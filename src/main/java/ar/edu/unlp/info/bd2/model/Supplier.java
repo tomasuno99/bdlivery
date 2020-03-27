@@ -1,11 +1,15 @@
 package ar.edu.unlp.info.bd2.model;
 
+import java.util.ArrayList;
+
 public class Supplier {
+	private long id;
 	private String name;
 	private String cuil;
 	private String address;
 	private Float coordX;
 	private Float coordY;
+	private ArrayList<Product> products = new ArrayList();
 	
 	public Supplier createSupplier(	String name, String cuil, String adress, Float coordx, Float coordy) {
 		this.name= name;
@@ -17,6 +21,14 @@ public class Supplier {
 		return this;
 	}
 	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -47,7 +59,18 @@ public class Supplier {
 	public void setCoordy(Float coordy) {
 		this.coordY = coordy;
 	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
+	}
 	
+	public void addProduct(Product product) {
+		this.products.add(product);
+	}
 	
 	
 }
