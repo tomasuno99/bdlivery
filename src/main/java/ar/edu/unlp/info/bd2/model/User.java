@@ -12,6 +12,15 @@ public class User {
 	private Date dateOfBirth;
 	private ArrayList<Order> orders = new ArrayList();
 	
+	public User(String email, String pass, String username, String name, Date date) {
+		this.id = id;
+		this.email = email;
+		this.password = pass;
+		this.name = name;
+		this.dateOfBirth = date;
+		this.username = username;
+	}
+	
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}

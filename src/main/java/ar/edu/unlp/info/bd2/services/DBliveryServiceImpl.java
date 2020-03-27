@@ -34,8 +34,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
-		// TODO Auto-generated method stub
-		return null;
+		User u = new User(email, password, username, name, dateOfBirth);
+		return u;
 	}
 
 	@Override
