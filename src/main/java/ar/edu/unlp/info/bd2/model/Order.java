@@ -15,6 +15,17 @@ public class Order {
 	private DeliveryUser deliveryUser;
 	// es mejor modelar el deliveryUser aparte del User? deliveryUser es un User
 	
+
+	public Order(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
+		OrderStatus pendingStatus = new Pending();
+		this.setStatus(pendingStatus);
+		this.dateOfOrder = dateOfOrder;
+		this.address = address;
+		this.coordX = coordX;
+		this.coordY = coordY;
+		this.client = client;
+	}
+	
 	public User getDeliveryUser() {
 		return this.deliveryUser;
 	}
@@ -99,15 +110,4 @@ public class Order {
 	}
 	
 
-
-	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
-		OrderStatus pendingStatus = new Pending();
-		this.setStatus(pendingStatus);
-		this.dateOfOrder = dateOfOrder;
-		this.address = address;
-		this.coordX = coordX;
-		this.coordY = coordY;
-		this.client = client;
-		return this;
-	}
 }

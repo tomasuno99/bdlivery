@@ -14,14 +14,12 @@ public class Product {
 	private Float weight;
 	private Supplier supplier;
 	
-	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
+	public Product(String name, Float price, Float weight, Supplier supplier) {
 
 		this.setPrice(price);
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
-		
-		return this;
 	}
 	
 	//public Product updateProductPrice(double idProd,float price, Date startDate) {

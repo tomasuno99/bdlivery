@@ -4,6 +4,11 @@ public class OrderProduct {
 	private int quantity;
 	private Product product;
 	
+	public OrderProduct(int quantity, Product product) {
+		this.quantity = quantity;
+		this.product = product;
+	}
+	
 	public int getQuantity() {
 		return quantity;
 	}
