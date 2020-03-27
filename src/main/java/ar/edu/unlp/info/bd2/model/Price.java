@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Price {
-	private float price;
+	private Float price;
 	private Date fechaInicio = Calendar.getInstance().getTime();
 	private Date fechaFin;
 	
