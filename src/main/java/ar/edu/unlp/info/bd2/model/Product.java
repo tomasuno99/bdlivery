@@ -46,7 +46,7 @@ public class Product {
 		this.name = name;
 	}
 
-	public float getPrice() {
+	public Float getPrice() {
 		return prices.get(prices.size()).getPrice();
 	}
 
