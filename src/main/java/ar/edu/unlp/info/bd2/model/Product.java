@@ -3,19 +3,33 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CascadeType;
+
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
+@Entity
+@Table(name="product")
 public class Product {
 
+	@Id
 	private long id;
+	@Column(name="name")
 	private String name;
+	@OneToMany
 	private ArrayList<Price> prices = new ArrayList();
 	//private double price = prices.get(prices.size()).getPrecio();
+	@Column(name="wight")
 	private Float weight;
+	@Column(name="supplier")
 	private Supplier supplier;
 	
 	public Product(String name, Float price, Float weight, Supplier supplier) {
-
 		this.setPrice(price);
 		this.name = name;
 		this.weight = weight;

@@ -2,23 +2,36 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="supplier")
 public class Supplier {
+	@Id
 	private long id;
+	@Column(name="name")
 	private String name;
+	@Column(name="cuil")
 	private String cuil;
+	@Column(name="address")
 	private String address;
+	@Column(name="coordX")
 	private Float coordX;
+	@Column(name="coordY")
 	private Float coordY;
+	@OneToMany
 	private ArrayList<Product> products = new ArrayList();
 	
-	public Supplier createSupplier(	String name, String cuil, String adress, Float coordx, Float coordy) {
+	public Supplier(String name, String cuil, String adress, Float coordx, Float coordy) {
 		this.name= name;
 		this.cuil = cuil;
 		this.address = adress;
 		this.coordX = coordx;
 		this.coordY = coordy;
-		
-		return this;
 	}
 	
 	public long getId() {

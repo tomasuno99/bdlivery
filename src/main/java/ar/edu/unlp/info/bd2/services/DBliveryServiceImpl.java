@@ -22,14 +22,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Product(name,price,weight,supplier);
 	}
 
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Supplier(name,cuil,address,coordX,coordY);
 	}
 
 	@Override
