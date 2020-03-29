@@ -3,17 +3,36 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+@Entity
+@Table(name = "user")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
+	@Id
+	@Column(name="user_id")
 	private long id;
+	@Column(name="email")
 	private String email;
+	@Column(name="password")
 	private String password;
+	@Column(name="username")
 	private String username;
+	@Column(name="name")
 	private String name;
+	@Column(name="dateOfBirth")
 	private Date dateOfBirth;
+	@OneToMany(mappedBy="client")
 	private ArrayList<Order> orders = new ArrayList();
 	
 	public User(String email, String pass, String username, String name, Date date) {
-		this.id = id;
+		//this.id = id;
 		this.email = email;
 		this.password = pass;
 		this.name = name;

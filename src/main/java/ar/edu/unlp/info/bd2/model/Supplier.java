@@ -2,9 +2,12 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,7 +26,7 @@ public class Supplier {
 	private Float coordX;
 	@Column(name="coordY")
 	private Float coordY;
-	@OneToMany
+	@OneToMany(mappedBy="supplier")
 	private ArrayList<Product> products = new ArrayList();
 	
 	public Supplier(String name, String cuil, String adress, Float coordx, Float coordy) {

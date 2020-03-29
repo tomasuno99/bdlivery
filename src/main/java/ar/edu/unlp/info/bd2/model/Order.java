@@ -3,15 +3,40 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "order")
 public class Order {
+	@Id
+	@Column(name="order_id")
 	private long id;
+	@Column(name="dateOfOrder")
 	private Date dateOfOrder;
+	@Column(name="address")
 	private String address;
-	private Float coordX; 
+	@Column(name="coordX")
+	private Float coordX;
+	@Column(name="coordY")
 	private Float coordY;
+	@ManyToOne
+	@JoinColumn(name="id_user")
 	private User client;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="order_id")
 	private ArrayList<OrderProduct> products = new ArrayList();
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="order_id")
 	private ArrayList<OrderStatus> statusHistory = new ArrayList();
+	@ManyToOne
+	@JoinColumn(name="id_deliveryUser")
 	private DeliveryUser deliveryUser;
 	// es mejor modelar el deliveryUser aparte del User? deliveryUser es un User
 	

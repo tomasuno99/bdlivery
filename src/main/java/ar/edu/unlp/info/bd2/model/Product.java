@@ -6,10 +6,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CascadeType;
+import javax.persistence.CascadeType;
 
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
@@ -21,12 +22,14 @@ public class Product {
 	private long id;
 	@Column(name="name")
 	private String name;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="product_id")
 	private ArrayList<Price> prices = new ArrayList();
 	//private double price = prices.get(prices.size()).getPrecio();
 	@Column(name="wight")
 	private Float weight;
-	@Column(name="supplier")
+	@ManyToOne
+	@JoinColumn(name="id_supplier")
 	private Supplier supplier;
 	
 	public Product(String name, Float price, Float weight, Supplier supplier) {
