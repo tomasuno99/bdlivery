@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="order")
+@Table(name="order_table")
 public class Order {
 	@Id
 	@Column(name="order_id")
@@ -66,14 +66,14 @@ public class Order {
 	}
 
 
-	//public List<OrderStatus> getStatus() {
-	//	return this.statusHistory;
-	//}
+	public List<OrderStatus> getStatus() {
+		return this.statusHistory;
+	}
 
 
-	//public void setStatus(OrderStatus status) {
-	//	this.statusHistory.add(status);
-	//}
+	public void setStatus(OrderStatus status) {
+		this.statusHistory.add(status);
+	}
 
 
 	public Date getDateOfOrder() {

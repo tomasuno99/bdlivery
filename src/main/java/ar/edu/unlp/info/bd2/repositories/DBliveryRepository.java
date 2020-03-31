@@ -17,9 +17,13 @@ public class DBliveryRepository {
 		    sessionFactory.getCurrentSession().save(supplier);
 		    return supplier;
 		}
-		  /* saves a new user and returns it */
 		 public Product storeProduct(Product product){
 		   sessionFactory.getCurrentSession().save(product);
 		   return product;
 		 }
+		 
+		  public User storeUser(User user){
+			    sessionFactory.getCurrentSession().save(user);
+			    return user;
+			  }
 }
