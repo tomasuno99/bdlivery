@@ -22,9 +22,9 @@ public class Supplier {
 	private String cuil;
 	@Column(name="address")
 	private String address;
-	@Column(name="coordX")
+	@Column(name="coord_x")
 	private Float coordX;
-	@Column(name="coordY")
+	@Column(name="coord_y")
 	private Float coordY;
 	@OneToMany(mappedBy="supplier")
 	private ArrayList<Product> products = new ArrayList();

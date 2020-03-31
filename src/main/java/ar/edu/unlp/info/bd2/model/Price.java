@@ -12,9 +12,9 @@ import javax.persistence.Table;
 public class Price {
 	@Column(name="price")
 	private Float price;
-	@Column(name="fechaInicio")
+	@Column(name="fecha_inicio")
 	private Date fechaInicio = Calendar.getInstance().getTime();
-	@Column(name="fechaFin")
+	@Column(name="fecha_fin")
 	private Date fechaFin;
 	
 	public Price(float price) {

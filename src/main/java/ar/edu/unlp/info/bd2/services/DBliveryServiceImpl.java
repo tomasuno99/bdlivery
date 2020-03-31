@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Product;
@@ -20,11 +22,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 			this.repository = repository;
 	}
 
+	@Transactional
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
 		return new Product(name,price,weight,supplier);
 	}
-
+	@Transactional
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
 		return new Supplier(name,cuil,address,coordX,coordY);

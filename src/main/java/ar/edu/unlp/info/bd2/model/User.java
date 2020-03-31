@@ -26,7 +26,7 @@ public class User {
 	private String username;
 	@Column(name="name")
 	private String name;
-	@Column(name="dateOfBirth")
+	@Column(name="date_of_birth")
 	private Date dateOfBirth;
 	@OneToMany(mappedBy="client")
 	private ArrayList<Order> orders = new ArrayList();

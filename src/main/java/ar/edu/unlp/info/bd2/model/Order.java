@@ -18,13 +18,13 @@ public class Order {
 	@Id
 	@Column(name="order_id")
 	private long id;
-	@Column(name="dateOfOrder")
+	@Column(name="date_of_order")
 	private Date dateOfOrder;
 	@Column(name="address")
 	private String address;
-	@Column(name="coordX")
+	@Column(name="coord_x")
 	private Float coordX;
-	@Column(name="coordY")
+	@Column(name="coord_y")
 	private Float coordY;
 	@ManyToOne
 	@JoinColumn(name="id_user")

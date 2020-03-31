@@ -6,7 +6,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="orderProduct")
+@Table(name="order_product")
 public class OrderProduct {
 	@Column(name="quantity")
 	private int quantity;

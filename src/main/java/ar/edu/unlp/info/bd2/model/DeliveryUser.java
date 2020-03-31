@@ -7,10 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
-@Table(name="deliveryUser")
+@Table(name="delivery_user")
 public class DeliveryUser extends User {
 	
-	@OneToMany(mappedBy="deliveryUser")
+	@OneToMany(mappedBy="delivery_user")
 	private ArrayList<Order> ordersDelivered = new ArrayList();
 
 	public DeliveryUser(String email, String pass, String username, String name, Date date) {
