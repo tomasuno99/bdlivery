@@ -1,3 +1,5 @@
 # DBlivery
-Proyecto Base para el TP de la cátedra de Bases de Datos 2
+Grupo 15
+Sandler	Tomas	15503/0	
+Ramirez	Agustin	15374/9
 Facultad de Informática / UNLP
