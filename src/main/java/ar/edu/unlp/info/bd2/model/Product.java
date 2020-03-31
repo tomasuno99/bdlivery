@@ -32,6 +32,8 @@ public class Product {
 	@JoinColumn(name="id_supplier")
 	private Supplier supplier;
 	
+	public Product() {}
+	
 	public Product(String name, Float price, Float weight, Supplier supplier) {
 		this.setPrice(price);
 		this.name = name;

@@ -16,7 +16,13 @@ public class Price {
 	private Date fechaInicio = Calendar.getInstance().getTime();
 	@Column(name="fecha_fin")
 	private Date fechaFin;
+<<<<<<< HEAD
 
+=======
+	
+	public Price() {}
+	
+>>>>>>> 3dfcb9fe6529dc6eeede7e656dff19b021a3c08b
 	public Price(float price) {
 		this.price = price;
 	}

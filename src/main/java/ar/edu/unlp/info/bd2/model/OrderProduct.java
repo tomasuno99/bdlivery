@@ -13,6 +13,8 @@ public class OrderProduct {
 	@OneToOne
 	private Product product;
 	
+	public OrderProduct() {}
+	
 	public OrderProduct(int quantity, Product product) {
 		this.quantity = quantity;
 		this.product = product;
