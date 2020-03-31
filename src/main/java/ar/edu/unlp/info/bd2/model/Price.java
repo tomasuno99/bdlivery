@@ -17,6 +17,8 @@ public class Price {
 	@Column(name="fecha_fin")
 	private Date fechaFin;
 	
+	public Price() {}
+	
 	public Price(float price) {
 		this.price = price;
 	}

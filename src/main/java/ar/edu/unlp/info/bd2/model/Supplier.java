@@ -29,6 +29,8 @@ public class Supplier {
 	@OneToMany(mappedBy="supplier")
 	private ArrayList<Product> products = new ArrayList();
 	
+	public Supplier() {}
+	
 	public Supplier(String name, String cuil, String adress, Float coordx, Float coordy) {
 		this.name= name;
 		this.cuil = cuil;

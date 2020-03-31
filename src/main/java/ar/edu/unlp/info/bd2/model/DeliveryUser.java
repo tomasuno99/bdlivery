@@ -12,6 +12,8 @@ public class DeliveryUser extends User {
 	
 	@OneToMany(mappedBy="delivery_user")
 	private ArrayList<Order> ordersDelivered = new ArrayList();
+	
+	public DeliveryUser() {}
 
 	public DeliveryUser(String email, String pass, String username, String name, Date date) {
 		super(email, pass, username, name, date);
