@@ -32,10 +32,9 @@ public class Order {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="order_id")
 	private List<OrderProduct> products;
-	//RESOLVER ESTA COLECCION
-	//@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	//@JoinColumn(name="order_id")
-	//private List<OrderStatus> statusHistory;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="order_id")
+	private List<OrderStatus> statusHistory;
 	@ManyToOne
 	@JoinColumn(name="id_deliveryUser")
 	private DeliveryUser deliveryUser;
@@ -45,7 +44,7 @@ public class Order {
 	
 	public Order(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
 		OrderStatus pendingStatus = new Pending();
-		//this.setStatus(pendingStatus);
+		this.statusHistory.add(pendingStatus);
 		this.dateOfOrder = dateOfOrder;
 		this.address = address;
 		this.coordX = coordX;
