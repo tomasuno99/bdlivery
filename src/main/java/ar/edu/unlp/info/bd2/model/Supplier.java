@@ -1,7 +1,7 @@
 package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ public class Supplier {
 	@Column(name="coord_y")
 	private Float coordY;
 	@OneToMany(mappedBy="supplier")
-	private ArrayList<Product> products = new ArrayList();
+	private List<Product> products;
 	
 	public Supplier() {}
 	
@@ -78,7 +78,7 @@ public class Supplier {
 		this.coordY = coordy;
 	}
 
-	public ArrayList<Product> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 

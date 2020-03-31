@@ -2,6 +2,7 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,10 +32,10 @@ public class Order {
 	private User client;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="order_id")
-	private ArrayList<OrderProduct> products = new ArrayList();
+	private List<OrderProduct> products;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="order_id")
-	private ArrayList<OrderStatus> statusHistory = new ArrayList();
+	private List<OrderStatus> statusHistory;
 	@ManyToOne
 	@JoinColumn(name="id_deliveryUser")
 	private DeliveryUser deliveryUser;
@@ -66,7 +67,7 @@ public class Order {
 	}
 
 
-	public ArrayList<OrderStatus> getStatus() {
+	public List<OrderStatus> getStatus() {
 		return this.statusHistory;
 	}
 
@@ -126,7 +127,7 @@ public class Order {
 	}
 
 
-	public ArrayList<OrderProduct> getProducts() {
+	public List<OrderProduct> getProducts() {
 		return products;
 	}
 

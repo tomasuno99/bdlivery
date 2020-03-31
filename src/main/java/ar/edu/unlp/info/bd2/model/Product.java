@@ -2,6 +2,7 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Product {
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="product_id")
-	private ArrayList<Price> prices = new ArrayList();
+	private List<Price> prices;
 	//private double price = prices.get(prices.size()).getPrecio();
 	@Column(name="wight")
 	private Float weight;
@@ -53,7 +54,7 @@ public class Product {
 		this.id = id;
 	}
 
-	public ArrayList<Price> getPrices() {
+	public List<Price> getPrices() {
 		return prices;
 	}
 

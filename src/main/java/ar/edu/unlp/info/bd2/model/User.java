@@ -2,6 +2,7 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class User {
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;
 	@OneToMany(mappedBy="client")
-	private ArrayList<Order> orders = new ArrayList();
+	private List<Order> orders;
 	
 	public User(String email, String pass, String username, String name, Date date) {
 		//this.id = id;
@@ -40,7 +41,7 @@ public class User {
 		this.username = username;
 	}
 	
-	public ArrayList<Order> getOrders() {
+	public List<Order> getOrders() {
 		return orders;
 	}
 	public void setOrders(ArrayList<Order> orders) {

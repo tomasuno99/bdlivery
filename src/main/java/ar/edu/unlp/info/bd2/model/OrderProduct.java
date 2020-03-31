@@ -2,12 +2,15 @@ package ar.edu.unlp.info.bd2.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="order_product")
 public class OrderProduct {
+	@Id
+	private long id;
 	@Column(name="quantity")
 	private int quantity;
 	@OneToOne
