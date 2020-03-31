@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name="delivery_user")
 public class DeliveryUser extends User {
 	
-	@OneToMany(mappedBy="delivery_user")
+	@OneToMany //(mappedBy="delivery_user") RESOLVER ESTO
 	private List<Order> ordersDelivered;
 
 	public DeliveryUser(String email, String pass, String username, String name, Date date) {

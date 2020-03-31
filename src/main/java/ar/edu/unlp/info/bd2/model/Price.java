@@ -5,11 +5,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="price")
 public class Price {
+	@Id
+	@Column(name="price_id")
+	private long id;
 	@Column(name="price")
 	private Float price;
 	@Column(name="fecha_inicio")
