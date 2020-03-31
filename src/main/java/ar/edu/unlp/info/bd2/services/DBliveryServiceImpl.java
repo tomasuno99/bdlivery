@@ -30,7 +30,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Transactional
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		return new Supplier(name,cuil,address,coordX,coordY);
+		return repository.storeSupplier();
 	}
 
 	@Override
