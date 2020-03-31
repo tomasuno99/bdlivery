@@ -1,6 +1,5 @@
 package ar.edu.unlp.info.bd2.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order")
+@Table(name="order")
 public class Order {
 	@Id
 	@Column(name="order_id")
@@ -133,7 +132,7 @@ public class Order {
 	}
 
 
-	public void setProducts(ArrayList<OrderProduct> products) {
+	public void setProducts(List<OrderProduct> products) {
 		this.products = products;
 	}
 	
