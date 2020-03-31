@@ -16,7 +16,7 @@ public class Price {
 	private Date fechaInicio = Calendar.getInstance().getTime();
 	@Column(name="fecha_fin")
 	private Date fechaFin;
-	
+
 	public Price(float price) {
 		this.price = price;
 	}

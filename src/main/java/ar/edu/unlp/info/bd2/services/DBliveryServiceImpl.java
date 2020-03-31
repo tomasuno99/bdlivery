@@ -25,7 +25,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Transactional
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		return new Product(name,price,weight,supplier);
+		return this.repository.storeProduct(new Product(name,price,weight,supplier)) ;
 	}
 	@Transactional
 	@Override
