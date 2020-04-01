@@ -19,15 +19,16 @@ public class Price {
 	private long id;
 	@Column(name="price")
 	private Float price;
-	@Column(name="fecha_inicio")
-	private Date fechaInicio = Calendar.getInstance().getTime();
-	@Column(name="fecha_fin")
-	private Date fechaFin;
+	@Column(name="startdate")
+	private Date startDate;
+	@Column(name="enddate")
+	private Date endDate;
 	
 	public Price() {}
 	
-	public Price(float price) {
+	public Price(float price, Date startDate) {
 		this.price = price;
+		this.startDate = startDate;
 	}
 	
 	public float getPrice() {
@@ -35,7 +36,7 @@ public class Price {
 	}
 	
 	public void finalizePrice() {
-		this.fechaFin = Calendar.getInstance().getTime();
+		this.endDate = Calendar.getInstance().getTime();
 	}
 	
 }
