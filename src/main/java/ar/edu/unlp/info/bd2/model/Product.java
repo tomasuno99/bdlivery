@@ -31,7 +31,7 @@ public class Product {
 	@JoinColumn(name="product_id")
 	private List<Price> prices;
 	//private double price = prices.get(prices.size()).getPrecio();
-	@Column(name="wight")
+	@Column(name="weight")
 	private Float weight;
 	@ManyToOne
 	@JoinColumn(name="id_supplier")
@@ -40,7 +40,12 @@ public class Product {
 	public Product() {}
 	
 	public Product(String name, Float price, Float weight, Supplier supplier) {
-		this.setPrice(price);
+		this.prices = new ArrayList<Price>();
+		Price p = new Price(price);
+		if (!this.prices.isEmpty()) {
+			this.prices.get(prices.size()).finalizePrice();
+		}
+		this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
@@ -70,14 +75,8 @@ public class Product {
 		this.name = name;
 	}
 
-	public Float getPrice() {
-		return prices.get(prices.size()).getPrice();
-	}
-
-	public void setPrice(Float price) {
-		Price p = new Price(price);
-		this.prices.get(prices.size()).finalizePrice();
-		this.prices.add(p);
+	public List<Price> getPrice() {
+		return this.prices;
 	}
 
 	public Float getWeight() {
