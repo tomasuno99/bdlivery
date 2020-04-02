@@ -73,6 +73,11 @@ public class Order {
 		return this.deliveryUser;
 	}
 	
+	
+	public void setDeliveryUser(DeliveryUser deliveryUser) {
+		this.deliveryUser = deliveryUser;
+	}
+
 	public long getId() {
 		return id;
 	}

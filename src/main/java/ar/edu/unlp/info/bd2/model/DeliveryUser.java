@@ -17,6 +17,10 @@ public class DeliveryUser extends User {
 		super(email, pass, username, name, date);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public DeliveryUser(User user) {
+		super(user.getEmail(), user.getPassword(), user.getUsername(), user.getName(), user.getDateOfBirth());
+	}
 
 
 }

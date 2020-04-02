@@ -6,11 +6,13 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import ar.edu.unlp.info.bd2.model.DeliveryUser;
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Price;
 import ar.edu.unlp.info.bd2.model.Product;
+import ar.edu.unlp.info.bd2.model.Sended;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
@@ -129,8 +131,13 @@ public class DBliveryServiceImpl implements DBliveryService {
 	 */
 	@Transactional
 	public Order deliverOrder(Long order, User deliveryUser) throws DBliveryException {
+		if (! this.canDeliver(order)) throw new DBliveryException("order error");
+		//ineficiente)?
 		Order o = this.repository.getOrderById(order);
-		// if (o == null) 
+		OrderStatus sended = new Sended();
+		o.setStatus(sended);
+		DeliveryUser du = new DeliveryUser(deliveryUser);
+		o.setDeliveryUser(du);
 		return null;
 	}
 
@@ -153,10 +160,26 @@ public class DBliveryServiceImpl implements DBliveryService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	/**
+	 * verifica si un pedido puede ser enviado para lo cual debe tener productos y estar en estado pending
+	 * @param order pedido a ser enviado
+	 * @return true en caso que pueda ser enviado, false en caso contrario
+	 * @throws DBliveryException si el pedido no esta en estado pending.
+	 */
 	@Override
 	public boolean canDeliver(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
+		Order o = this.repository.getOrderById(order);
+		if (o != null) {
+			if (o.getActualStatus().equals("Pending")){
+				if (o.getProducts().size() > 0) {
+					return true;
+				}
+			}
+			else {
+				throw new DBliveryException("the order is not Pending");
+			}
+		}
 		return false;
 	}
 
