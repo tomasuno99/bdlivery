@@ -56,12 +56,11 @@ public class Product {
 	//}
 	
 	public Price getActualPrice() {
-		ArrayList<Price> iterator = new ArrayList<Price>(this.prices);
 		Price p = null;
 		int i=0;
-		while((iterator.size() < i) && (p == null)) {
-			if (iterator.get(i).getActualPrice() == true) {
-				p=iterator.get(i);
+		while((i < this.prices.size()) && (p == null)) {
+			if (this.prices.get(i).getActualPrice() == true) {
+				p=this.prices.get(i);
 			}
 			i++;
 		}
