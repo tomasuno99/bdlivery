@@ -99,13 +99,13 @@ public interface DBliveryService {
 	
 	/**
 	 * agrega un producto al pedido
-	 * @param d pedido al cual se le agrega el producto
+	 * @param id del pedido al cual se le agrega el producto
 	 * @param quantity cantidad de producto a agregar
 	 * @param product producto a agregar
 	 * @return el pedido con el nuevo producto
 	 * @throws DBliveryException en caso de no existir el pedido
 	 */
-	Order addProduct (Long d,Long quantity, Product product )throws DBliveryException;
+	Order addProduct (Long id,Long quantity, Product product )throws DBliveryException;
 
 	/**
 	 * Registra el envío del pedido, registrando al repartidor y cambiando su estado a Send.

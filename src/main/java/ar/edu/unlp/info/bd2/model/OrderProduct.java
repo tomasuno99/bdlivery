@@ -16,21 +16,21 @@ public class OrderProduct {
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private long id;
 	@Column(name="quantity")
-	private int quantity;
+	private Long quantity;
 	@OneToOne
 	private Product product;
 	
 	public OrderProduct() {}
 	
-	public OrderProduct(int quantity, Product product) {
+	public OrderProduct(Long quantity, Product product) {
 		this.quantity = quantity;
 		this.product = product;
 	}
 	
-	public int getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 	public Product getProduct() {

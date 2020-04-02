@@ -1,5 +1,6 @@
 package ar.edu.unlp.info.bd2.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class Order {
 	public Order() {}
 	
 	public Order(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
+		this.statusHistory = new ArrayList<OrderStatus>();
+		this.products = new ArrayList<OrderProduct>();
 		OrderStatus pendingStatus = new Pending();
 		this.statusHistory.add(pendingStatus);
 		this.dateOfOrder = dateOfOrder;

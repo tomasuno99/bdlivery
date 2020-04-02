@@ -20,7 +20,17 @@ public abstract class OrderStatus {
 	@Column(name="order_status_id")
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private long id;
+	@Column(name="is_actual")
+	private boolean isActual = true;
 	
+	public boolean isActual() {
+		return isActual;
+	}
+
+	public void setActual(boolean isActual) {
+		this.isActual = isActual;
+	}
+
 	public abstract String getStatus();
 	
 }
