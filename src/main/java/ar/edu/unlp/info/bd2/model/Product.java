@@ -31,7 +31,7 @@ public class Product {
 	@JoinColumn(name="product_id")
 	private List<Price> prices;
 	//private double price = prices.get(prices.size()).getPrecio();
-	@Column(name="wight")
+	@Column(name="weight")
 	private Float weight;
 	@ManyToOne
 	@JoinColumn(name="id_supplier")

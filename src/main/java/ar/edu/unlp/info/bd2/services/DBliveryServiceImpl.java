@@ -24,11 +24,13 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		return this.repository.storeProduct(new Product(name,price,weight,supplier)) ;
+		Product p = new Product(name,price,weight,supplier);
+		return this.repository.storeProduct(p) ;
 	}
 	@Transactional
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		return repository.storeSupplier(new Supplier(name,cuil,address,coordX,coordY));
+		Supplier s = new Supplier(name,cuil,address,coordX,coordY);
+		return repository.storeSupplier(s);
 	}
 
 	@Override
