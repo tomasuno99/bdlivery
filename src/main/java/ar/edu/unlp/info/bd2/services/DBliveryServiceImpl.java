@@ -6,11 +6,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-<<<<<<< HEAD
 import ar.edu.unlp.info.bd2.model.DeliveryUser;
-=======
 import ar.edu.unlp.info.bd2.model.Cancelled;
->>>>>>> 978c0d60d18f79a1c09610b73a67340c690220f2
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
