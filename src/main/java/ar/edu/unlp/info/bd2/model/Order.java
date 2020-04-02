@@ -74,7 +74,7 @@ public class Order {
 	}
 	
 	public User getDeliveryUser() {
-		return this.deliveryUser;
+		return (User) this.deliveryUser;
 	}
 	
 	
