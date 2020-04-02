@@ -6,7 +6,11 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+<<<<<<< HEAD
 import ar.edu.unlp.info.bd2.model.DeliveryUser;
+=======
+import ar.edu.unlp.info.bd2.model.Cancelled;
+>>>>>>> 978c0d60d18f79a1c09610b73a67340c690220f2
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
@@ -87,10 +91,16 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public boolean canCancel(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
-		
-		return false;
+		if (o == null) throw new DBliveryException("the order with that id does not exist");
+		return o.getActualStatus().equals("Pending");
 	}
-
+	
+	@Transactional
+	public OrderStatus getActualStatus(Long order) {
+		Order o = this.repository.getOrderById(order);
+		return o.getActualStatusObject();
+	}
+	
 	@Override
 	public Optional<User> getUserById(Long id) {
 		// TODO Auto-generated method stub
@@ -134,17 +144,25 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (! this.canDeliver(order)) throw new DBliveryException("order error");
 		//ineficiente)?
 		Order o = this.repository.getOrderById(order);
+<<<<<<< HEAD
 		OrderStatus sended = new Sended();
 		o.setStatus(sended);
 		DeliveryUser du = new DeliveryUser(deliveryUser);
 		o.setDeliveryUser(du);
+=======
+>>>>>>> 978c0d60d18f79a1c09610b73a67340c690220f2
 		return null;
 	}
 
 	@Override
 	public Order cancelOrder(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = this.repository.getOrderById(order);
+		if (o == null) throw new DBliveryException("the order with that id does not exist");
+		if (o.getActualStatus() != "Pending") throw new DBliveryException("The order is not in pending");
+		o.getActualStatusObject().setActual(false);
+		OrderStatus cancelled = new Cancelled();
+		o.getStatus().add(cancelled);
+		return repository.storeOrder(o);
 	}
 
 	@Override
@@ -183,11 +201,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return false;
 	}
 
-	@Override
-	public OrderStatus getActualStatus(Long order) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public List<Product> getProductByName(String name) {

@@ -58,15 +58,19 @@ public class Order {
 		this.client = client;
 	}
 	
-	public String getActualStatus() {
+	public OrderStatus getActualStatusObject() {
 		int i=0;
 		while(i < this.statusHistory.size()) {
 			if (this.statusHistory.get(i).isActual()) {
-				return this.statusHistory.get(i).getStatus();
+				return this.statusHistory.get(i);
 			}
 			i++;
 		}
-		return null;
+		return null;	
+	}
+	
+	public String getActualStatus() {
+		return this.getActualStatusObject().getStatus();
 	}
 	
 	public User getDeliveryUser() {
