@@ -44,5 +44,11 @@ public class DBliveryRepository {
             Product p = (Product) session.createQuery(txt).setParameter("idProd",idProd).uniqueResult();
             return p;
 		}
-
+		
+		 public Order getOrderById(Long idOrder) {
+			 String txt="from Order o where o.id=:idOrder";
+	         Session session= sessionFactory.getCurrentSession();
+	         Order o = (Order) session.createQuery(txt).setParameter("idOrder",idOrder).uniqueResult();
+	         return o;
+		 }
 }
