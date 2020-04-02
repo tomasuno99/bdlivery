@@ -142,10 +142,11 @@ public class DBliveryServiceImpl implements DBliveryService {
 		//ineficiente)?
 		Order o = this.repository.getOrderById(order);
 		OrderStatus sended = new Sended();
+		this.getActualStatus(order).setActual(false);
 		o.setStatus(sended);
 		DeliveryUser du = new DeliveryUser(deliveryUser);
 		o.setDeliveryUser(du);
-		return null;
+		return this.repository.storeOrder(o);
 	}
 
 	@Override
