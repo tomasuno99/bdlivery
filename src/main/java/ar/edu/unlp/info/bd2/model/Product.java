@@ -3,7 +3,9 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,9 +45,6 @@ public class Product {
 	public Product(String name, Float price, Float weight, Supplier supplier) {
 		this.prices = new ArrayList<Price>();
 		Price p = new Price(price, Calendar.getInstance().getTime());
-		if (!this.prices.isEmpty()) {
-			this.prices.get(prices.size()).finalizePrice();
-		}
 		this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
@@ -55,8 +54,22 @@ public class Product {
 	//public Product updateProductPrice(double idProd,float price, Date startDate) {
 	//	
 	//}
+	
+	public Price getActualPrice() {
+		ArrayList<Price> iterator = new ArrayList<Price>(this.prices);
+		Price p = null;
+		int i=0;
+		while((iterator.size() < i) && (p == null)) {
+			if (iterator.get(i).getActualPrice() == true) {
+				p=iterator.get(i);
+			}
+			i++;
+		}
+		return p;
+	}
+	
 	public Float getPrice() {
-		return this.prices.get(prices.size()-1).getPrice();
+		return this.getActualPrice().getPrice();
 	}
 	
 	public long getId() {

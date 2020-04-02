@@ -23,20 +23,31 @@ public class Price {
 	private Date startDate;
 	@Column(name="enddate")
 	private Date endDate;
+	@Column(name="actual_price")
+	private Boolean actualPrice;
 	
 	public Price() {}
 	
 	public Price(float price, Date startDate) {
 		this.price = price;
 		this.startDate = startDate;
+		this.actualPrice = true;
 	}
 	
 	public float getPrice() {
 		return this.price;
 	}
 	
+	public Boolean getActualPrice() {
+		return this.actualPrice;
+	}
+	
+	
 	public void finalizePrice() {
-		this.endDate = Calendar.getInstance().getTime();
+		if (this.endDate == null) {
+			this.endDate = Calendar.getInstance().getTime();
+		}
+		this.actualPrice = false;
 	}
 	
 }

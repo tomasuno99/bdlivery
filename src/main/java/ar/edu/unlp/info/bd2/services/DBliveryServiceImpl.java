@@ -47,16 +47,16 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public Product updateProductPrice(Long id, Float price, Date startDate) throws DBliveryException {
-		// TODO Auto-generated method stub
-		Product p = repository.getProductById(id); 
+		Product p = repository.getProductById(id);
 		if (p==null) {
 			throw new DBliveryException("the product with that id does not exist");
 		}
-		p.getPrices().get(p.getPrices().size()-1).finalizePrice();
+		
+		p.getActualPrice().finalizePrice();
 		Price priceVar = new Price(price, startDate);
 		p.getPrices().add(priceVar);
-		repository.storeProduct(p);
-		return null;
+		
+		return repository.storeProduct(p);
 	}
 
 	@Override
