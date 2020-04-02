@@ -118,10 +118,19 @@ public class DBliveryServiceImpl implements DBliveryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
+	
+	
+	/**
+	 * Registra el envío del pedido, registrando al repartidor y cambiando su estado a Send.
+	 * @param order pedido a ser enviado
+	 * @param deliveryUser Usuario que entrega el pedido
+	 * @return el pedido modificado
+	 * @throws DBliveryException en caso de no existir el pedido, que el pedido no se encuentre en estado Pending o sí no contiene productos.
+	 */
+	@Transactional
 	public Order deliverOrder(Long order, User deliveryUser) throws DBliveryException {
-		// TODO Auto-generated method stub
+		Order o = this.repository.getOrderById(order);
+		// if (o == null) 
 		return null;
 	}
 
