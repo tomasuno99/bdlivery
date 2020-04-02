@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import ar.edu.unlp.info.bd2.model.Order;
+import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Price;
 import ar.edu.unlp.info.bd2.model.Product;
@@ -55,8 +56,30 @@ public class DBliveryServiceImpl implements DBliveryService {
 		p.getActualPrice().finalizePrice();
 		Price priceVar = new Price(price, startDate);
 		p.getPrices().add(priceVar);
-		
 		return repository.storeProduct(p);
+	}
+	
+	@Transactional
+	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
+		Order o = new Order(dateOfOrder, address, coordX, coordY, client);
+		return this.repository.storeOrder(o);
+	}
+	
+	/**
+	 * agrega un producto al pedido
+	 * @param id del pedido al cual se le agrega el producto
+	 * @param quantity cantidad de producto a agregar
+	 * @param product producto a agregar
+	 * @return el pedido con el nuevo producto
+	 * @throws DBliveryException en caso de no existir el pedido
+	 */
+	@Transactional
+	public Order addProduct(Long order, Long quantity, Product product) throws DBliveryException {
+		Order o = this.repository.getOrderById(order);
+		if (o == null) throw new DBliveryException("the order with that id does not exist");
+		OrderProduct op = new OrderProduct(quantity, product);
+		o.getProducts().add(op);
+		return this.repository.storeOrder(o);
 	}
 
 	@Override
@@ -85,18 +108,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Optional<Order> getOrderById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Order addProduct(Long order, Long quantity, Product product) throws DBliveryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
