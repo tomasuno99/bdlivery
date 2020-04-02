@@ -40,7 +40,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 //		return repository.getProductById(idProd);
 //	}
 
-	@Override
+	@Transactional
 	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
 		User u=new User(email, password, username, name, dateOfBirth);
 		return repository.storeUser(u);
@@ -80,6 +80,13 @@ public class DBliveryServiceImpl implements DBliveryService {
 		OrderProduct op = new OrderProduct(quantity, product);
 		o.getProducts().add(op);
 		return this.repository.storeOrder(o);
+	}
+	
+	@Override
+	public boolean canCancel(Long order) throws DBliveryException {
+		Order o = this.repository.getOrderById(order);
+		
+		return false;
 	}
 
 	@Override
@@ -130,11 +137,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return null;
 	}
 
-	@Override
-	public boolean canCancel(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 
 	@Override
 	public boolean canFinish(Long id) throws DBliveryException {
