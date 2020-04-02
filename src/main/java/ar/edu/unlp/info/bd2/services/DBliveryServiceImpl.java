@@ -144,13 +144,10 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (! this.canDeliver(order)) throw new DBliveryException("order error");
 		//ineficiente)?
 		Order o = this.repository.getOrderById(order);
-<<<<<<< HEAD
 		OrderStatus sended = new Sended();
 		o.setStatus(sended);
 		DeliveryUser du = new DeliveryUser(deliveryUser);
 		o.setDeliveryUser(du);
-=======
->>>>>>> 978c0d60d18f79a1c09610b73a67340c690220f2
 		return null;
 	}
 
