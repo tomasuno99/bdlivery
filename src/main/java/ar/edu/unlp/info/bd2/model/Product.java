@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,12 @@ public class Product {
 	public Product() {}
 	
 	public Product(String name, Float price, Float weight, Supplier supplier) {
-		this.setPrice(price);
+		this.prices = new ArrayList<Price>();
+		Price p = new Price(price, Calendar.getInstance().getTime());
+		if (!this.prices.isEmpty()) {
+			this.prices.get(prices.size()).finalizePrice();
+		}
+		this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
@@ -49,6 +55,9 @@ public class Product {
 	//public Product updateProductPrice(double idProd,float price, Date startDate) {
 	//	
 	//}
+	public Float getPrice() {
+		return this.prices.get(prices.size()-1).getPrice();
+	}
 	
 	public long getId() {
 		return id;
@@ -68,16 +77,6 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Float getPrice() {
-		return prices.get(prices.size()).getPrice();
-	}
-
-	public void setPrice(Float price) {
-		Price p = new Price(price);
-		this.prices.get(prices.size()).finalizePrice();
-		this.prices.add(p);
 	}
 
 	public Float getWeight() {

@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
+import ar.edu.unlp.info.bd2.model.Price;
 import ar.edu.unlp.info.bd2.model.Product;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
@@ -32,6 +33,11 @@ public class DBliveryServiceImpl implements DBliveryService {
 		Supplier s = new Supplier(name,cuil,address,coordX,coordY);
 		return repository.storeSupplier(s);
 	}
+	
+//	@Transactional
+//	public Product getProductById(long idProd) {
+//		return repository.getProductById(idProd);
+//	}
 
 	@Override
 	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
@@ -39,9 +45,17 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.storeUser(u);
 	}
 
-	@Override
+	@Transactional
 	public Product updateProductPrice(Long id, Float price, Date startDate) throws DBliveryException {
 		// TODO Auto-generated method stub
+		Product p = repository.getProductById(id); 
+		if (p==null) {
+			throw new DBliveryException("the product with that id does not exist");
+		}
+		p.getPrices().get(p.getPrices().size()-1).finalizePrice();
+		Price priceVar = new Price(price, startDate);
+		p.getPrices().add(priceVar);
+		repository.storeProduct(p);
 		return null;
 	}
 
