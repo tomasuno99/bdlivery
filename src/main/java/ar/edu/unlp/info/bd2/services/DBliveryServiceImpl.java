@@ -152,7 +152,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public Order cancelOrder(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
-		if (o.getActualStatus() != "Pending") throw new DBliveryException("The order is not in pending");
+		if (! o.getActualStatus().equals("Pending")) throw new DBliveryException("The order is not in pending");
 		o.getActualStatusObject().setActual(false);
 		OrderStatus cancelled = new Cancelled();
 		o.getStatus().add(cancelled);
