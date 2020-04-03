@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.bd2.repositories;
 
 import javax.persistence.TypedQuery;
+
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

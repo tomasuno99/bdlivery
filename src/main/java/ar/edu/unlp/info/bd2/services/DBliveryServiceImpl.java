@@ -1,12 +1,12 @@
 package ar.edu.unlp.info.bd2.services;
 
 import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import ar.edu.unlp.info.bd2.model.DeliveryUser;
 import ar.edu.unlp.info.bd2.model.Cancelled;
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
@@ -144,8 +144,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		OrderStatus sended = new Sended();
 		this.getActualStatus(order).setActual(false);
 		o.setStatus(sended);
-		DeliveryUser du = new DeliveryUser(deliveryUser);
-		o.setDeliveryUser(du);
+		o.setDeliveryUser(deliveryUser);
 		return this.repository.storeOrder(o);
 	}
 

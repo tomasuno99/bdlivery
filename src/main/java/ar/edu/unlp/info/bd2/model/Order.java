@@ -40,8 +40,8 @@ public class Order {
 	@JoinColumn(name="order_id")
 	private List<OrderStatus> statusHistory;
 	@ManyToOne
-	@JoinColumn(name="id_deliveryUser")
-	private DeliveryUser deliveryUser;
+	@JoinColumn(name="id_delivery_user")
+	private User deliveryUser;
 	// es mejor modelar el deliveryUser aparte del User? deliveryUser es un User
 	
 	public Order() {}
@@ -74,11 +74,11 @@ public class Order {
 	}
 	
 	public User getDeliveryUser() {
-		return (User) this.deliveryUser;
+		return this.deliveryUser;
 	}
 	
 	
-	public void setDeliveryUser(DeliveryUser deliveryUser) {
+	public void setDeliveryUser(User deliveryUser) {
 		this.deliveryUser = deliveryUser;
 	}
 

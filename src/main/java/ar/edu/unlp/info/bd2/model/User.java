@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class User {
 	private Date dateOfBirth;
 	@OneToMany(mappedBy="client")
 	private List<Order> orders;
+	@Column(name="is_delivery")
+	private boolean isDelivery;
 	
 	public User(String email, String pass, String username, String name, Date date) {
 		//this.id = id;
@@ -50,6 +53,15 @@ public class User {
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
+	
+	public boolean isDelivery() {
+		return isDelivery;
+	}
+
+	public void setDelivery(boolean isDelivery) {
+		this.isDelivery = isDelivery;
+	}
+
 	public long getId() {
 		return id;
 	}
