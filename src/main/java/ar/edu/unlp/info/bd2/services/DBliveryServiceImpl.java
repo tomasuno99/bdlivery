@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import ar.edu.unlp.info.bd2.model.Cancelled;
+import ar.edu.unlp.info.bd2.model.Delivered;
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
@@ -85,11 +86,18 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.storeOrder(o);
 	}
 	
-	@Override
+	@Transactional
 	public boolean canCancel(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
 		return o.getActualStatus().equals("Pending");
+	}
+	
+	@Transactional
+	public boolean canFinish(Long id) throws DBliveryException {
+		Order o = this.repository.getOrderById(id);
+		if (o == null) throw new DBliveryException("the order with that id does not exist");
+		return o.getActualStatus().equals("Sended");
 	}
 	
 	@Transactional
@@ -161,17 +169,18 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Order finishOrder(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = this.repository.getOrderById(order);
+		if (o == null) throw new DBliveryException("the order with that id does not exist");
+		if (! o.getActualStatus().equals("Sended")) throw new DBliveryException("The order is not sended");
+		o.getActualStatusObject().setActual(false);
+		OrderStatus delivered = new Delivered();
+		o.getStatus().add(delivered);
+		return repository.storeOrder(o);
 	}
 
 
 
-	@Override
-	public boolean canFinish(Long id) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	
 	/**
 	 * verifica si un pedido puede ser enviado para lo cual debe tener productos y estar en estado pending
