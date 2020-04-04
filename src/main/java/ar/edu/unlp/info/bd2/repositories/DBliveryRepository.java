@@ -1,5 +1,7 @@
 package ar.edu.unlp.info.bd2.repositories;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.query.Query;
@@ -52,4 +54,26 @@ public class DBliveryRepository {
 	         Order o = (Order) session.createQuery(txt).setParameter("idOrder",idOrder).uniqueResult();
 	         return o;
 		 }
+		 
+		public User getUserByEmail(String email) {
+			String txt="from User u where u.email like :UEmail";
+			Session session= sessionFactory.getCurrentSession();
+	        User u = (User) session.createQuery(txt).setParameter("UEmail",email).uniqueResult();
+	        return u;
+		}
+
+		public User getUserById(long id) {
+			String txt="from User u where u.id=:idUser";
+			Session session= sessionFactory.getCurrentSession();
+	        User u = (User) session.createQuery(txt).setParameter("IdUser",id).uniqueResult();
+	        return u;
+		}
+		
+		public List<Product>getProductByName(String nameProd) {
+			String txt="from Product p where p.name like CONCAT('%', :nameProd, '%')";
+			Session session= sessionFactory.getCurrentSession();
+            List<Product> p = (List<Product>) session.createQuery(txt).setParameter("nameProd",nameProd).getResultList();
+            return p;
+		}
+		 
 }
