@@ -117,23 +117,20 @@ public class DBliveryServiceImpl implements DBliveryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public Optional<User> getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(this.repository.getUserByUsername(username));
 	}
 
 	@Override
 	public Optional<Product> getProductById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(this.repository.getProductById(id));
 	}
 
 	@Override
 	public Optional<Order> getOrderById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(this.repository.getOrderById(id));
 	}
 	
 	

@@ -52,4 +52,11 @@ public class DBliveryRepository {
 	         Order o = (Order) session.createQuery(txt).setParameter("idOrder",idOrder).uniqueResult();
 	         return o;
 		 }
+		 
+		public User getUserByUsername(String aUsername) {
+			String txt="from User u where u.username like :aUsername";
+			Session session= sessionFactory.getCurrentSession();
+            User u = (User) session.createQuery(txt).setParameter("aUsername",aUsername).uniqueResult();
+            return u;
+		}
 }
