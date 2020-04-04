@@ -62,10 +62,10 @@ public class DBliveryRepository {
 	        return u;
 		}
 
-		public User getUserById(long id) {
+		public User getUserById(long idUser) {
 			String txt="from User u where u.id=:idUser";
 			Session session= sessionFactory.getCurrentSession();
-	        User u = (User) session.createQuery(txt).setParameter("IdUser",id).uniqueResult();
+	        User u = (User) session.createQuery(txt).setParameter("idUser",idUser).uniqueResult();
 	        return u;
 		}
 		
