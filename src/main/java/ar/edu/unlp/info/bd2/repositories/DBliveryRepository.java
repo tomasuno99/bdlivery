@@ -65,7 +65,7 @@ public class DBliveryRepository {
 		public User getUserById(long id) {
 			String txt="from User u where u.id=:idUser";
 			Session session= sessionFactory.getCurrentSession();
-	        User u = (User) session.createQuery(txt).setParameter("IdUser",id).uniqueResult();
+	        User u = (User) session.createQuery(txt).setParameter("idUser",id).uniqueResult();
 	        return u;
 		}
 		
