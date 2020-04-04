@@ -115,23 +115,25 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public Optional<User> getUserByEmail(String email) {
 		return Optional.of(this.repository.getUserByEmail(email));
 	}
-
+	
 	@Override
 	public Optional<User> getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(this.repository.getUserByUsername(username));
 	}
 
 	@Override
 	public Optional<Product> getProductById(Long id) {
+<<<<<<< HEAD
 		// TODO Aunerated methoto-ged stub
 		return null;
+=======
+		return Optional.of(this.repository.getProductById(id));
+>>>>>>> c91475bf9b979f863e275392ba2424c50dcafa75
 	}
 
 	@Override
 	public Optional<Order> getOrderById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(this.repository.getOrderById(id));
 	}
 	
 	
