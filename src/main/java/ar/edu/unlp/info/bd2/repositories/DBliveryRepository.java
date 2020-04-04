@@ -55,7 +55,6 @@ public class DBliveryRepository {
 	         return o;
 		 }
 		 
-<<<<<<< HEAD
 		public User getUserByEmail(String email) {
 			String txt="from User u where u.email like :UEmail";
 			Session session= sessionFactory.getCurrentSession();
@@ -77,12 +76,10 @@ public class DBliveryRepository {
             return p;
 		}
 		 
-=======
 		public User getUserByUsername(String aUsername) {
 			String txt="from User u where u.username like :aUsername";
 			Session session= sessionFactory.getCurrentSession();
             User u = (User) session.createQuery(txt).setParameter("aUsername",aUsername).uniqueResult();
             return u;
 		}
->>>>>>> c91475bf9b979f863e275392ba2424c50dcafa75
 }

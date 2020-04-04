@@ -123,12 +123,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Optional<Product> getProductById(Long id) {
-<<<<<<< HEAD
-		// TODO Aunerated methoto-ged stub
-		return null;
-=======
 		return Optional.of(this.repository.getProductById(id));
->>>>>>> c91475bf9b979f863e275392ba2424c50dcafa75
 	}
 
 	@Override
