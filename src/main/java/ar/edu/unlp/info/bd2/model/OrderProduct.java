@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class OrderProduct {
 	@Id
 	@Column(name="order_product_id")
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	@Column(name="quantity")
 	private Long quantity;
