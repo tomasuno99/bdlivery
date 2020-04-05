@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Price {
 	@Id
 	@Column(name="price_id")
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	@Column(name="price")
 	private Float price;

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public abstract class OrderStatus {
 	@Id
 	@Column(name="order_status_id")
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	@Column(name="is_actual")
 	private boolean isActual = true;
