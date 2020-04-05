@@ -3,6 +3,7 @@ package ar.edu.unlp.info.bd2.model;
 import javax.persistence.Column;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ public class OrderProduct {
 	private long id;
 	@Column(name="quantity")
 	private Long quantity;
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY) 
 	private Product product;
 	
 	public OrderProduct() {}

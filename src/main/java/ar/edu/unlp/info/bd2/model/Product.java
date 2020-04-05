@@ -10,6 +10,7 @@ import java.util.ListIterator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class Product {
 	//private double price = prices.get(prices.size()).getPrecio();
 	@Column(name="weight")
 	private Float weight;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="id_supplier")
 	private Supplier supplier;
 	

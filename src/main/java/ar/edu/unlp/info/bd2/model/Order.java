@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Order {
 	private Float coordX;
 	@Column(name="coord_y")
 	private Float coordY;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="id_user")
 	private User client;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
@@ -39,7 +40,7 @@ public class Order {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="order_id")
 	private List<OrderStatus> statusHistory;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="id_delivery_user")
 	private User deliveryUser;
 	// es mejor modelar el deliveryUser aparte del User? deliveryUser es un User
