@@ -82,4 +82,11 @@ public class DBliveryRepository {
             User u = (User) session.createQuery(txt).setParameter("aUsername",aUsername).uniqueResult();
             return u;
 		}
+		
+		public List<Order> getAllOrdersMadeByUser(String aUsername){
+			String txt="select o from Order o join o.client as c where c.username like :aUsername";
+			Session session= sessionFactory.getCurrentSession();
+            List<Order> resultList = session.createQuery(txt).setParameter("aUsername",aUsername).getResultList();
+            return resultList;
+		}
 }

@@ -56,7 +56,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (p==null) {
 			throw new DBliveryException("the product with that id does not exist");
 		}
-		
 		p.getActualPrice().finalizePrice();
 		Price priceVar = new Price(price, startDate);
 		p.getPrices().add(priceVar);
@@ -204,5 +203,166 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public List<Product> getProductByName(String name) {
 		return this.repository.getProductByName(name);
+	}
+	
+	@Transactional
+	public List<Order> getAllOrdersMadeByUser(String username){
+		return this.repository.getAllOrdersMadeByUser(username);
+	}
+
+	@Override
+	public List<User> getUsersSpendingMoreThan(Float amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getTop10MoreExpensiveProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> getTop6UsersMoreOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getPendingOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getSentOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getDeliveredOrdersForUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getSentMoreOneHour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getDeliveredOrdersSameDay() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> get5LessDeliveryUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product getBestSellingProduct() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getProductsOnePrice() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getProductIncreaseMoreThan100() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Supplier getSupplierLessExpensiveProduct() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Supplier> getSuppliersDoNotSellOn(Date day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getSoldProductsOn(Date day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getOrdersCompleteMorethanOneDay() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object[]> getProductsWithPriceAt(Date day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getProductsNotSold() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order cancelOrder(Long order, Date date) throws DBliveryException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order finishOrder(Long order, Date date) throws DBliveryException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

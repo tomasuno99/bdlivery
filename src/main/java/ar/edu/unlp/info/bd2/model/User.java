@@ -38,6 +38,8 @@ public class User {
 	@Column(name="is_delivery")
 	private boolean isDelivery;
 	
+	public User() {}
+	
 	public User(String email, String pass, String username, String name, Date date) {
 		//this.id = id;
 		this.email = email;
