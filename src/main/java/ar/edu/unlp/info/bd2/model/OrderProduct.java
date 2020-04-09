@@ -29,6 +29,10 @@ public class OrderProduct {
 		this.product = product;
 	}
 	
+	public Float getAmount() {
+		return this.product.getActualPrice().getPrice() * this.quantity;
+	}
+	
 	public Long getQuantity() {
 		return quantity;
 	}
