@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {AppConfig.class, HibernateConfiguration.class, DBInitializer.class }, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = {AppConfig.class, HibernateConfiguration.class, DBInitializerConfig.class }, loader = AnnotationConfigContextLoader.class)
 @Transactional
 @Rollback(true)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

@@ -33,6 +33,13 @@ public class DBliveryServiceImpl implements DBliveryService {
 		Product p = new Product(name,price,weight,supplier);
 		return this.repository.storeProduct(p) ;
 	}
+	
+	@Transactional
+	public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
+		Product p = new Product(name,price,weight,supplier, date);
+		return this.repository.storeProduct(p) ;
+	}
+	
 	@Transactional
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
 		Supplier s = new Supplier(name,cuil,address,coordX,coordY);
@@ -68,14 +75,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.storeOrder(o);
 	}
 	
-	/**
-	 * agrega un producto al pedido
-	 * @param id del pedido al cual se le agrega el producto
-	 * @param quantity cantidad de producto a agregar
-	 * @param product producto a agregar
-	 * @return el pedido con el nuevo producto
-	 * @throws DBliveryException en caso de no existir el pedido
-	 */
 	@Transactional
 	public Order addProduct(Long order, Long quantity, Product product) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
@@ -130,14 +129,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return Optional.of(this.repository.getOrderById(id));
 	}
 	
-	
-	/**
-	 * Registra el envío del pedido, registrando al repartidor y cambiando su estado a Send.
-	 * @param order pedido a ser enviado
-	 * @param deliveryUser Usuario que entrega el pedido
-	 * @return el pedido modificado
-	 * @throws DBliveryException en caso de no existir el pedido, que el pedido no se encuentre en estado Pending o sí no contiene productos.
-	 */
 	@Transactional
 	public Order deliverOrder(Long order, User deliveryUser) throws DBliveryException {
 		if (! this.canDeliver(order)) throw new DBliveryException("order error");
@@ -148,6 +139,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 		o.setStatus(sended);
 		o.setDeliveryUser(deliveryUser);
 		return this.repository.storeOrder(o);
+	}
+	
+	@Override
+	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -160,6 +157,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 		o.getStatus().add(cancelled);
 		return repository.storeOrder(o);
 	}
+	
+	@Override
+	public Order cancelOrder(Long order, Date date) throws DBliveryException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Order finishOrder(Long order) throws DBliveryException {
@@ -171,17 +174,14 @@ public class DBliveryServiceImpl implements DBliveryService {
 		o.getStatus().add(delivered);
 		return repository.storeOrder(o);
 	}
-
-
-
-
 	
-	/**
-	 * verifica si un pedido puede ser enviado para lo cual debe tener productos y estar en estado pending
-	 * @param order pedido a ser enviado
-	 * @return true en caso que pueda ser enviado, false en caso contrario
-	 * @throws DBliveryException si el pedido no esta en estado pending.
-	 */
+	@Override
+	public Order finishOrder(Long order, Date date) throws DBliveryException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	@Override
 	public boolean canDeliver(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
@@ -338,30 +338,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Order cancelOrder(Long order, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Order finishOrder(Long order, Date date) throws DBliveryException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -36,6 +36,7 @@ public class Supplier {
 	public Supplier() {}
 	
 	public Supplier(String name, String cuil, String adress, Float coordx, Float coordy) {
+		this.products = new ArrayList<Product>();
 		this.name= name;
 		this.cuil = cuil;
 		this.address = adress;
