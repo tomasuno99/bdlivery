@@ -1,5 +1,6 @@
 package ar.edu.unlp.info.bd2.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -136,7 +137,7 @@ public class DBliveryRepository {
 		  * Obtiene el listado de las ordenes enviadas y no entregadas
 		  */
 		public List<Order> getSentOrders(){
-			String txt="select o from Order o join o.statusHistory as os where os.class = 2 AND NOT EXISTS (select o2 from Order o2 join o2.statusHistory as os2 where o2.id = o.id AND os2.class = 3";
+			String txt="select o from Order o join o.statusHistory as os where os.class = 2 AND NOT EXISTS (select o2 from Order o2 join o2.statusHistory as os2 where o2.id = o.id AND os2.class = 3)";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
             return resultList;
@@ -148,6 +149,22 @@ public class DBliveryRepository {
 			  +" where os.class=1 and os.isActual is true";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
+		
+		/**
+		  * Obtiene todas las ordenes entregadas entre dos fechas
+		  * @param startDate
+		  * @param endDate
+		  * @return una lista con las ordenes que satisfagan la condición
+		 */
+		public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate){
+			String txt="select o from Order o join o.statusHistory as os where os.class = 3 AND os.date >= :startDate AND os.date <= :endDate";
+			Session session= sessionFactory.getCurrentSession();
+            Query query = session.createQuery(txt);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            List<Order> resultList = query.getResultList();
             return resultList;
 		}
 		
