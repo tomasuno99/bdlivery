@@ -138,7 +138,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.updateOrder(o);
 	}
 	
-	@Override
+	@Transactional
 	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
 		if (! this.canDeliver(order)) throw new DBliveryException("order error");
 		Order o = this.repository.getOrderById(order);
@@ -150,7 +150,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.updateOrder(o);
 	}
 
-	@Override
+	@Transactional
 	public Order cancelOrder(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -161,7 +161,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.updateOrder(o);
 	}
 	
-	@Override
+	@Transactional
 	public Order cancelOrder(Long order, Date date) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -173,7 +173,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.updateOrder(o);
 	}
 
-	@Override
+	@Transactional
 	public Order finishOrder(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -184,7 +184,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.updateOrder(o);
 	}
 	
-	@Override
+	@Transactional
 	public Order finishOrder(Long order, Date date) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -197,7 +197,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	}
 
 
-	@Override
+	@Transactional
 	public boolean canDeliver(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o != null) {
@@ -215,7 +215,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 
 
-	@Override
+	@Transactional
 	public List<Product> getProductByName(String name) {
 		return this.repository.getProductByName(name);
 	}
@@ -225,39 +225,38 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.getAllOrdersMadeByUser(username);
 	}
 
-	@Override
+	@Transactional
 	public List<User> getUsersSpendingMoreThan(Float amount) {
 		return this.repository.getUsersSpendingMoreThan(amount);
 	}
 
 
-	@Override
+	@Transactional
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
 		return this.repository.getTopNSuppliersInSentOrders(n);
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getTop10MoreExpensiveProducts() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<User> getTop6UsersMoreOrders() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getPendingOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getPendingOrders();
 	}
 
 	@Override
