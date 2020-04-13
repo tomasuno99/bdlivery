@@ -141,5 +141,14 @@ public class DBliveryRepository {
             List<Order> resultList = session.createQuery(txt).getResultList();
             return resultList;
 		}
+
+		@Transactional
+		public List<Order> getPendingOrders() {
+			String txt = "select o from Order as o join o.statusHistory as os"
+			  +" where os.class=1 and os.isActual is true";
+			Session session= sessionFactory.getCurrentSession();
+            List<Order> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
 		
 }
