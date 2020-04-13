@@ -138,7 +138,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.updateOrder(o);
 	}
 	
-	@Override
+	@Transactional
 	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
 		if (! this.canDeliver(order)) throw new DBliveryException("order error");
 		Order o = this.repository.getOrderById(order);
@@ -150,7 +150,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.updateOrder(o);
 	}
 
-	@Override
+	@Transactional
 	public Order cancelOrder(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -161,7 +161,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.updateOrder(o);
 	}
 	
-	@Override
+	@Transactional
 	public Order cancelOrder(Long order, Date date) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -173,7 +173,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.updateOrder(o);
 	}
 
-	@Override
+	@Transactional
 	public Order finishOrder(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -184,7 +184,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.updateOrder(o);
 	}
 	
-	@Override
+	@Transactional
 	public Order finishOrder(Long order, Date date) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
@@ -225,132 +225,131 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.getAllOrdersMadeByUser(username);
 	}
 
-	@Override
+	@Transactional
 	public List<User> getUsersSpendingMoreThan(Float amount) {
 		return this.repository.getUsersSpendingMoreThan(amount);
 	}
 
 
-	@Override
+	@Transactional
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
 		return this.repository.getTopNSuppliersInSentOrders(n);
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getTop10MoreExpensiveProducts() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<User> getTop6UsersMoreOrders() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getPendingOrders() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getSentOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getSentOrders();
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersForUser(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getSentMoreOneHour() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersSameDay() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<User> get5LessDeliveryUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public Product getBestSellingProduct() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getProductsOnePrice() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getProductIncreaseMoreThan100() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public Supplier getSupplierLessExpensiveProduct() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Supplier> getSuppliersDoNotSellOn(Date day) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getSoldProductsOn(Date day) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getOrdersCompleteMorethanOneDay() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Object[]> getProductsWithPriceAt(Date day) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getProductsNotSold() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
 		// TODO Auto-generated method stub
 		return null;
