@@ -132,12 +132,14 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
-		@Transactional
-		public List<Order> getPendingOrders() {
-			String txt = "select o from Order as o join o.statusHistory as os"
-			  +" where os.class=1 and os.isActual is true";
+		 /**
+		  * Obtiene el listado de las ordenes enviadas y no entregadas
+		  */
+		public List<Order> getSentOrders(){
+			String txt="select o from Order o join o.statusHistory as os where os.class = 2 AND NOT EXISTS (select o2 from Order o2 join o2.statusHistory as os2 where o2.id = o.id AND os2.class = 3";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
             return resultList;
 		}
+		
 }

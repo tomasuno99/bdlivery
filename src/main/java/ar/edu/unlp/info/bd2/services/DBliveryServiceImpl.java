@@ -259,97 +259,96 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.getPendingOrders();
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getSentOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getSentOrders();
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersForUser(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getSentMoreOneHour() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getDeliveredOrdersSameDay() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<User> get5LessDeliveryUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public Product getBestSellingProduct() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getProductsOnePrice() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getProductIncreaseMoreThan100() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public Supplier getSupplierLessExpensiveProduct() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Supplier> getSuppliersDoNotSellOn(Date day) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getSoldProductsOn(Date day) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getOrdersCompleteMorethanOneDay() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Object[]> getProductsWithPriceAt(Date day) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Product> getProductsNotSold() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
 		// TODO Auto-generated method stub
 		return null;
