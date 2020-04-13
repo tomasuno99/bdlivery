@@ -20,16 +20,16 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
 	@Id
-	@Column(name="user_id")
+	@Column(name="user_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="email")
+	@Column(name="email", nullable=false)
 	private String email;
-	@Column(name="password")
+	@Column(name="password", nullable=false)
 	private String password;
-	@Column(name="username")
+	@Column(name="username", nullable=false)
 	private String username;
-	@Column(name="name")
+	@Column(name="name", nullable=false)
 	private String name;
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;

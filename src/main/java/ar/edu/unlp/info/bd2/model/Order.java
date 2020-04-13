@@ -20,10 +20,10 @@ import javax.persistence.Table;
 @Table(name="order_table")
 public class Order {
 	@Id
-	@Column(name="order_id")
+	@Column(name="order_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="date_of_order")
+	@Column(name="date_of_order", nullable=false)
 	private Date dateOfOrder;
 	@Column(name="address")
 	private String address;
@@ -32,7 +32,7 @@ public class Order {
 	@Column(name="coord_y")
 	private Float coordY;
 	@ManyToOne(fetch=FetchType.LAZY) 
-	@JoinColumn(name="id_user")
+	@JoinColumn(name="id_user", nullable=false)
 	private User client;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="order_id")
@@ -67,21 +67,6 @@ public class Order {
 			i++;
 		}
 		return total;	
-	}
-	
-	public OrderStatus getActualStatusObject() {
-		int i=0;
-		while(i < this.statusHistory.size()) {
-			if (this.statusHistory.get(i).isActual()) {
-				return this.statusHistory.get(i);
-			}
-			i++;
-		}
-		return null;	
-	}
-	
-	public String getActualStatus() {
-		return this.getActualStatusObject().getStatus();
 	}
 	
 	public User getDeliveryUser() {

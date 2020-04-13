@@ -27,24 +27,26 @@ import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 public class Product {
 
 	@Id
-	@Column(name="product_id")
+	@Column(name="product_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="name")
+	@Column(name="name", nullable=false)
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="product_id")
 	private List<Price> prices;
 	//private double price = prices.get(prices.size()).getPrecio();
-	@Column(name="weight")
+	@Column(name="weight", nullable=false)
 	private Float weight;
 	@ManyToOne(fetch=FetchType.LAZY) 
-	@JoinColumn(name="id_supplier")
+	@JoinColumn(name="id_supplier", nullable=false)
 	private Supplier supplier;
 	@Column(name="date")
 	private Date date;
 	
-	public Product() {}
+	public Product() {
+		this.prices = new ArrayList<Price>();
+	}
 	
 	public Product(String name, Float price, Float weight, Supplier supplier) {
 		this.prices = new ArrayList<Price>();
@@ -80,6 +82,12 @@ public class Product {
 			i++;
 		}
 		return p;
+	}
+	
+	public void updatePrice(Float price, Date startDate) {
+		this.getActualPrice().finalizePrice(startDate);
+		Price priceVar = new Price(price, startDate);
+		this.getPrices().add(priceVar);
 	}
 	
 	public Date getDate() {

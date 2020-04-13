@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @DiscriminatorColumn(name="order_status_type", discriminatorType=DiscriminatorType.INTEGER)
 public abstract class OrderStatus {
 	@Id
-	@Column(name="order_status_id")
+	@Column(name="order_status_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	@Column(name="is_actual")

@@ -14,10 +14,10 @@ import javax.persistence.Table;
 @Table(name="order_product")
 public class OrderProduct {
 	@Id
-	@Column(name="order_product_id")
+	@Column(name="order_product_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="quantity")
+	@Column(name="quantity", nullable=false)
 	private Long quantity;
 	@OneToOne(fetch=FetchType.LAZY) 
 	private Product product;

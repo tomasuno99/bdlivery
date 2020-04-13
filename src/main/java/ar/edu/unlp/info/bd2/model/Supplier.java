@@ -17,12 +17,12 @@ import javax.persistence.Table;
 @Table(name="supplier")
 public class Supplier {
 	@Id
-	@Column(name="supplier_id")
+	@Column(name="supplier_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="name")
+	@Column(name="name", nullable=false)
 	private String name;
-	@Column(name="cuil")
+	@Column(name="cuil", nullable=false)
 	private String cuil;
 	@Column(name="address")
 	private String address;

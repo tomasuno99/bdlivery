@@ -15,12 +15,12 @@ import javax.persistence.Table;
 @Table(name="price")
 public class Price {
 	@Id
-	@Column(name="price_id")
+	@Column(name="price_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="price")
+	@Column(name="price", nullable=false)
 	private Float price;
-	@Column(name="startdate")
+	@Column(name="startdate", nullable=false)
 	private Date startDate;
 	@Column(name="enddate")
 	private Date endDate;
@@ -44,9 +44,12 @@ public class Price {
 	}
 	
 	
-	public void finalizePrice() {
+	public void finalizePrice(Date startDate) {
 		if (this.endDate == null) {
-			this.endDate = Calendar.getInstance().getTime();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(startDate);
+			cal.add(Calendar.DAY_OF_MONTH, -1);
+			this.endDate = cal.getTime();
 		}
 		this.actualPrice = false;
 	}

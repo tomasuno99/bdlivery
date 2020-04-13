@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.Order;
+import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Product;
 import ar.edu.unlp.info.bd2.model.User;
 
@@ -30,9 +31,18 @@ public class DBliveryRepository {
 			 return product;
 		 }
 		 
+		 public Product updateProduct(Product product){
+			 sessionFactory.getCurrentSession().update(product);
+			 return product;
+		 }
 		 
 		 public Order storeOrder(Order order) {
 			 sessionFactory.getCurrentSession().save(order);
+			 return order;
+		 }
+		 
+		 public Order updateOrder(Order order) {
+			 sessionFactory.getCurrentSession().update(order);
 			 return order;
 		 }
 		 
@@ -55,6 +65,13 @@ public class DBliveryRepository {
 	         return o;
 		 }
 		 
+		 public OrderStatus getActualStatus(Long idOrder) {
+			 String txt="select s from Order o join o.statusHistory as s where s.isActual is true and o.id=:idOrder";
+	         Session session= sessionFactory.getCurrentSession();
+	         OrderStatus os = (OrderStatus) session.createQuery(txt).setParameter("idOrder",idOrder).uniqueResult();
+	         return os;
+		 }
+		 
 		public User getUserByEmail(String email) {
 			String txt="from User u where u.email like :UEmail";
 			Session session= sessionFactory.getCurrentSession();
@@ -70,9 +87,9 @@ public class DBliveryRepository {
 		}
 		
 		public List<Product>getProductByName(String nameProd) {
-			String txt="from Product p where p.name like CONCAT('%', :nameProd, '%')";
+			String txt="from Product p where p.name like :nameProd";
 			Session session= sessionFactory.getCurrentSession();
-            List<Product> p = (List<Product>) session.createQuery(txt).setParameter("nameProd",nameProd).getResultList();
+            List<Product> p = (List<Product>) session.createQuery(txt).setParameter("nameProd","%"+nameProd+"%").getResultList();
             return p;
 		}
 		 
@@ -87,6 +104,17 @@ public class DBliveryRepository {
 			String txt="select o from Order o join o.client as c where c.username like :aUsername";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).setParameter("aUsername",aUsername).getResultList();
+            return resultList;
+		}
+		public List<User> getUsersSpendingMoreThan(Float amount){
+			String txt="select u from User u inner join u.orders o"
+					+ "			             inner join o.products op"
+					+ "						 inner join op.product p"
+					+ "						 inner join p.prices pr "
+					+ "	where pr.actualPrice is true "
+					+ "	GROUP BY u HAVING sum(pr.price) > :amount;";
+			Session session= sessionFactory.getCurrentSession();
+            List<User> resultList = session.createQuery(txt).setParameter("amount",amount).getResultList();
             return resultList;
 		}
 }

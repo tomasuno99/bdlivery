@@ -63,10 +63,8 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (p==null) {
 			throw new DBliveryException("the product with that id does not exist");
 		}
-		p.getActualPrice().finalizePrice();
-		Price priceVar = new Price(price, startDate);
-		p.getPrices().add(priceVar);
-		return repository.storeProduct(p);
+		p.updatePrice(price, startDate);
+		return repository.updateProduct(p);
 	}
 	
 	@Transactional
@@ -81,27 +79,26 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
 		OrderProduct op = new OrderProduct(quantity, product);
 		o.getProducts().add(op);
-		return this.repository.storeOrder(o);
+		return this.repository.updateOrder(o);
 	}
 	
 	@Transactional
 	public boolean canCancel(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
-		return o.getActualStatus().equals("Pending");
+		return this.getActualStatus(order).getStatus().equals("Pending");
 	}
 	
 	@Transactional
 	public boolean canFinish(Long id) throws DBliveryException {
 		Order o = this.repository.getOrderById(id);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
-		return o.getActualStatus().equals("Sended");
+		return this.getActualStatus(id).getStatus().equals("Sended");
 	}
 	
 	@Transactional
 	public OrderStatus getActualStatus(Long order) {
-		Order o = this.repository.getOrderById(order);
-		return o.getActualStatusObject();
+		return repository.getActualStatus(order);
 	}
 	
 	@Override
@@ -138,7 +135,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		this.getActualStatus(order).setActual(false);
 		o.setStatus(sended);
 		o.setDeliveryUser(deliveryUser);
-		return this.repository.storeOrder(o);
+		return this.repository.updateOrder(o);
 	}
 	
 	@Override
@@ -151,11 +148,11 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public Order cancelOrder(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
-		if (! o.getActualStatus().equals("Pending")) throw new DBliveryException("The order is not in pending");
-		o.getActualStatusObject().setActual(false);
+		if (! this.getActualStatus(order).getStatus().equals("Pending")) throw new DBliveryException("The order is not in pending");
+		this.getActualStatus(order).setActual(false);
 		OrderStatus cancelled = new Cancelled();
 		o.getStatus().add(cancelled);
-		return repository.storeOrder(o);
+		return repository.updateOrder(o);
 	}
 	
 	@Override
@@ -168,11 +165,11 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public Order finishOrder(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o == null) throw new DBliveryException("the order with that id does not exist");
-		if (! o.getActualStatus().equals("Sended")) throw new DBliveryException("The order is not sended");
-		o.getActualStatusObject().setActual(false);
+		if (! this.getActualStatus(order).getStatus().equals("Sended")) throw new DBliveryException("The order is not sended");
+		this.getActualStatus(order).setActual(false);
 		OrderStatus delivered = new Delivered();
 		o.getStatus().add(delivered);
-		return repository.storeOrder(o);
+		return repository.updateOrder(o);
 	}
 	
 	@Override
@@ -186,7 +183,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public boolean canDeliver(Long order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o != null) {
-			if (o.getActualStatus().equals("Pending")){
+			if (this.getActualStatus(order).getStatus().equals("Pending")){
 				if (o.getProducts().size() > 0) {
 					return true;
 				}
@@ -212,8 +209,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<User> getUsersSpendingMoreThan(Float amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getUsersSpendingMoreThan(amount);
 	}
 
 	@Override
