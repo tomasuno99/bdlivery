@@ -140,8 +140,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	@Override
 	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.deliverOrder(order, deliveryUser);
 	}
 
 	@Override
@@ -157,8 +156,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	@Override
 	public Order cancelOrder(Long order, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.cancelOrder(order);
 	}
 
 	@Override
@@ -174,8 +172,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	@Override
 	public Order finishOrder(Long order, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.finishOrder(order);
 	}
 
 
@@ -212,10 +209,10 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return this.repository.getUsersSpendingMoreThan(amount);
 	}
 
+
 	@Override
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getTopNSuppliersInSentOrders(n);
 	}
 
 	@Override

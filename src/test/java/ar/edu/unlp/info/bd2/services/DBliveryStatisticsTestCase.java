@@ -55,7 +55,7 @@ public class DBliveryStatisticsTestCase {
     	assertEquals(7,users.size());
     	this.assertListEquality(users.stream().map(property -> property.getUsername()).collect(Collectors.toList()),Arrays.asList("alfredomartnez114","paulasez791","eduardomartin114","carlabentez531","nataliocastro278","florenciacastillo698","nataliomartnez928"));
     }
-    /*
+    
     @Test
     public void testGetTopNSuppliers() {
     	List<Supplier> suppliers = this.service.getTopNSuppliersInSentOrders(4);
@@ -207,7 +207,6 @@ public class DBliveryStatisticsTestCase {
     	}
     }
     
-    */
     
     private <T> void assertListEquality(List<T> list1, List<T> list2) {
         if (list1.size() != list2.size()) {

@@ -112,9 +112,22 @@ public class DBliveryRepository {
 					+ "						 inner join op.product p"
 					+ "						 inner join p.prices pr "
 					+ "	where pr.actualPrice is true "
-					+ "	GROUP BY u HAVING sum(pr.price) > :amount;";
+					+ "	GROUP BY u HAVING sum(pr.price) > :amount";
 			Session session= sessionFactory.getCurrentSession();
             List<User> resultList = session.createQuery(txt).setParameter("amount",amount).getResultList();
+            return resultList;
+		}
+		
+		
+		/**
+		 * Obtiene los <code>n</code> proveedores que más productos tienen en ordenes que están siendo enviadas
+		 * @param n
+		 * @return una lista con los <code>n</code> proveedores que satisfagan la condición
+		 */
+		public List<Supplier> getTopNSuppliersInSentOrders(int n){
+			String txt="select prod.supplier, AVG(op.quantity) from Order o join o.products as op join op.product as prod join o.statusHistory as os where os.class = Sended GROUP BY prod.supplier ORDER BY AVG(op.quantity)";
+			Session session= sessionFactory.getCurrentSession();
+            List<Supplier> resultList = session.createQuery(txt).setMaxResults(n).getResultList();
             return resultList;
 		}
 }
