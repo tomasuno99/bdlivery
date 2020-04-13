@@ -140,7 +140,14 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	@Override
 	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
-		return this.deliverOrder(order, deliveryUser);
+		if (! this.canDeliver(order)) throw new DBliveryException("order error");
+		Order o = this.repository.getOrderById(order);
+		OrderStatus sended = new Sended();
+		sended.setDate(date);
+		this.getActualStatus(order).setActual(false);
+		o.setStatus(sended);
+		o.setDeliveryUser(deliveryUser);
+		return this.repository.updateOrder(o);
 	}
 
 	@Override
@@ -156,7 +163,14 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	@Override
 	public Order cancelOrder(Long order, Date date) throws DBliveryException {
-		return this.cancelOrder(order);
+		Order o = this.repository.getOrderById(order);
+		if (o == null) throw new DBliveryException("the order with that id does not exist");
+		if (! this.getActualStatus(order).getStatus().equals("Pending")) throw new DBliveryException("The order is not in pending");
+		this.getActualStatus(order).setActual(false);
+		OrderStatus cancelled = new Cancelled();
+		cancelled.setDate(date);
+		o.getStatus().add(cancelled);
+		return repository.updateOrder(o);
 	}
 
 	@Override
@@ -172,7 +186,14 @@ public class DBliveryServiceImpl implements DBliveryService {
 	
 	@Override
 	public Order finishOrder(Long order, Date date) throws DBliveryException {
-		return this.finishOrder(order);
+		Order o = this.repository.getOrderById(order);
+		if (o == null) throw new DBliveryException("the order with that id does not exist");
+		if (! this.getActualStatus(order).getStatus().equals("Sended")) throw new DBliveryException("The order is not sended");
+		this.getActualStatus(order).setActual(false);
+		OrderStatus delivered = new Delivered();
+		delivered.setDate(date);
+		o.getStatus().add(delivered);
+		return repository.updateOrder(o);
 	}
 
 
