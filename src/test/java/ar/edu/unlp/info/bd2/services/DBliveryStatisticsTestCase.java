@@ -43,11 +43,11 @@ public class DBliveryStatisticsTestCase {
     public void prepareDB() throws Exception {
         this.initializer.prepareDB();
     }
-    /*
+    
     @Test
     public void testGetAllOrdersMadeByUser() {
     	assertEquals(5,this.service.getAllOrdersMadeByUser("rubnpastor265").size());
-    }*/
+    }
     
     @Test
     public void testGetUsersSpendingMoreThan() {

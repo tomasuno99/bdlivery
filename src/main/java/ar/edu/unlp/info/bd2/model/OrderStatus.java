@@ -1,5 +1,7 @@
 package ar.edu.unlp.info.bd2.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 
 import javax.persistence.DiscriminatorColumn;
@@ -23,7 +25,19 @@ public abstract class OrderStatus {
 	private long id;
 	@Column(name="is_actual")
 	private boolean isActual = true;
+	@Column(name="date")
+	private Date date;
 	
+	
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public boolean isActual() {
 		return isActual;
 	}
