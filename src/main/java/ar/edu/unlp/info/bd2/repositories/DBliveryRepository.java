@@ -125,7 +125,14 @@ public class DBliveryRepository {
 		 * @return una lista con los <code>n</code> proveedores que satisfagan la condición
 		 */
 		public List<Supplier> getTopNSuppliersInSentOrders(int n){
-			String txt="select prod.supplier, AVG(op.quantity) from Order o join o.products as op join op.product as prod join o.statusHistory as os where os.class = Sended GROUP BY prod.supplier ORDER BY AVG(op.quantity)";
+			String txt="select s "
+					+ "from Order o join o.products as op "
+					+ "join op.product as prod "
+					+ "join o.statusHistory as os "
+					+ "join prod.supplier as s "
+					+ "where os.class = 2 "
+					+ "group by s.id "
+					+ "order by count(*) desc";
 			Session session= sessionFactory.getCurrentSession();
             List<Supplier> resultList = session.createQuery(txt).setMaxResults(n).getResultList();
             return resultList;
