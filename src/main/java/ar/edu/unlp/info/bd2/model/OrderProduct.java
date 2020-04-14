@@ -21,16 +21,19 @@ public class OrderProduct {
 	private Long quantity;
 	@OneToOne(fetch=FetchType.LAZY) 
 	private Product product;
+	@OneToOne(fetch=FetchType.LAZY) 
+	private Price price;
 	
 	public OrderProduct() {}
 	
 	public OrderProduct(Long quantity, Product product) {
 		this.quantity = quantity;
 		this.product = product;
+		this.price = this.product.getActualPrice();
 	}
 	
 	public Float getAmount() {
-		return this.product.getActualPrice().getPrice() * this.quantity;
+		return this.price.getPrice() * this.quantity;
 	}
 	
 	public Long getQuantity() {
