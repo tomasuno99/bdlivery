@@ -251,6 +251,27 @@ public class DBliveryRepository {
 	        return p;
 		}
 		
+		public List<Product> getProductsOnePrice(){
+			String txt="select p "
+					+ "from Product p join p.prices as price "
+					+ "where not exists (select price2 from Product p2 join p2.prices as price2 where price2.id <> price.id and p.id = p2.id)";
+			Session session= sessionFactory.getCurrentSession();
+            List<Product> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
+		
+		
+		public Supplier getSupplierLessExpensiveProduct() {
+			String txt="select s "
+					+ "from Product p join p.supplier as s "
+					+ 					"join p.prices as price "
+					+ "group by p.id "
+					+ "order by min(price.price) desc";
+			Session session= sessionFactory.getCurrentSession();
+            Supplier result = (Supplier) session.createQuery(txt).setMaxResults(1).uniqueResult();
+            return result;
+		}
+
 		public List<Order> getDeliveredOrdersSameDay() {
 			String txt="select o "
 					+ "from Order o join o.statusHistory as os "

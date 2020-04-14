@@ -293,8 +293,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Product> getProductsOnePrice() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getProductsOnePrice();
 	}
 
 	@Transactional
@@ -304,8 +303,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public Supplier getSupplierLessExpensiveProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getSupplierLessExpensiveProduct();
 	}
 
 	@Transactional
