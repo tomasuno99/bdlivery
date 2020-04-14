@@ -284,8 +284,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<User> get5LessDeliveryUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.get5LessDeliveryUsers();
 	}
 
 	@Transactional

@@ -229,5 +229,16 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
+		public List<User> get5LessDeliveryUsers(){
+			String txt="select o.deliveryUser "
+					+ "from Order o join o.statusHistory as os "
+					// deberia chequear que os.class = 3 ??? 
+					+ "group by o.deliveryUser.id "
+					+ "order by count(*) asc";
+			Session session= sessionFactory.getCurrentSession();
+            List<User> resultList = session.createQuery(txt).setMaxResults(5).getResultList();
+            return resultList;
+		}
+		
 		
 }
