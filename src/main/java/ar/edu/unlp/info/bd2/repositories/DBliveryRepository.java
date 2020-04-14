@@ -303,6 +303,15 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
+		public List<Product> getProductsNotSold(){
+			String txt="select p "
+					+ "from Product p "
+					+ "where p not in (select p2 from Order o join o.products as op join op.product as p2)";
+			Session session= sessionFactory.getCurrentSession();
+            List<Product> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
+
 		public List<Product> getSoldProductsOn(Date day) {
 			String txt="select distinct(p) "
 					+ "from Order as o join o.products as op "
