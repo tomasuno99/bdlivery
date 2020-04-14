@@ -243,8 +243,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<User> getTop6UsersMoreOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getTop6UsersMoreOrders();
 	}
 
 	@Transactional

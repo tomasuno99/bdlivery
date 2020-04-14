@@ -183,5 +183,14 @@ public class DBliveryRepository {
             return resultList;
 		}
 
+		public List<User> getTop6UsersMoreOrders() {
+			String txt="select u "
+					+ "from User u join u.orders as o "
+					+ "group by u "
+					+ "order by count(*) desc";
+			Session session= sessionFactory.getCurrentSession();
+            List<User> resultList = session.createQuery(txt).setMaxResults(6).getResultList();
+            return resultList;
+		}
 		
 }
