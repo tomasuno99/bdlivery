@@ -261,4 +261,16 @@ public class DBliveryRepository {
 		}
 		
 		
+		public Supplier getSupplierLessExpensiveProduct() {
+			String txt="select s "
+					+ "from Product p join p.supplier as s "
+					+ 					"join p.prices as price "
+					+ "group by p.id "
+					+ "order by min(price.price) desc";
+			Session session= sessionFactory.getCurrentSession();
+            Supplier result = (Supplier) session.createQuery(txt).setMaxResults(1).uniqueResult();
+            return result;
+		}
+		
+		
 }
