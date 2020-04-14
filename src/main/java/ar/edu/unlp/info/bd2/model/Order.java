@@ -59,6 +59,21 @@ public class Order {
 		this.client = client;
 	}
 	
+	public OrderStatus getActualStatusObject() {
+		int i=0;
+		while(i < this.statusHistory.size()) {
+			if (this.statusHistory.get(i).isActual()) {
+				return this.statusHistory.get(i);
+			}
+			i++;
+		}
+		return null;	
+	}
+
+	public String getActualStatus() {
+		return this.getActualStatusObject().getStatus();
+	}
+	
 	public Float getAmount() {
 		Float total = 00.0f;
 		int i=0;

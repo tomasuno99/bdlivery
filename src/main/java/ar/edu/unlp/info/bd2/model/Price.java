@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.joda.time.DateTime;
+
 @Entity
 @Table(name="price")
 public class Price {
@@ -46,10 +48,8 @@ public class Price {
 	
 	public void finalizePrice(Date startDate) {
 		if (this.endDate == null) {
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(startDate);
-			cal.add(Calendar.DAY_OF_MONTH, -1);
-			this.endDate = cal.getTime();
+			DateTime sdate = new DateTime (startDate);
+			this.endDate = sdate.minusDays(1).toDate();
 		}
 		this.actualPrice = false;
 	}
