@@ -318,8 +318,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Order> getOrdersCompleteMorethanOneDay() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getOrdersCompleteMorethanOneDay();
 	}
 
 	@Transactional

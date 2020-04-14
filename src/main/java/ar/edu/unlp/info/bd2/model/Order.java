@@ -51,6 +51,7 @@ public class Order {
 		this.statusHistory = new ArrayList<OrderStatus>();
 		this.products = new ArrayList<OrderProduct>();
 		OrderStatus pendingStatus = new Pending();
+		pendingStatus.setDate(dateOfOrder);
 		this.statusHistory.add(pendingStatus);
 		this.dateOfOrder = dateOfOrder;
 		this.address = address;

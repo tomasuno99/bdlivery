@@ -313,5 +313,17 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
+		public List<Order> getOrdersCompleteMorethanOneDay() {
+			String txt="select o "
+					+  "from Order as o join o.statusHistory as os "
+					+  "where os.class=3 "
+					+ "	and os.date > (select os2.date "
+					+ "				   from Order as o2 join o2.statusHistory as os2 "
+					+ "					where o.id=o2.id and os2.class=1  ) ";
+			Session session= sessionFactory.getCurrentSession();
+            List<Order> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
+		
 		
 }
