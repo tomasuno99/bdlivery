@@ -313,8 +313,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Product> getSoldProductsOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getSoldProductsOn(day);
 	}
 
 	@Transactional

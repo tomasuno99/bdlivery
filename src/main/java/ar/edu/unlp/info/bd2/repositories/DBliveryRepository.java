@@ -110,9 +110,9 @@ public class DBliveryRepository {
             return resultList;
 		}
 		public List<User> getUsersSpendingMoreThan(Float amount){
-			String txt="select u from User u join u.orders as o"
-					+ "			             join o.products as op"
-					+ "						 join op.price as p"
+			String txt="select u from User u join u.orders as o "
+					+ "			             join o.products as op "
+					+ "						 join op.price as p "
 					+ "	group by u having sum(p.price * op.quantity) > :amount";
 			Session session= sessionFactory.getCurrentSession();
             List<User> resultList = session.createQuery(txt).setParameter("amount",amount.doubleValue()).getResultList();
@@ -203,7 +203,7 @@ public class DBliveryRepository {
             List<Order> resultList = query.getResultList();
             return resultList;
 		}
-		//PREGUNTAR EL TEMA DE LOS DIAS
+		
 		public List<Order> getDeliveredOrdersForUser(String username) {
 			String txt="select o "
 					+ "from Order o join o.client as u "
@@ -211,9 +211,6 @@ public class DBliveryRepository {
 					+ "where u.username=:username and "
 					+ "os.class=3";
 			Session session= sessionFactory.getCurrentSession();
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, -10);
-			Date date = cal.getTime();
             List<Order> resultList = session.createQuery(txt).setParameter("username", username).getResultList();
             return resultList;
 		}
@@ -306,6 +303,7 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
+<<<<<<< HEAD
 		public List<Product> getProductsNotSold(){
 			String txt="select p "
 					+ "from Product p "
@@ -314,5 +312,17 @@ public class DBliveryRepository {
             List<Product> resultList = session.createQuery(txt).getResultList();
             return resultList;
 		}
+=======
+		public List<Product> getSoldProductsOn(Date day) {
+			String txt="select distinct(p) "
+					+ "from Order as o join o.products as op "
+					+ 					"join op.product as p "
+					+ "where o.dateOfOrder=:day ";
+			Session session= sessionFactory.getCurrentSession();
+            List<Product> resultList = session.createQuery(txt).setParameter("day", day).getResultList();
+            return resultList;
+		}
+		
+>>>>>>> 931602a76bf9fbf216f7bd2e5ab6802cf31748cd
 		
 }
