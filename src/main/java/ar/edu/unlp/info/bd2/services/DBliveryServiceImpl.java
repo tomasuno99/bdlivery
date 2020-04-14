@@ -331,8 +331,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Product> getProductsNotSold() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getProductsNotSold();
 	}
 
 	@Transactional
