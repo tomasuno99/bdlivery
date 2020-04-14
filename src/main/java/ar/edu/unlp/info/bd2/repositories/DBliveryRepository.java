@@ -112,9 +112,7 @@ public class DBliveryRepository {
 			String txt="select u from User u join u.orders as o"
 					+ "			             join o.products as op"
 					+ "						 join op.price as p"
-					+ "						 join o.statusHistory os"
-					+ " where os.class=3"
-					+ "	GROUP BY u HAVING sum(p.price * op.quantity) > :amount";
+					+ "	group by u having sum(p.price * op.quantity) > :amount";
 			Session session= sessionFactory.getCurrentSession();
             List<User> resultList = session.createQuery(txt).setParameter("amount",amount.doubleValue()).getResultList();
             return resultList;
