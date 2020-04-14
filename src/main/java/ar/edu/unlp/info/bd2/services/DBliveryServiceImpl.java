@@ -289,8 +289,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public Product getBestSellingProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getBestSellingProduct();
 	}
 
 	@Transactional

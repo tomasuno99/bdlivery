@@ -240,5 +240,16 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
+		public Product getBestSellingProduct() {
+			String txt="select p "
+					+ "from Order o join o.products as op "
+					+ 				"join op.product as p " 
+					+ "group by op.product.id "
+					+ "order by sum(op.price) desc";
+			Session session= sessionFactory.getCurrentSession();
+	        Product p = (Product) session.createQuery(txt).setMaxResults(1).uniqueResult();
+	        return p;
+		}
+		
 		
 }
