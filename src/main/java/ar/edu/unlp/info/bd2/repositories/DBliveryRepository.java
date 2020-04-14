@@ -292,5 +292,16 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
+		public List<Supplier> getSuppliersDoNotSellOn(Date day){
+			String txt="select distinct(s) "
+					+ "from Order as o join o.products as op "
+					+ 					"join op.product as p "
+					+ 					"join p.supplier as s "
+					+ "where o.dateOfOrder <> :day and not exists (select o2 from Order o2 join o2.products as op2 join op2.product as p2 join p2.supplier as s2 where s.id = s2.id and o2.dateOfOrder = :day)";
+			Session session= sessionFactory.getCurrentSession();
+            List<Supplier> resultList = session.createQuery(txt).setParameter("day", day).getResultList();
+            return resultList;
+		}
+		
 		
 }
