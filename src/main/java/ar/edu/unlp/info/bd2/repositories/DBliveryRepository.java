@@ -1,5 +1,6 @@
 package ar.edu.unlp.info.bd2.repositories;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -192,5 +193,30 @@ public class DBliveryRepository {
             List<User> resultList = session.createQuery(txt).setMaxResults(6).getResultList();
             return resultList;
 		}
+		
+		public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate){
+			String txt="select o from Order o join o.statusHistory as os where os.class = 4 AND os.date >= :startDate AND os.date <= :endDate";
+			Session session= sessionFactory.getCurrentSession();
+            Query query = session.createQuery(txt);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            List<Order> resultList = query.getResultList();
+            return resultList;
+		}
+		//PREGUNTAR EL TEMA DE LOS DIAS
+		public List<Order> getDeliveredOrdersForUser(String username) {
+			String txt="select o "
+					+ "from Order o join o.client as u "
+					+ "				join o.statusHistory as os "
+					+ "where u.username=:username and "
+					+ "os.class=3";
+			Session session= sessionFactory.getCurrentSession();
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, -10);
+			Date date = cal.getTime();
+            List<Order> resultList = session.createQuery(txt).setParameter("username", username).getResultList();
+            return resultList;
+		}
+		
 		
 }

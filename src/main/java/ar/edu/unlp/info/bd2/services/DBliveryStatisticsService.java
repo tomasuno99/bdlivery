@@ -68,7 +68,7 @@ public interface DBliveryStatisticsService {
 	 List <Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate);
 	 
 	 /**
-	  * Obtiene todas las ordenes entregadas por el repartidor con username <code>username</code> en los últimos 10 días
+	  * Obtiene todas las ordenes entregadas al cliente con username <code>username</code> en los últimos 10 días
 	  * @param username
 	  * @return una lista de ordenes que satisfagan la condición
 	  */

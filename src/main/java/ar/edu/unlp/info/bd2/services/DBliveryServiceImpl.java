@@ -248,8 +248,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Order> getCancelledOrdersInPeriod(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getCancelledOrdersInPeriod(startDate, endDate);
 	}
 
 	@Transactional
@@ -269,8 +268,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Order> getDeliveredOrdersForUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getDeliveredOrdersForUser(username);
 	}
 
 	@Transactional
