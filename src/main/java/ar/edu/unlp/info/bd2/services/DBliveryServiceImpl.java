@@ -266,8 +266,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getDeliveredOrdersInPeriod(startDate, endDate);
 	}
 
 	@Transactional
