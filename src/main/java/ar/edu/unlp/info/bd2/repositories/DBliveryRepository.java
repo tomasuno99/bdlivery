@@ -217,6 +217,17 @@ public class DBliveryRepository {
             List<Order> resultList = session.createQuery(txt).setParameter("username", username).getResultList();
             return resultList;
 		}
+		// Preguntar por las horas
+		public List<Order> getSentMoreOneHour() {
+			String txt="select o "
+					+ "from Order o join o.statusHistory as os "
+					+ "where "
+					+ "os.class=2 and "
+					+ "os.date > o.dateOfOrder";
+			Session session= sessionFactory.getCurrentSession();
+            List<Order> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
 		
 		
 }

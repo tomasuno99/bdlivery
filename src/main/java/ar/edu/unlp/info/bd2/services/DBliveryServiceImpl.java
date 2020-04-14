@@ -273,8 +273,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Order> getSentMoreOneHour() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getSentMoreOneHour();
 	}
 
 	@Transactional
