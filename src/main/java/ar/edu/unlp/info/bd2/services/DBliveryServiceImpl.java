@@ -278,8 +278,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Order> getDeliveredOrdersSameDay() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getDeliveredOrdersSameDay();
 	}
 
 	@Transactional
@@ -299,8 +298,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Product> getProductIncreaseMoreThan100() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getProductIncreaseMoreThan100();
 	}
 
 	@Transactional

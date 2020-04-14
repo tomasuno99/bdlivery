@@ -173,7 +173,7 @@ public class DBliveryRepository {
             List<Order> resultList = query.getResultList();
             return resultList;
 		}
-		
+		//Preguntar
 		public List<Product> getTop10MoreExpensiveProducts() {
 			String txt="select p "
 					+ "from Product p join p.prices as price "
@@ -270,6 +270,29 @@ public class DBliveryRepository {
 			Session session= sessionFactory.getCurrentSession();
             Supplier result = (Supplier) session.createQuery(txt).setMaxResults(1).uniqueResult();
             return result;
+		}
+
+		public List<Order> getDeliveredOrdersSameDay() {
+			String txt="select o "
+					+ "from Order o join o.statusHistory as os "
+					+ "where "
+					+ "os.class=3 and "
+					+ "os.date = o.dateOfOrder";
+			Session session= sessionFactory.getCurrentSession();
+            List<Order> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
+		
+		public List<Product> getProductIncreaseMoreThan100() {
+			String txt="select p "
+					+ "from Product p join p.prices as price "
+					+ "where price.actualPrice is true and "
+					+ "(select min(price2.price) "
+					+ "from Product p2 join p2.prices as price2 "
+					+ "where p2.id=p.id)*2 < price.price ";
+			Session session= sessionFactory.getCurrentSession();
+            List<Product> resultList = session.createQuery(txt).getResultList();
+            return resultList;
 		}
 		
 		public List<Supplier> getSuppliersDoNotSellOn(Date day){
