@@ -238,8 +238,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Product> getTop10MoreExpensiveProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getTop10MoreExpensiveProducts();
 	}
 
 	@Transactional
