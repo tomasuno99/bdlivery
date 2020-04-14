@@ -303,5 +303,15 @@ public class DBliveryRepository {
             return resultList;
 		}
 		
+		public List<Product> getSoldProductsOn(Date day) {
+			String txt="select distinct(p) "
+					+ "from Order as o join o.products as op "
+					+ 					"join op.product as p "
+					+ "where o.dateOfOrder=:day ";
+			Session session= sessionFactory.getCurrentSession();
+            List<Product> resultList = session.createQuery(txt).setParameter("day", day).getResultList();
+            return resultList;
+		}
+		
 		
 }
