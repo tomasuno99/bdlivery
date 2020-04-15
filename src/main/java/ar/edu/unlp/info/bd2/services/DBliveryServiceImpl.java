@@ -123,7 +123,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Optional<Order> getOrderById(Long id) {
-		return Optional.of(this.repository.getOrderById(id));
+		return Optional.ofNullable(this.repository.getOrderById(id));
 	}
 	
 	@Transactional
@@ -323,8 +323,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Object[]> getProductsWithPriceAt(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getProductsWithPriceAt(day);
 	}
 
 	@Transactional
@@ -337,4 +336,5 @@ public class DBliveryServiceImpl implements DBliveryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }

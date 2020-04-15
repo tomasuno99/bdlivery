@@ -59,7 +59,7 @@ public class Product {
 	
 	public Product(String name, Float price, Float weight, Supplier supplier, Date date) {
 		this.prices = new ArrayList<Price>();
-		Price p = new Price(price, Calendar.getInstance().getTime());
+		Price p = new Price(price, date);
 		this.date = date;
 		this.prices.add(p);
 		this.name = name;

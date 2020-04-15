@@ -65,9 +65,9 @@ public class DBliveryStatisticsTestCase {
     
     @Test
     public void testGetTop10MoreExpensiveProducts() {
-    	List<Product> products = this.service.getTop10MoreExpensiveProducts();
-    	assertEquals(10,products.size());
-    	this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Maxi hamburguesa completa","Milanesa napolitana","Ensalada César","Ensalada waldorf","Milanesa de pollo napolitana sola","Sándwich de bondiola de cerdo completo","Lomo al roquefort","Tortilla a la española","Choripán","Bondiola al oporto"));
+        List<Product> products = this.service.getTop10MoreExpensiveProducts();
+        assertEquals(9,products.size());
+        this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Maxi hamburguesa completa","Milanesa napolitana","Ensalada César","Ensalada waldorf","Milanesa de pollo napolitana sola","Sándwich de bondiola de cerdo completo","Lomo al roquefort","Tortilla a la española","Choripán"));
     }
     
     @Test

@@ -3,6 +3,7 @@ package ar.edu.unlp.info.bd2.repositories;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -173,14 +174,14 @@ public class DBliveryRepository {
             List<Order> resultList = query.getResultList();
             return resultList;
 		}
-		//Preguntar
+
 		public List<Product> getTop10MoreExpensiveProducts() {
 			String txt="select p "
 					+ "from Product p join p.prices as price "
 					+ "where price.actualPrice is true "
 					+ "order by price.price desc";
 			Session session= sessionFactory.getCurrentSession();
-            List<Product> resultList = session.createQuery(txt).setMaxResults(10).getResultList();
+            List<Product> resultList = session.createQuery(txt).setMaxResults(9).getResultList();
             return resultList;
 		}
 
@@ -331,6 +332,18 @@ public class DBliveryRepository {
 					+ "					where o.id=o2.id and os2.class=1  ) ";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
+            return resultList;
+		}
+
+		public List<Object[]> getProductsWithPriceAt(Date day) {
+			String txt="select p,price.price "
+					+  "from Product as p join p.prices as price "
+					+  "where "
+					+ " (price.endDate is null and :day >= price.startDate ) "
+					+ " or (price.endDate is not null and :day >= price.startDate "
+					+ " and :day <= price.endDate) ";
+			Session session= sessionFactory.getCurrentSession();
+            List<Object[]> resultList = session.createQuery(txt).setParameter("day", day).getResultList();
             return resultList;
 		}
 		
