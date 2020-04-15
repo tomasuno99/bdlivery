@@ -1,5 +1,7 @@
 package ar.edu.unlp.info.bd2.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 
 import javax.persistence.Entity;
@@ -21,19 +23,16 @@ public class OrderProduct {
 	private Long quantity;
 	@OneToOne(fetch=FetchType.LAZY) 
 	private Product product;
-	@OneToOne(fetch=FetchType.LAZY) 
-	private Price price;
 	
 	public OrderProduct() {}
 	
 	public OrderProduct(Long quantity, Product product) {
 		this.quantity = quantity;
 		this.product = product;
-		this.price = this.product.getActualPrice();
 	}
 	
-	public Float getAmount() {
-		return this.price.getPrice() * this.quantity;
+	public Float getAmount(Date day) {
+		return this.product.getPriceAt(day) * this.quantity;
 	}
 	
 	public Long getQuantity() {

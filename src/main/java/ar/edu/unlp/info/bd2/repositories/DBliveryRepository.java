@@ -111,10 +111,15 @@ public class DBliveryRepository {
             return resultList;
 		}
 		public List<User> getUsersSpendingMoreThan(Float amount){
-			String txt="select u from User u join u.orders as o "
+			String txt="select distinct(u) from User u join u.orders as o "
 					+ "			             join o.products as op "
-					+ "						 join op.price as p "
-					+ "	group by u having sum(p.price * op.quantity) > :amount";
+					+ "						 join op.product as product "
+					+ "						 join product.prices as p"
+					+ " where (p.endDate is null and o.dateOfOrder >= p.startDate ) "  
+					+ " or (p.endDate is not null and o.dateOfOrder >= p.startDate "  
+					+ " and o.dateOfOrder <= p.endDate) "
+					+ " group by o "
+					+ "	having sum(p.price * op.quantity) > :amount ";
 			Session session= sessionFactory.getCurrentSession();
             List<User> resultList = session.createQuery(txt).setParameter("amount",amount.doubleValue()).getResultList();
             return resultList;
@@ -150,7 +155,6 @@ public class DBliveryRepository {
             return resultList;
 		}
 
-		@Transactional
 		public List<Order> getPendingOrders() {
 			String txt = "select o from Order as o join o.statusHistory as os"
 			  +" where os.class=1 and os.isActual is true";
@@ -241,9 +245,9 @@ public class DBliveryRepository {
 		public Product getBestSellingProduct() {
 			String txt="select p "
 					+ "from Order o join o.products as op "
-					+ 				"join op.product as p " 
-					+ "group by op.product.id "
-					+ "order by sum(op.price) desc";
+					+ 				"join op.product as p "
+					+ "group by p "
+					+ "order by count(*) desc";
 			Session session= sessionFactory.getCurrentSession();
 	        Product p = (Product) session.createQuery(txt).setMaxResults(1).uniqueResult();
 	        return p;
@@ -344,6 +348,18 @@ public class DBliveryRepository {
 					+ " and :day <= price.endDate) ";
 			Session session= sessionFactory.getCurrentSession();
             List<Object[]> resultList = session.createQuery(txt).setParameter("day", day).getResultList();
+            return resultList;
+		}
+
+		public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
+			String txt="select o "
+					+  "from Order as o join o.products as p "
+					+  "where "
+					+  "o.dateOfOrder=:day "
+					+  "group by o "
+					+  "order by count(*) desc";
+			Session session= sessionFactory.getCurrentSession();
+            List<Order> resultList = session.createQuery(txt).setParameter("day", day).setMaxResults(1).getResultList();
             return resultList;
 		}
 		

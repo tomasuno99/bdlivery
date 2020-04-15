@@ -41,8 +41,6 @@ public class Product {
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="id_supplier", nullable=false)
 	private Supplier supplier;
-	@Column(name="date")
-	private Date date;
 	
 	public Product() {
 		this.prices = new ArrayList<Price>();
@@ -60,7 +58,6 @@ public class Product {
 	public Product(String name, Float price, Float weight, Supplier supplier, Date date) {
 		this.prices = new ArrayList<Price>();
 		Price p = new Price(price, date);
-		this.date = date;
 		this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
@@ -90,16 +87,25 @@ public class Product {
 		this.getPrices().add(priceVar);
 	}
 	
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public Float getPrice() {
 		return this.getActualPrice().getPrice();
+	}
+	
+	public Float getPriceAt(Date day) {
+		int i=0;
+		while(i < this.prices.size()) {
+			if(this.prices.get(i).getEndDate() == null){
+				if (day.compareTo(this.prices.get(i).getStartDate()) >= 0 ){
+				return this.prices.get(i).getPrice();
+				}
+			}else {
+				if (day.compareTo(this.prices.get(i).getStartDate()) >= 0 && day.compareTo(this.prices.get(i).getEndDate()) <= 0) {
+					return this.prices.get(i).getPrice();
+				}
+			}
+			i++;
+		}
+		return null;
 	}
 	
 	public long getId() {

@@ -333,8 +333,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Transactional
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getOrderWithMoreQuantityOfProducts(day);
 	}
 	
 }
