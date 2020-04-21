@@ -41,7 +41,17 @@ public class Product {
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="id_supplier", nullable=false)
 	private Supplier supplier;
+	@Column(name="date")
+	private Date date;
 	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public Product() {
 		this.prices = new ArrayList<Price>();
 	}
@@ -53,6 +63,7 @@ public class Product {
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
+		this.date = Calendar.getInstance().getTime();
 	}
 	
 	public Product(String name, Float price, Float weight, Supplier supplier, Date date) {
@@ -62,6 +73,7 @@ public class Product {
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
+		this.date = date;
 	}
 	
 	//public Product updateProductPrice(double idProd,float price, Date startDate) {

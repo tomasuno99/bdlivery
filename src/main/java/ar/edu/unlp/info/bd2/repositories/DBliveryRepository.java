@@ -289,9 +289,10 @@ public class DBliveryRepository {
 			String txt="select p "
 					+ "from Product p join p.prices as price "
 					+ "where price.actualPrice is true and "
-					+ "(select min(price2.price) "
+					+ "(select price2.price "
 					+ "from Product p2 join p2.prices as price2 "
-					+ "where p2.id=p.id)*2 < price.price ";
+					+ "where p2.id=p.id "
+					+ "and price2.startDate = p.date)*2 < price.price ";
 			Session session= sessionFactory.getCurrentSession();
             List<Product> resultList = session.createQuery(txt).getResultList();
             return resultList;
