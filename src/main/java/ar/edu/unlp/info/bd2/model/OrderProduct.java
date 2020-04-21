@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,6 +22,7 @@ public class OrderProduct {
 	private long id;
 	@Column(name="quantity", nullable=false)
 	private Long quantity;
+	@JoinColumn(name="product_id", nullable=false)
 	@OneToOne(fetch=FetchType.LAZY) 
 	private Product product;
 	

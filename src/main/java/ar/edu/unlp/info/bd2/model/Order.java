@@ -25,7 +25,7 @@ public class Order {
 	private long id;
 	@Column(name="date_of_order", nullable=false)
 	private Date dateOfOrder;
-	@Column(name="address")
+	@Column(name="address", nullable=false)
 	private String address;
 	@Column(name="coord_x")
 	private Float coordX;

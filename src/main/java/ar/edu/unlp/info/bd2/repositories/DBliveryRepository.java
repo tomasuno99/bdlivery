@@ -77,7 +77,7 @@ public class DBliveryRepository {
 		 }
 		 
 		public User getUserByEmail(String email) {
-			String txt="from User u where u.email like :UEmail";
+			String txt="from User u where u.email = :UEmail";
 			Session session= sessionFactory.getCurrentSession();
 	        User u = (User) session.createQuery(txt).setParameter("UEmail",email).uniqueResult();
 	        return u;
@@ -98,14 +98,14 @@ public class DBliveryRepository {
 		}
 		 
 		public User getUserByUsername(String aUsername) {
-			String txt="from User u where u.username like :aUsername";
+			String txt="from User u where u.username = :aUsername";
 			Session session= sessionFactory.getCurrentSession();
             User u = (User) session.createQuery(txt).setParameter("aUsername",aUsername).uniqueResult();
             return u;
 		}
 		
 		public List<Order> getAllOrdersMadeByUser(String aUsername){
-			String txt="select o from Order o join o.client as c where c.username like :aUsername";
+			String txt="select o from Order o join o.client as c where c.username = :aUsername";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).setParameter("aUsername",aUsername).getResultList();
             return resultList;
