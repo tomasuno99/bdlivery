@@ -299,11 +299,9 @@ public class DBliveryRepository {
 		}
 		
 		public List<Supplier> getSuppliersDoNotSellOn(Date day){
-			String txt="select distinct(s) "
-					+ "from Order as o join o.products as op "
-					+ 					"join op.product as p "
-					+ 					"join p.supplier as s "
-					+ "where o.dateOfOrder <> :day and not exists (select o2 from Order o2 join o2.products as op2 join op2.product as p2 join p2.supplier as s2 where s.id = s2.id and o2.dateOfOrder = :day)";
+			String txt="select s "
+					+ "from Supplier s "
+					+ "where not exists (select o2 from Order o2 join o2.products as op2 join op2.product as p2 join p2.supplier as s2 where s.id = s2.id and o2.dateOfOrder = :day)";
 			Session session= sessionFactory.getCurrentSession();
             List<Supplier> resultList = session.createQuery(txt).setParameter("day", day).getResultList();
             return resultList;
@@ -332,9 +330,9 @@ public class DBliveryRepository {
 			String txt="select o "
 					+  "from Order as o join o.statusHistory as os "
 					+  "where os.class=3 "
-					+ "	and DATE(os.date) >= DATE(select os2.date "
+					+ "	and date(os.date) >= date((select os2.date "
 					+ "				   from Order as o2 join o2.statusHistory as os2 "
-					+ "					where o.id=o2.id and os2.class=1  )+1 ";
+					+ "					where o.id=o2.id and os2.class=1))+1 ";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
             return resultList;
