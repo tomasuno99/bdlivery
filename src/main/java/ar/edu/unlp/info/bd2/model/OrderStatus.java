@@ -22,11 +22,11 @@ public abstract class OrderStatus {
 	@Id
 	@Column(name="order_status_id", nullable=false)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	protected long id;
 	@Column(name="is_actual", nullable=false)
-	private boolean isActual = true;
+	protected boolean isActual = true;
 	@Column(name="date")
-	private Date date;
+	protected Date date;
 	
 	
 	

@@ -33,7 +33,7 @@ public class Product {
 	@Column(name="name", nullable=false)
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	@JoinColumn(name="product_id")
+	@JoinColumn(name="product_id", nullable=false)
 	private List<Price> prices;
 	//private double price = prices.get(prices.size()).getPrecio();
 	@Column(name="weight", nullable=false)

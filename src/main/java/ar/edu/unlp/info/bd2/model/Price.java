@@ -22,11 +22,11 @@ public class Price {
 	private long id;
 	@Column(name="price", nullable=false)
 	private Float price;
-	@Column(name="startdate", nullable=false)
+	@Column(name="start_date", nullable=false)
 	private Date startDate;
-	@Column(name="enddate")
+	@Column(name="end_date")
 	private Date endDate;
-	@Column(name="actual_price")
+	@Column(name="is_actual")
 	private Boolean actualPrice;
 	
 	public Date getStartDate() {

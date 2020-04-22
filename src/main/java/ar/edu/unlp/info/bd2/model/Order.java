@@ -38,7 +38,7 @@ public class Order {
 	@JoinColumn(name="order_id")
 	private List<OrderProduct> products;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	@JoinColumn(name="order_id")
+	@JoinColumn(name="order_id", nullable=false)
 	private List<OrderStatus> statusHistory;
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="id_delivery_user")
