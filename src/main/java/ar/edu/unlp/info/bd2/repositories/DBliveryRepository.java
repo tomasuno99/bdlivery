@@ -105,7 +105,7 @@ public class DBliveryRepository {
 		}
 		
 		public List<Order> getAllOrdersMadeByUser(String aUsername){
-			String txt="select o from Order o join o.client as c where c.username = :aUsername";
+			String txt="select o from Order o where o.client.username = :aUsername";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).setParameter("aUsername",aUsername).getResultList();
             return resultList;
@@ -139,7 +139,7 @@ public class DBliveryRepository {
 					+ "join prod.supplier as s "
 					+ "where os.class = 2 "
 					+ "group by s.id "
-					+ "order by count(*) desc";
+					+ "order by sum(os.quantity) desc";
 			Session session= sessionFactory.getCurrentSession();
             List<Supplier> resultList = session.createQuery(txt).setMaxResults(n).getResultList();
             return resultList;
@@ -149,7 +149,7 @@ public class DBliveryRepository {
 		  * Obtiene el listado de las ordenes enviadas y no entregadas
 		  */
 		public List<Order> getSentOrders(){
-			String txt="select o from Order o join o.statusHistory as os where os.class = 2 and not exists(select o2 from Order o2 join o2.statusHistory as os2 where o2.id = o.id AND os2.class = 3)";
+			String txt="select o from Order o join o.statusHistory as os where os.class = 2 and os.isActual is true";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
             return resultList;
@@ -247,7 +247,7 @@ public class DBliveryRepository {
 					+ "from Order o join o.products as op "
 					+ 				"join op.product as p "
 					+ "group by p "
-					+ "order by count(*) desc";
+					+ "order by sum(op.quantity) desc";
 			Session session= sessionFactory.getCurrentSession();
 	        Product p = (Product) session.createQuery(txt).setMaxResults(1).uniqueResult();
 	        return p;
@@ -279,7 +279,7 @@ public class DBliveryRepository {
 					+ "from Order o join o.statusHistory as os "
 					+ "where "
 					+ "os.class=3 and "
-					+ "os.date = o.dateOfOrder";
+					+ "DATE(os.date) = DATE(o.dateOfOrder)";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
             return resultList;
@@ -332,9 +332,9 @@ public class DBliveryRepository {
 			String txt="select o "
 					+  "from Order as o join o.statusHistory as os "
 					+  "where os.class=3 "
-					+ "	and os.date > (select os2.date "
+					+ "	and DATE(os.date) >= DATE(select os2.date "
 					+ "				   from Order as o2 join o2.statusHistory as os2 "
-					+ "					where o.id=o2.id and os2.class=1  ) ";
+					+ "					where o.id=o2.id and os2.class=1  )+1 ";
 			Session session= sessionFactory.getCurrentSession();
             List<Order> resultList = session.createQuery(txt).getResultList();
             return resultList;
