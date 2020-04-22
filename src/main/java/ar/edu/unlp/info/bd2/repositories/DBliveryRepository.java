@@ -139,11 +139,7 @@ public class DBliveryRepository {
 					+ "join prod.supplier as s "
 					+ "where os.class = 2 "
 					+ "group by s.id "
-<<<<<<< HEAD
 					+ "order by sum(op.quantity) desc";
-=======
-					+ "order by sum(os.quantity) desc";
->>>>>>> dcc74a1da336453695f142daa6d8444af276974c
 			Session session= sessionFactory.getCurrentSession();
             List<Supplier> resultList = session.createQuery(txt).setMaxResults(n).getResultList();
             return resultList;
