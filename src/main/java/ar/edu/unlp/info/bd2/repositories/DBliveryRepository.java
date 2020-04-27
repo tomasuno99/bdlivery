@@ -352,13 +352,15 @@ public class DBliveryRepository {
 
 		public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
 			String txt="select o "
-					+  "from Order as o join o.products as p "
-					+  "where "
-					+  "o.dateOfOrder=:day "
-					+  "group by o "
-					+  "order by count(*) desc";
+                    +  "from Order as o join o.products as op "
+                    +  "where "
+                    +  "o.dateOfOrder= :day "
+                    +  "group by o "
+                    +  "having not exists (select sum(op3.quantity) " 
+                    +  "                    from Order o3 join o3.products as op3 where o3.dateOfOrder= :day "  
+                    +  "                    group by o3 having sum(op.quantity) < sum(op3.quantity) )";
 			Session session= sessionFactory.getCurrentSession();
-            List<Order> resultList = session.createQuery(txt).setParameter("day", day).setMaxResults(1).getResultList();
+            List<Order> resultList = session.createQuery(txt).setParameter("day", day).getResultList();
             return resultList;
 		}
 		
