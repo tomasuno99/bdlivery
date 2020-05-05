@@ -1,0 +1,17 @@
+1) El concepto de Base de Datos existe en ambas BDs, por otro lado, los conceptos de Tabla/Ralacion, Fila/Tupla, y Columna no existen en MongoDB, sus alternativas son:
+Tabla/Relacion --> Coleccion
+Fila/Tupla --> Documento
+Columna --> Campo
+
+2)
+
+3) MongoDB soporta indices, estos se definen a nivel de las collecciones, se soportan indices por cualquier campo o subcampo del documento
+Tipos de indices:
+	- Single field
+	- Compound index
+	- Multikey index
+	- Geospatial index (datos en formato de cordenadas como GeoJSON)
+	- Text index (a lo sumo 1 indice de texto por coleccion)
+	- Hashed index
+
+4) No existen claves foraneas en MongoDB, pero su alternativa son las Referencias
