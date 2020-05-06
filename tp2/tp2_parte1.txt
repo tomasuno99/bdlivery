@@ -1,17 +1,51 @@
-1) El concepto de Base de Datos existe en ambas BDs, por otro lado, los conceptos de Tabla/Ralacion, Fila/Tupla, y Columna no existen en MongoDB, sus alternativas son:
+. ¿Cuáles de los siguientes conceptos de RDBMS existen en MongoDB? En caso de no existir,
+¿hay alguna alternativa? ¿Cuál es?
+• Base de Datos
+• Tabla / Relación
+• Fila / Tupla
+• Columna
+
+1) 
+El concepto de Base de Datos existe en ambas BDs, por otro lado, los conceptos de Tabla/Ralacion, Fila/Tupla, 
+y Columna no existen en MongoDB, sus alternativas son:
 Tabla/Relacion --> Coleccion
 Fila/Tupla --> Documento
 Columna --> Campo
+En MongoDB no existe un esquema predefinido para la estructura de los datos, los datos se guardan en documentos tipo JSON con un esquema dinámico llamado BSON que permite que la estructura no sea siempre la misma.
+Al seguir el formato de JSON, la estructura de un documento esta compuesta por pares clave:valor. 
+
+2. MongoDB tiene soporte para transacciones, pero no es igual que el de los RDBMS. ¿Cuál es
+el alcance de una transacción en MongoDB?
 
 2)
+Las transacciones ACID garantizan que la misma se ha realizado correctamente. Cuando modificamos dos documentos, si en uno de ellos 
+hay error, la transacción es cancelada. Si los dos documentos se han modificado correctamente, la transacción se completa correctamente.
+MongoDB en la versión 4.0 introdujo el soporte de transacciones ACID de múltiples documentos para replica sets como una 
+característica para mejorar la integridad y la consistencia de los datos. Un replica set es un grupo de procesos mongod que 
+utilizan y mantienen los mismos grupos de datos.
+Existen limitaciones contra esta característica que hacen poco eficiente su uso en lo que respecta al concepto de transacciones:
+1. No puede crear ni eliminar una colección dentro de una transacción.
+2. Las transacciones no pueden realizar escrituras en una colección con tamaño fijo(Capped collections)
+3. Las transacciones tardan mucho tiempo en ejecutarse y de alguna manera pueden ralentizar el rendimiento de la base de datos.
+4. El tamaño de la transacción está limitado a 16 MB, lo que requiere que se divida cualquier transacción que exceda este tamaño en transacciones más pequeñas.
+Cada transacción está asociadas a una sesión. El manejo en cuanto a sintaxis en codigo es muy similar al de transacciones en esquemas relacionales:
+Session.startTransaction()
+Session.commitTransaction()
+Session.abortTransaction()
+
+3. Para acelerar las consultas, MongoDB tiene soporte para índices. ¿Qué tipos de índices
+soporta?
 
 3) MongoDB soporta indices, estos se definen a nivel de las collecciones, se soportan indices por cualquier campo o subcampo del documento
 Tipos de indices:
-	- Single field
-	- Compound index
-	- Multikey index
+	- Single field(De un solo campo)
+	- Compound index(De múltiples campos)
+	- Multikey index(Se utiliza para indexar el contenido de arreglos almacenados. )
 	- Geospatial index (datos en formato de cordenadas como GeoJSON)
 	- Text index (a lo sumo 1 indice de texto por coleccion)
-	- Hashed index
+	- Hashed index(Indexa el valor hasheado de un campo)
 
-4) No existen claves foraneas en MongoDB, pero su alternativa son las Referencias
+4. ¿Existen claves foráneas en MongoDB?
+
+4) No existen claves foraneas en MongoDB, pero su alternativa son las Referencias, donde se guarda el campo _id de un documento 
+como referencia en otro documento. En este modelo la aplicación debe ejecutar una segunda consulta para devolver los datos relacionados.
