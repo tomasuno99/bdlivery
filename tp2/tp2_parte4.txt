@@ -1,0 +1,90 @@
+MongoDB cuenta con un Aggregation Framework que brinda la posibilidad de hacer analítica
+en tiempo real del estilo OLAP (Online Analytical Processing), de forma similar a otros
+productos específicos como Hadoop o MapReduce. En los siguientes ejercicios se verán
+algunos ejemplos de su aplicabilidad.
+Al igual que en la parte 3, guarde en un archivo llamado ‘generadorReservas.js’ el siguiente
+código JavaScript y ejecútelo con la función load(): 
+
+load('generadorReservas.js')
+
+13. Obtenga 5 departamentos aleatorios de la colección
+
+db.apartments.aggregate([{ $sample: { size: 5 } }])
+
+14. Usando el framework de agregación, obtenga los departamentos que estén a 15km (o menos)
+del centro de la ciudad de Londres ([-0.127718, 51.507451]) y guárdelos en una nueva
+colección.
+
+db.apartments.aggregate([  
+    {
+     $geoNear: {
+        near: { type: "Point", coordinates: [-0.127718, 51.507451]},
+        distanceField: "distance_to_center",
+        maxDistance: 15000,
+        spherical: true
+     }
+   }
+, { $out: "subset" } ]);
+
+15. Para los departamentos hallados en el punto anterior, obtener una colección con cada
+departamento agregando un atributo reservas que contenga un array con todas sus reservas.
+Note que sólo es posible ligarlas por el nombre del departamento.
+▶︎ Si la consulta se empieza a tornar difícil de leer, se pueden ir guardando los agregadores en
+variables, que no son más que objetos en formato JSON.
+
+db.apartments.aggregate([  
+    {
+     $geoNear: {
+        near: { type: "Point", coordinates: [-0.127718, 51.507451]},
+        distanceField: "distanceToCenter",
+        maxDistance: 15000,
+        spherical: true
+     }
+   }
+, { $lookup:      {
+       from: "reservations",
+       localField: "name",
+       foreignField: "apartmentName",
+       as: "reservations"
+     } } ]);
+
+16. Usando la colección del punto anterior, obtenga el promedio de precio pagado por reserva
+(precio completo, no dividir por la cantidad de noches) de cada departamento.
+
+Departamentos a 15km o menos del centro de Londres
+var apartments =     {
+     $geoNear: {
+        near: { type: "Point", coordinates: [-0.127718, 51.507451]},
+        distanceField: "distanceToCenter",
+        maxDistance: 15000,
+        spherical: true
+     }
+   };
+
+Junto las reservas de cada departamento
+var reservations = { $lookup:      {
+       from: "reservations",
+       localField: "name",
+       foreignField: "apartmentName",
+       as: "reservations"
+     } }
+
+Me quedo solamente con los departamentos que tengan reservas(que la coleccion de reservas no se encuentre vacia)
+var withReservations = {
+    $unwind:
+        {
+        path: "$reservations",
+        preserveNullAndEmptyArrays: false
+        }
+    }
+
+Por cada departamento indico el promedio del precio de todas las reservas que tenga
+var groupResult =    { $group: {  
+        _id: "$_id",
+        name: { "$first": "$name" },
+        averageTotalPrice: { 
+            $avg: "$reservations.amount" 
+        }
+    }}
+
+db.apartments.aggregate([apartments, reservations, withReservations, groupResult]);

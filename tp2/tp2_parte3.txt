@@ -13,7 +13,9 @@ devuelve:
 	}
 ]
 
-11) Cree un índice para el campo name. Busque los departamentos que tengan en su nombre el string “11” y utilice el método explain("executionStats") al final de la consulta, para comparar la cantidad de documentos examinados y el tiempo en milisegundos de la consulta con y sin índice:
+11) Cree un índice para el campo name. Busque los departamentos que tengan en su nombre el string “11” y utilice el método 
+explain("executionStats") al final de la consulta, para comparar la cantidad de documentos examinados y el tiempo en milisegundos
+de la consulta con y sin índice:
 
 db.apartments.createIndex({name: 1})
 devuelve:
@@ -43,7 +45,10 @@ con indice:
 		"totalDocsExamined" : 2291,
 		...
 
-12) Busque los departamentos dentro de la ciudad de Londres. Para esto, puede definir una variable en la terminal y asignarle como valor el polígono del archivo provisto greaterlondon.geojson (copiando y pegando directamente). Cree un índice geoespacial de tipo 2dsphere para el campo location de la colección apartments y, de la misma forma que en el punto 11, compare la performance de la consulta con y sin dicho índice.
+12) Busque los departamentos dentro de la ciudad de Londres. Para esto, puede definir una variable en la terminal y asignarle 
+como valor el polígono del archivo provisto greaterlondon.geojson (copiando y pegando directamente). Cree un índice geoespacial 
+de tipo 2dsphere para el campo location de la colección apartments y, de la misma forma que en el punto 11, compare la performance
+de la consulta con y sin dicho índice.
 
 var coordenadas = ... (pego todo el contenido del greaterlondon.geojson)
 
