@@ -19,7 +19,7 @@ db.apartments.aggregate([
     {
      $geoNear: {
         near: { type: "Point", coordinates: [-0.127718, 51.507451]},
-        distanceField: "distance_to_center",
+        distanceField: "distanceToCenter",
         maxDistance: 15000,
         spherical: true
      }
