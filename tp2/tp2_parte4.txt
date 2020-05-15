@@ -32,42 +32,22 @@ Note que sólo es posible ligarlas por el nombre del departamento.
 ▶︎ Si la consulta se empieza a tornar difícil de leer, se pueden ir guardando los agregadores en
 variables, que no son más que objetos en formato JSON.
 
-db.apartments.aggregate([  
-    {
-     $geoNear: {
-        near: { type: "Point", coordinates: [-0.127718, 51.507451]},
-        distanceField: "distanceToCenter",
-        maxDistance: 15000,
-        spherical: true
-     }
-   }
-, { $lookup:      {
+Utilizo la coleccion generada en el ejercicio 15.
+db.subset.aggregate([  
+     { $lookup:      {
        from: "reservations",
        localField: "name",
        foreignField: "apartmentName",
        as: "reservations"
-     } } ]);
+     } },
+     {
+       $out: "subsetWithReservations"
+     } ]);
 
 16. Usando la colección del punto anterior, obtenga el promedio de precio pagado por reserva
 (precio completo, no dividir por la cantidad de noches) de cada departamento.
 
-Departamentos a 15km o menos del centro de Londres
-var apartments =     {
-     $geoNear: {
-        near: { type: "Point", coordinates: [-0.127718, 51.507451]},
-        distanceField: "distanceToCenter",
-        maxDistance: 15000,
-        spherical: true
-     }
-   };
-
-Junto las reservas de cada departamento
-var reservations = { $lookup:      {
-       from: "reservations",
-       localField: "name",
-       foreignField: "apartmentName",
-       as: "reservations"
-     } }
+Utilizo la coleccion generada en el ejercicio 15.
 
 Me quedo solamente con los departamentos que tengan reservas(que la coleccion de reservas no se encuentre vacia)
 var withReservations = {
@@ -87,4 +67,4 @@ var groupResult =    { $group: {
         }
     }}
 
-db.apartments.aggregate([apartments, reservations, withReservations, groupResult]);
+db.subsetWithReservations.aggregate([withReservations, groupResult]);
