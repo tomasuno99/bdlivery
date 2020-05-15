@@ -7,7 +7,7 @@ agregar la función .pretty() al final de la expresión para ver los datos inden
 que no se encuentran exactamente los atributos que insertó. ¿Cuál es la diferencia?
 
 5) creo la bd airbdb con el comando "use airbdb", luego creo la coleccion apartments y agrego un documento ejecutando el comando 
-"db.apartments.insert({name:'Apartment with 2 beedrooms', capacity:4}).
+"db.apartments.insertOne({name:'Apartment with 2 beedrooms', capacity:4})".
 Recupero la informacion del departamento con "db.apartments.find().pretty()", se puede ver que devuelve un documento con los 
 atributos definidos anteriormente, y ademas un id ("_id") que se genera automaticamente.
 
@@ -28,11 +28,16 @@ vuelva a realizar la última consulta pero proyecte sólo el nombre del departam
 resultados, omitiendo incluso el atributo _id de la proyección.
 
 6) 
+db.apartments.insertMany([{name:'New Apartment', capacity:3, services: ['wifi', 'ac']}, 
+                          {name:'Nice apt for 6', capacity:6, services: ['parking']}, 
+                          {name:'1950s Apartment', capacity:3}, 
+                          {name:'Duplex Floor', capacity:4, services: ['wifi', 'breakfast', 'laundry']}])
+
 departamentos con capidad para 3 personas: 
 db.apartments.find({capacity: 3}).pretty()
 
 departamentos con capacidad para 4 personas o mas: 
-db.apartments.find({capacity: {$gt:3} }).pretty()
+db.apartments.find({capacity: {$gte:4} }).pretty()
 
 departamentos con wifi: 
 db.apartments.find({services: 'wifi'}).pretty()
@@ -41,7 +46,7 @@ departamentos que incluyan la palabra 'Apartment' en su nombre:
 db.apartments.find({name: /Apartment/ }).pretty()
 
 departamentos con la palabra Apartment en su nombre y capacidad para mas de 3 personas: 
-db.apartments.find({name: /Apartment/, capacity: {$gt: 3} }).pretty()
+db.apartments.find({name: /Apartment/, capacity: {$gte: 4} }).pretty()
 
 departamentos sin servicios (es decir, que el atributo este ausente): 
 db.apartments.find({services: {$exists: false} }).pretty()
