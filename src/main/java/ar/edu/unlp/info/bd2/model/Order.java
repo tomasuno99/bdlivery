@@ -1,49 +1,34 @@
 package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="order_table")
+@Document
 public class Order {
 	@Id
-	@Column(name="order_id", nullable=false)
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="date_of_order", nullable=false)
 	private Date dateOfOrder;
-	@Column(name="address", nullable=false)
 	private String address;
-	@Column(name="coord_x")
 	private Float coordX;
-	@Column(name="coord_y")
 	private Float coordY;
-	@ManyToOne(fetch=FetchType.LAZY) 
-	@JoinColumn(name="id_user", nullable=false)
+	
+	@DBRef
 	private User client;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	@JoinColumn(name="order_id")
+	
+	@DBRef
 	private List<OrderProduct> products;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	@JoinColumn(name="order_id", nullable=false)
+	
+	@DBRef
 	private List<OrderStatus> statusHistory;
-	@ManyToOne(fetch=FetchType.LAZY) 
-	@JoinColumn(name="id_delivery_user")
+	
+	@DBRef
 	private User deliveryUser;
-	// es mejor modelar el deliveryUser aparte del User? deliveryUser es un User
 	
 	public Order() {}
 	
