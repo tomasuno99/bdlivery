@@ -5,37 +5,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-@Entity
-@Table(name = "user")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class User {
 	@Id
-	@Column(name="user_id", nullable=false)
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="email", nullable=false)
 	private String email;
-	@Column(name="password", nullable=false)
 	private String password;
-	@Column(name="username", nullable=false)
 	private String username;
-	@Column(name="name", nullable=false)
 	private String name;
-	@Column(name="date_of_birth")
 	private Date dateOfBirth;
-	@OneToMany(mappedBy="client")
+	@DBRef
 	private List<Order> orders;
-	@Column(name="is_delivery")
 	private boolean isDelivery;
 	
 	public User() {}

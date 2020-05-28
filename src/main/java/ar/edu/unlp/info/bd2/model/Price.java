@@ -4,29 +4,17 @@ import java.util.Calendar;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.joda.time.DateTime;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="price")
+@Document
 public class Price {
 	@Id
-	@Column(name="price_id", nullable=false)
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="price", nullable=false)
 	private Float price;
-	@Column(name="start_date", nullable=false)
 	private Date startDate;
-	@Column(name="end_date")
 	private Date endDate;
-	@Column(name="is_actual")
 	private Boolean actualPrice;
 	
 	public Date getStartDate() {

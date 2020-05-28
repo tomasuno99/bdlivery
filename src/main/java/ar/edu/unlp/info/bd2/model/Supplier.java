@@ -3,34 +3,20 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="supplier")
+@Document
 public class Supplier {
 	@Id
-	@Column(name="supplier_id", nullable=false)
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="name", nullable=false)
 	private String name;
-	@Column(name="cuil", nullable=false)
 	private String cuil;
-	@Column(name="address")
 	private String address;
-	@Column(name="coord_x")
 	private Float coordX;
-	@Column(name="coord_y")
 	private Float coordY;
-	@OneToMany(mappedBy="supplier")
+	@DBRef
 	private List<Product> products;
 	
 	public Supplier() {}

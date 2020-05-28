@@ -8,40 +8,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.CascadeType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
-@Entity
-@Table(name="product")
+@Document
 public class Product {
 
 	@Id
-	@Column(name="product_id", nullable=false)
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	@Column(name="name", nullable=false)
 	private String name;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	@JoinColumn(name="product_id", nullable=false)
+	
+	@DBRef
 	private List<Price> prices;
 	//private double price = prices.get(prices.size()).getPrecio();
-	@Column(name="weight", nullable=false)
 	private Float weight;
-	@ManyToOne(fetch=FetchType.LAZY) 
-	@JoinColumn(name="id_supplier", nullable=false)
+	@DBRef
 	private Supplier supplier;
-	@Column(name="date")
 	private Date date;
 	
 	public Date getDate() {
