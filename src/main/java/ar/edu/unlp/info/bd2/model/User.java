@@ -10,10 +10,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a2ea524303128cf3f664730b17a3113c5e23c9c3
 @Document
 public class User {
 	@Id
@@ -23,10 +19,7 @@ public class User {
 	private String username;
 	private String name;
 	private Date dateOfBirth;
-<<<<<<< HEAD
 	@DBRef
-=======
->>>>>>> a2ea524303128cf3f664730b17a3113c5e23c9c3
 	private List<Order> orders;
 	private boolean isDelivery;
 	
