@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.bd2.config;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import com.mongodb.MongoClientSettings;
@@ -38,6 +39,6 @@ public class MongoDBConfiguration {
     }
 
     private Integer getGroupNumber() {
-        return 0;
+        return 15;
     }
 }
