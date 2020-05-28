@@ -3,14 +3,17 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import ar.edu.unlp.info.bd2.mongo.PersistentObject;
+
 @Document
-public class Supplier {
+public class Supplier implements PersistentObject{
 	@Id
-	private long id;
+	private ObjectId id;
 	private String name;
 	private String cuil;
 	private String address;
@@ -28,14 +31,6 @@ public class Supplier {
 		this.address = adress;
 		this.coordX = coordx;
 		this.coordY = coordy;
-	}
-	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -79,6 +74,17 @@ public class Supplier {
 	
 	public void addProduct(Product product) {
 		this.products.add(product);
+	}
+
+	@Override
+	public ObjectId getObjectId() {
+		return this.id;
+	}
+
+	@Override
+	public void setObjectId(ObjectId objectId) {
+		this.id = objectId;
+		
 	}
 	
 	

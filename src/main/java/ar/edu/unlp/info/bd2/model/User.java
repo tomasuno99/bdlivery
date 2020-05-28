@@ -6,14 +6,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import ar.edu.unlp.info.bd2.mongo.PersistentObject;
+
 @Document
-public class User {
+public class User implements PersistentObject {
 	@Id
-	private long id;
+	private ObjectId id;
 	private String email;
 	private String password;
 	private String username;
@@ -34,6 +37,15 @@ public class User {
 		this.username = username;
 	}
 	
+	
+	public ObjectId getId() {
+		return this.getObjectId();
+	}
+
+	public void setId(ObjectId id) {
+		this.setObjectId(id);
+	}
+	
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -49,12 +61,6 @@ public class User {
 		this.isDelivery = isDelivery;
 	}
 
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -84,6 +90,16 @@ public class User {
 	}
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	@Override
+	public ObjectId getObjectId() {
+		return this.id;
+	}
+
+	@Override
+	public void setObjectId(ObjectId objectId) {
+		this.id = objectId;
 	}
 	
 }

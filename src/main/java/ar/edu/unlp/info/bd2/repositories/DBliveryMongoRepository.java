@@ -2,6 +2,8 @@ package ar.edu.unlp.info.bd2.repositories;
 
 import static com.mongodb.client.model.Aggregates.*;
 
+
+
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 
@@ -31,7 +33,7 @@ public class DBliveryMongoRepository {
         return this.client.getDatabase("bd2_grupo" + this.getGroupNumber() );
     }
 
-    private Integer getGroupNumber() { return 0; }
+    private Integer getGroupNumber() { return 15; }
 
     public <T extends PersistentObject> List<T> getAssociatedObjects(
             PersistentObject source, Class<T> objectClass, String association, String destCollection) {
@@ -48,6 +50,10 @@ public class DBliveryMongoRepository {
                 StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
         return stream.collect(Collectors.toList());
     }
+
+	public User insert(User user) {
+		return null;
+	}
 
 
 }

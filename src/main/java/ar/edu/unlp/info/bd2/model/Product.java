@@ -8,17 +8,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
 @Document
-public class Product {
+public class Product implements PersistentObject{
 
 	@Id
-	private long id;
+	private ObjectId id;
 	private String name;
 	
 	@DBRef
@@ -105,12 +107,12 @@ public class Product {
 		return null;
 	}
 	
-	public long getId() {
-		return id;
+	public ObjectId getId() {
+		return this.getObjectId();
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(ObjectId id) {
+		this.setObjectId(id);
 	}
 
 	public List<Price> getPrices() {
@@ -139,6 +141,17 @@ public class Product {
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
+	}
+
+	@Override
+	public ObjectId getObjectId() {
+		return this.id;
+	}
+
+	@Override
+	public void setObjectId(ObjectId objectId) {
+		this.id = objectId;
+		
 	}
 
 
