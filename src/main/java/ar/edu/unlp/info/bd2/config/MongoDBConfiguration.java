@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.bd2.config;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import com.mongodb.MongoClientSettings;
