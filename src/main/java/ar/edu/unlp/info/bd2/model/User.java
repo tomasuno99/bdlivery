@@ -3,33 +3,31 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 
 
+
 import java.util.Date;
 import java.util.List;
 
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-@Document
 public class User implements PersistentObject {
-	@Id
 	private ObjectId id;
 	private String email;
 	private String password;
 	private String username;
 	private String name;
 	private Date dateOfBirth;
-	@DBRef
+	
+	@BsonIgnore
 	private List<Order> orders;
 	private boolean isDelivery;
 	
 	public User() {}
 	
 	public User(String email, String pass, String username, String name, Date date) {
-		//this.id = id;
+		this.id = new ObjectId();
 		this.email = email;
 		this.password = pass;
 		this.name = name;

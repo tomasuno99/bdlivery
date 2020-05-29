@@ -2,13 +2,12 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.Calendar;
 
+
 import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class Price {
 	@Id
 	private long id;

@@ -2,10 +2,9 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+import org.springframework.data.annotation.Id;
+
 public abstract class OrderStatus {
 	@Id
 	protected long id;

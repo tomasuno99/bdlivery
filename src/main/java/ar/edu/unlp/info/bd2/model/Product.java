@@ -2,6 +2,7 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -10,24 +11,20 @@ import java.util.ListIterator;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
-@Document
+
 public class Product implements PersistentObject{
 
 	@Id
 	private ObjectId id;
 	private String name;
 	
-	@DBRef
 	private List<Price> prices;
 	//private double price = prices.get(prices.size()).getPrecio();
 	private Float weight;
-	@DBRef
 	private Supplier supplier;
 	private Date date;
 	

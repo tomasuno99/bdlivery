@@ -1,16 +1,15 @@
 package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-@Document
 public class Supplier implements PersistentObject{
 	@Id
 	private ObjectId id;
@@ -19,7 +18,7 @@ public class Supplier implements PersistentObject{
 	private String address;
 	private Float coordX;
 	private Float coordY;
-	@DBRef
+
 	private List<Product> products;
 	
 	public Supplier() {}

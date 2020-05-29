@@ -2,14 +2,12 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
+
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class Order {
 	@Id
 	private long id;
@@ -18,16 +16,12 @@ public class Order {
 	private Float coordX;
 	private Float coordY;
 	
-	@DBRef
 	private User client;
 	
-	@DBRef
 	private List<OrderProduct> products;
 	
-	@DBRef
 	private List<OrderStatus> statusHistory;
 	
-	@DBRef
 	private User deliveryUser;
 	
 	public Order() {}

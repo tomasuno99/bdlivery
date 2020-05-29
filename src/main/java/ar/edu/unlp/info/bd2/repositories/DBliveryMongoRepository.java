@@ -14,6 +14,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,7 +54,14 @@ public class DBliveryMongoRepository {
     }
 
 	public User insert(User user) {
-		return null;
+		Document doc = new Document("_id", user.getObjectId());
+		doc.append("email", user.getEmail());
+		doc.append("password", user.getPassword());
+		doc.append("username", user.getUsername());
+		doc.append("name", user.getName());
+		doc.append("date_of_birth", user.getDateOfBirth());
+		this.getDb().getCollection("users").insertOne(doc);
+		return user;
 	}
 
 
