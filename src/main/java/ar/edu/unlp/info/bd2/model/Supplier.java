@@ -4,27 +4,26 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
 public class Supplier implements PersistentObject{
-	@Id
 	private ObjectId id;
 	private String name;
 	private String cuil;
 	private String address;
 	private Float coordX;
 	private Float coordY;
-
+	@BsonIgnore
 	private List<Product> products;
 	
 	public Supplier() {}
 	
 	public Supplier(String name, String cuil, String adress, Float coordx, Float coordy) {
-		this.products = new ArrayList<Product>();
+		this.id = new ObjectId();
 		this.name= name;
 		this.cuil = cuil;
 		this.address = adress;

@@ -27,29 +27,30 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		// TODO Auto-generated method stub
-		return null;
+		Product product = new Product(name, price, weight, supplier);
+		repository.insertProduct("products", product.getClass(), product);
+		return product;
 	}
 
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		// TODO Auto-generated method stub
-		return null;
+		Supplier supplier = new Supplier(name, cuil, address, coordX, coordY);
+		repository.insert("suppliers", supplier.getClass(), supplier);
+		return supplier;
 	}
 
 	@Override
-	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
-//		if (!repository.uniqueUsername(username))
+    public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
+//        if (!repository.uniqueUsername(username))
         User user = new User (email, password, username, name, dateOfBirth);
-        return repository.insert(user);
+        repository.insert("users", user.getClass(), user);
+        return user;
 	}
-
 	@Override
 	public Product updateProductPrice(ObjectId id, Float price, Date startDate) throws DBliveryException {
 		// TODO Auto-generated method stub

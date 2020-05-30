@@ -9,7 +9,6 @@ import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 
 public class Price {
-	@Id
 	private long id;
 	private Float price;
 	private Date startDate;
