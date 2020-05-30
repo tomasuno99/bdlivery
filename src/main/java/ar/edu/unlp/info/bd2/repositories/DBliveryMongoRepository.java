@@ -53,16 +53,14 @@ public class DBliveryMongoRepository {
         return stream.collect(Collectors.toList());
     }
 
-	public User insert(User user) {
-		Document doc = new Document("_id", user.getObjectId());
-		doc.append("email", user.getEmail());
-		doc.append("password", user.getPassword());
-		doc.append("username", user.getUsername());
-		doc.append("name", user.getName());
-		doc.append("date_of_birth", user.getDateOfBirth());
-		this.getDb().getCollection("users").insertOne(doc);
-		return user;
-	}
+    public void insert(String collectionName, Class objClass,  Object obj) {
+        this.getDb().getCollection(collectionName, objClass).insertOne(obj);
+    }
+    
+    public void insertWithAssociation(String collectionName, Class objClass, PersistentObject assocSource, PersistentObject assocDestination, String assocName) {
+    	this.insert(collectionName, objClass, assocSource);
+    	this.saveAssociation(assocSource, assocDestination, assocName);
+    }
 
 
 }

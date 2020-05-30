@@ -27,8 +27,9 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		// TODO Auto-generated method stub
-		return null;
+		Product p = new Product(name, price, weight, supplier);
+		repository.insertWithAssociation("products", p.getClass(), p, p.getSupplier(), "product_supplier");
+		return p;
 	}
 
 	@Override
@@ -39,15 +40,17 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		// TODO Auto-generated method stub
-		return null;
+		Supplier s= new Supplier(name, cuil, address, coordX, coordY);
+		repository.insert("suppliers", s.getClass(), s);
+		return s;
 	}
 
 	@Override
 	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
 //		if (!repository.uniqueUsername(username))
         User user = new User (email, password, username, name, dateOfBirth);
-        return repository.insert(user);
+        repository.insert("users", user.getClass(), user);
+        return user;
 	}
 
 	@Override

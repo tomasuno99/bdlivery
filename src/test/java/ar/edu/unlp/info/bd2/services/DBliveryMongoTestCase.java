@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(
         classes = {AppConfig.class, MongoDBConfiguration.class},
         loader = AnnotationConfigContextLoader.class)
-@Rollback(true)
+@Rollback(false)
 public class DBliveryMongoTestCase {
 
     @Autowired
@@ -43,28 +43,28 @@ public class DBliveryMongoTestCase {
         return 0;
     }
 
-    @Test
-    public void testCreateUser() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, 1982);
-        cal.set(Calendar.MONTH, Calendar.MAY);
-        cal.set(Calendar.DAY_OF_MONTH, 17);
-        Date dob = cal.getTime();
-        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
-        assertNotNull(u1.getObjectId());
-    }
-//
 //    @Test
-//    public void testCreateProduct() {
-//        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
-//        assertNotNull(s1.getObjectId());
-//        assertEquals("Burger King",s1.getName());
-//        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
-//        assertNotNull(p1.getObjectId());
-//        assertEquals("Combo Stacker ATR",p1.getName());
-//        assertEquals(1,p1.getPrices().size());
+//    public void testCreateUser() {
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(Calendar.YEAR, 1982);
+//        cal.set(Calendar.MONTH, Calendar.MAY);
+//        cal.set(Calendar.DAY_OF_MONTH, 17);
+//        Date dob = cal.getTime();
+//        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
+//        assertNotNull(u1.getObjectId());
 //    }
-//
+
+    @Test
+    public void testCreateProduct() {
+        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
+        assertNotNull(s1.getObjectId());
+        assertEquals("Burger King",s1.getName());
+        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
+        assertNotNull(p1.getObjectId());
+        assertEquals("Combo Stacker ATR",p1.getName());
+        assertEquals(1,p1.getPrices().size());
+    }
+
 //    @Test
 //    public void testUpdateProductPrice() throws DBliveryException {
 //        Calendar cal = Calendar.getInstance();

@@ -2,8 +2,10 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
@@ -18,12 +20,14 @@ public class Supplier implements PersistentObject{
 	private String address;
 	private Float coordX;
 	private Float coordY;
-
+	
+	@BsonIgnore
 	private List<Product> products;
 	
 	public Supplier() {}
 	
 	public Supplier(String name, String cuil, String adress, Float coordx, Float coordy) {
+		this.id = new ObjectId();
 		this.products = new ArrayList<Product>();
 		this.name= name;
 		this.cuil = cuil;
