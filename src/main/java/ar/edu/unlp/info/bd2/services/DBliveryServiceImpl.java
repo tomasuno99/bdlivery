@@ -27,9 +27,9 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		Product product = new Product(name, price, weight, supplier);
-		repository.insertProduct("products", product.getClass(), product);
-		return product;
+		Product p = new Product(name, price, weight, supplier);
+		repository.insertWithAssociation("products", p.getClass(), p, p.getSupplier(), "product_supplier");
+		return p;
 	}
 
 	@Override
@@ -39,9 +39,9 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		Supplier supplier = new Supplier(name, cuil, address, coordX, coordY);
-		repository.insert("suppliers", supplier.getClass(), supplier);
-		return supplier;
+		Supplier s= new Supplier(name, cuil, address, coordX, coordY);
+		repository.insert("suppliers", s.getClass(), s);
+		return s;
 	}
 
 	@Override

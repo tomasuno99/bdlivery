@@ -53,13 +53,15 @@ public class DBliveryMongoRepository {
         return stream.collect(Collectors.toList());
     }
     
+
     public void insert(String collectionName, Class objClass,  Object obj) {
         this.getDb().getCollection(collectionName, objClass).insertOne(obj);
     }
     
-    public void insertProduct(String collectionName, Class objClass,  Product obj) {
-        this.insert(collectionName, objClass, obj);
-        this.saveAssociation(obj, obj.getSupplier(), "product_supplier");
+    public void insertWithAssociation(String collectionName, Class objClass, PersistentObject assocSource, PersistentObject assocDestination, String assocName) {
+    	this.insert(collectionName, objClass, assocSource);
+    	this.saveAssociation(assocSource, assocDestination, assocName);
     }
+
 
 }

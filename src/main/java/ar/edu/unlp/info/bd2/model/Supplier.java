@@ -2,6 +2,7 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
 import org.bson.codecs.pojo.annotations.BsonIgnore;
@@ -17,6 +18,7 @@ public class Supplier implements PersistentObject{
 	private String address;
 	private Float coordX;
 	private Float coordY;
+	
 	@BsonIgnore
 	private List<Product> products;
 	

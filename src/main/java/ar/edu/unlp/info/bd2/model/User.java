@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
@@ -33,6 +34,16 @@ public class User implements PersistentObject {
 		this.name = name;
 		this.dateOfBirth = date;
 		this.username = username;
+	}
+	
+	public Document createDocument(User user) {
+		Document doc = new Document("_id", user.getObjectId());
+		doc.append("email", user.getEmail());
+		doc.append("password", user.getPassword());
+		doc.append("username", user.getUsername());
+		doc.append("name", user.getName());
+		doc.append("date_of_birth", user.getDateOfBirth());
+		return doc;
 	}
 	
 	
