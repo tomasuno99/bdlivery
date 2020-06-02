@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //package ar.edu.unlp.info.bd2.utils;
 //
 //import ar.edu.unlp.info.bd2.model.*;
@@ -16,6 +17,26 @@
 //    public void prepareDB() throws Exception {
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //
+=======
+package ar.edu.unlp.info.bd2.utils;
+
+import ar.edu.unlp.info.bd2.model.*;
+import ar.edu.unlp.info.bd2.services.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.text.SimpleDateFormat;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DBInitializer {
+
+    @Autowired
+    DBliveryService service;
+
+    public void prepareDB() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+>>>>>>> 393f87006f57abce456fead17dd780975bd635f1
 //        Supplier supplier001 = this.service.createSupplier("La Trattoria", "21206013986","Calle 52 Nº84", -34.931463F, -57.954751F);
 //        Supplier supplier002 = this.service.createSupplier("Pancho Crazy", "22626502551","Calle 54 Nº1389", -34.918711F, -57.985247F);
 //        Supplier supplier003 = this.service.createSupplier("Kentucky", "20226239082","Calle 51 Nº1356", -34.934297F, -57.991746F);
@@ -1876,7 +1897,14 @@
 //        service.addProduct(order300.getId(),3L, product061);
 //        service.deliverOrder(order300.getId(), user188, sdf.parse("6/3/2014"));
 //        service.finishOrder(order300.getId(), sdf.parse("8/3/2014"));
+<<<<<<< HEAD
 //
 //
 //    }
 //}
+=======
+
+
+    }
+}
+>>>>>>> 393f87006f57abce456fead17dd780975bd635f1

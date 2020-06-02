@@ -28,8 +28,9 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		Product p = new Product(name, price, weight, supplier);
-		repository.insertWithAssociation("products", p.getClass(), p, p.getSupplier(), "product_supplier");
+		Product p = new Product(name, price, weight);
+		p.updatePrice(price, new Date());
+		repository.insertWithAssociation("products", p.getClass(), p, supplier, "product_supplier");
 		return p;
 	}
 
@@ -155,6 +156,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public List<Product> getProductsByName(String name) {
 		return repository.getProductsByName(name);
+	}
+
+	@Override
+	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
