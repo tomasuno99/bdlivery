@@ -45,7 +45,21 @@ public class Price implements PersistentObject{
 		this.startDate = startDate;
 		this.actualPrice = true;
 	}
-	
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
+	public void setActualPrice(Boolean actualPrice) {
+		this.actualPrice = actualPrice;
+	}
 	public float getPrice() {
 		return this.price;
 	}

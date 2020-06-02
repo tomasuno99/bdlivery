@@ -66,7 +66,7 @@ public class DBliveryMongoTestCase {
          assertEquals("Combo Stacker ATR",p1.getName());
          assertEquals(1,p1.getPrices().size());
     }
-//
+
     @Test
     public void testUpdateProductPrice() throws DBliveryException {
         Calendar cal = Calendar.getInstance();

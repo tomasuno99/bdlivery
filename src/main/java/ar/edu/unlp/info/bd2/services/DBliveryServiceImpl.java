@@ -164,10 +164,5 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return null;
 	}
 
-	@Override
-	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

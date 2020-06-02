@@ -2,7 +2,6 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -17,21 +16,21 @@ import org.springframework.data.annotation.Id;
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
-
-public class Product implements PersistentObject{
+public class Product implements PersistentObject {
 
 	@BsonId
 	private ObjectId id;
+
 	private String name;
-	
+
 	private List<Price> prices = new ArrayList<>();
-	//private double price = prices.get(prices.size()).getPrecio();
+	// private double price = prices.get(prices.size()).getPrecio();
 	private Float weight;
-	
+
 	@BsonIgnore
 	private Supplier supplier;
 	private Date date;
-	
+
 	public Date getDate() {
 		return date;
 	}
@@ -42,64 +41,71 @@ public class Product implements PersistentObject{
 
 	public Product() {
 	}
-	
+
 	public Product(String name, Float price, Float weight) {
 		this.id = new ObjectId();
-		//Price p = new Price(price, Calendar.getInstance().getTime());
-		//this.prices.add(p);
+		// Price p = new Price(price, Calendar.getInstance().getTime());
+		// this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
 		this.date = Calendar.getInstance().getTime();
 	}
-	
+
 	public Product(String name, Float price, Float weight, Date date) {
 		this.id = new ObjectId();
-		//Price p = new Price(price, date);
-		//this.prices.add(p);
+		// Price p = new Price(price, date);
+		// this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
 		this.date = date;
 	}
-	
-	//public Product updateProductPrice(double idProd,float price, Date startDate) {
-	//	
-	//}
+
+	// public Product updateProductPrice(double idProd,float price, Date startDate)
+	// {
+	//
+	// }
 	@BsonIgnore
 	public Price getActualPrice() {
 		Price p = null;
-		int i=0;
-		while((i < this.prices.size()) && (p == null)) {
+		int i = 0;
+		while ((i < this.prices.size()) && (p == null)) {
 			if (this.prices.get(i).getActualPrice() == true) {
-				p=this.prices.get(i);
+				p = this.prices.get(i);
 			}
 			i++;
 		}
 		return p;
 	}
-	
+
+	public void setPrices(List<Price> prices) {
+		this.prices = prices;
+	}
+
 	public Product updatePrice(Float price, Date startDate) {
-		if (! this.prices.isEmpty()) {
-		this.getActualPrice().finalizePrice(startDate);
+		if (!this.prices.isEmpty()) {
+			this.getActualPrice().finalizePrice(startDate);
 		}
 		Price priceVar = new Price(price, startDate);
 		this.getPrices().add(priceVar);
 		return this;
 	}
+
 	@BsonIgnore
 	public Float getPrice() {
 		return this.getActualPrice().getPrice();
 	}
-	
+
 	public Float getPriceAt(Date day) {
-		int i=0;
-		while(i < this.prices.size()) {
-			if(this.prices.get(i).getEndDate() == null){
-				if (day.compareTo(this.prices.get(i).getStartDate()) >= 0 ){
-				return this.prices.get(i).getPrice();
+		int i = 0;
+		while (i < this.prices.size()) {
+			if (this.prices.get(i).getEndDate() == null) {
+				if (day.compareTo(this.prices.get(i).getStartDate()) >= 0) {
+					return this.prices.get(i).getPrice();
 				}
-			}else {
-				if (day.compareTo(this.prices.get(i).getStartDate()) >= 0 && day.compareTo(this.prices.get(i).getEndDate()) <= 0) {
+			} else {
+				if (day.compareTo(this.prices.get(i).getStartDate()) >= 0
+						&& day.compareTo(this.prices.get(i).getEndDate()) <= 0) {
 					return this.prices.get(i).getPrice();
 				}
 			}
@@ -107,7 +113,7 @@ public class Product implements PersistentObject{
 		}
 		return null;
 	}
-	
+
 	public ObjectId getId() {
 		return this.getObjectId();
 	}
@@ -115,7 +121,7 @@ public class Product implements PersistentObject{
 	public void setId(ObjectId id) {
 		this.setObjectId(id);
 	}
-	
+
 	public List<Price> getPrices() {
 		return prices;
 	}
@@ -136,7 +142,6 @@ public class Product implements PersistentObject{
 		this.weight = weight;
 	}
 
-	
 	public Supplier getSupplier() {
 		return supplier;
 	}
@@ -153,9 +158,7 @@ public class Product implements PersistentObject{
 	@Override
 	public void setObjectId(ObjectId objectId) {
 		this.id = objectId;
-		
+
 	}
 
-
-	
 }
