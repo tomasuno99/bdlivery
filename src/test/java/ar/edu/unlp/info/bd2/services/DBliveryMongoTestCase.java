@@ -2,6 +2,7 @@ package ar.edu.unlp.info.bd2.services;
 
 import ar.edu.unlp.info.bd2.config.AppConfig;
 
+
 import ar.edu.unlp.info.bd2.config.MongoDBConfiguration;
 import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
@@ -21,11 +22,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(
         classes = {AppConfig.class, MongoDBConfiguration.class},
         loader = AnnotationConfigContextLoader.class)
-@Rollback(false)
+@Rollback(true)
 public class DBliveryMongoTestCase {
 
     @Autowired
@@ -221,17 +223,17 @@ public class DBliveryMongoTestCase {
 //        }
 //    }
 //
-//    @Test
-//    public void testGetProduct() {
-//        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
-//        assertNotNull(s1.getObjectId());
-//        assertEquals("Burger King",s1.getName());
-//        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
-//        Product p2 = this.service.createProduct("Combo Tostado de Campo", Float.valueOf(2210.2F), Float.valueOf(2.2F), s1);
-//        Product p3 = this.service.createProduct("Combo Stacker ATR triple", Float.valueOf(1210F), Float.valueOf(1.8F), s1);
-//        assertEquals(this.service.getProductsByName("Combo Stacker ATR").size(),2);
-//        assertEquals(this.service.getProductsByName("Combo Tostado de Campo").size(),1);
-//        assertEquals(this.service.getProductsByName("triple").size(),1);
-//
-//    }
+    @Test
+    public void testGetProduct() {
+        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
+        assertNotNull(s1.getObjectId());
+        assertEquals("Burger King",s1.getName());
+        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
+        Product p2 = this.service.createProduct("Combo Tostado de Campo", Float.valueOf(2210.2F), Float.valueOf(2.2F), s1);
+        Product p3 = this.service.createProduct("Combo Stacker ATR triple", Float.valueOf(1210F), Float.valueOf(1.8F), s1);
+        assertEquals(this.service.getProductsByName("Combo Stacker ATR").size(),2);
+        assertEquals(this.service.getProductsByName("Combo Tostado de Campo").size(),1);
+        assertEquals(this.service.getProductsByName("triple").size(),1);
+
+    }
 }

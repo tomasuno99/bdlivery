@@ -24,7 +24,6 @@ public class Product implements PersistentObject{
 	private ObjectId id;
 	private String name;
 	
-	
 	private List<Price> prices = new ArrayList<>();
 	//private double price = prices.get(prices.size()).getPrecio();
 	private Float weight;

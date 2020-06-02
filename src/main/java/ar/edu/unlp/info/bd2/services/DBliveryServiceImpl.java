@@ -62,32 +62,28 @@ public class DBliveryServiceImpl implements DBliveryService {
     }
 	@Override
 	public Optional<User> getUserById(ObjectId id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(repository.getUserById(id));
 	}
 
 	@Override
 	public Optional<User> getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(repository.getUserByEmail(email));
 	}
 
 	@Override
 	public Optional<User> getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(repository.getUserByUsername(username));
 	}
 
 	@Override
 	public Optional<Order> getOrderById(ObjectId id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(repository.getOrderById(id));
 	}
 
 	@Override
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
 		Order o = new Order(dateOfOrder, address, coordX, coordY, client);
-		repository.insertWithAssociation("lalalaala", o.getClass(), o, o.getClient(), "order_client");
+		repository.insertWithAssociation("orders", o.getClass(), o, o.getClient(), "order_client");
 		return o;
 	}
 
@@ -158,6 +154,11 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public List<Product> getProductsByName(String name) {
+		return repository.getProductsByName(name);
+	}
+
+	@Override
+	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
 		// TODO Auto-generated method stub
 		return null;
 	}

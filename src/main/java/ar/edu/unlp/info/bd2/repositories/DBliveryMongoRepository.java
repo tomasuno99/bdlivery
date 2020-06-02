@@ -11,6 +11,7 @@ import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.mongo.*;
 import com.mongodb.client.*;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -59,8 +60,9 @@ public class DBliveryMongoRepository {
     }
     
     public void insertWithAssociation(String collectionName, Class objClass, PersistentObject assocSource, PersistentObject assocDestination, String assocName) {
-    	this.insert(collectionName, objClass, assocSource);
     	this.saveAssociation(assocSource, assocDestination, assocName);
+    	this.insert(collectionName, objClass, assocSource);
+    	
     }
     
 //    public Order addProduct(ObjectId order, Long quantity, Product product) {
@@ -83,6 +85,38 @@ public class DBliveryMongoRepository {
 
 	public void replaceProduct(Product product) {
 		this.getDb().getCollection("products", Product.class).replaceOne(eq("_id", product.getObjectId()), product);
+	}
+
+	public Order getOrderById(ObjectId id) {
+		return this.getDb().getCollection("orders", Order.class).find(eq("_id", id)).first();
+	}
+
+	public User getUserByUsername(String username) {
+		return this.getDb().getCollection("users", User.class).find(eq("username", username)).first();
+	}
+
+	public User getUserByEmail(String email) {
+		return this.getDb().getCollection("Users", User.class).find(eq("email", email)).first();
+	}
+
+	public User getUserById(ObjectId id) {
+		return this.getDb().getCollection("users", User.class).find(eq("_id", id)).first();
+	}
+
+	public List<Product> getProductsByName(String name) {
+		List<Product> list = new ArrayList<>();
+		Pattern pat = Pattern.compile(".*" + name + ".*");
+		for (Product obj: this.getDb().getCollection("products", Product.class).find(regex("name", pat))) {
+			list.add(obj);
+		}
+		return list;
+//		MongoCollection<Product> collection = this.getDb().getCollection("Product", Product.class);
+//        ArrayList<Product> list = new ArrayList<>();
+//        for (Product dbObject : collection.find(regex("name", ".*" + Pattern.quote(name) + ".*", "i")))
+//        {
+//            list.add(dbObject);
+//        }
+//        return list;
 	}
 
 }
