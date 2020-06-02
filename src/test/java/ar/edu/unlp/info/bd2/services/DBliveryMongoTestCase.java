@@ -42,20 +42,20 @@ public class DBliveryMongoTestCase {
     }
 
     private Integer getGroupNumber() {
-        return 0;
+        return 15;
     }
 
-//    @Test
-//    public void testCreateUser() {
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.YEAR, 1982);
-//        cal.set(Calendar.MONTH, Calendar.MAY);
-//        cal.set(Calendar.DAY_OF_MONTH, 17);
-//        Date dob = cal.getTime();
-//        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
-//        assertNotNull(u1.getObjectId());
-//    }
-//
+    @Test
+    public void testCreateUser() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1982);
+        cal.set(Calendar.MONTH, Calendar.MAY);
+        cal.set(Calendar.DAY_OF_MONTH, 17);
+        Date dob = cal.getTime();
+        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
+        assertNotNull(u1.getObjectId());
+    }
+
       @Test
       public void testCreateProduct() {
          Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
