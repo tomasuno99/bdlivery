@@ -29,6 +29,7 @@ public class Product implements PersistentObject{
 	//private double price = prices.get(prices.size()).getPrecio();
 	private Float weight;
 	
+	@BsonIgnore
 	private Supplier supplier;
 	private Date date;
 	
@@ -41,23 +42,21 @@ public class Product implements PersistentObject{
 	}
 
 	public Product() {
-		this.prices = new ArrayList<Price>();
 	}
 	
-	public Product(String name, Float price, Float weight, Supplier supplier) {
+	public Product(String name, Float price, Float weight) {
 		this.id = new ObjectId();
-		Price p = new Price(price, Calendar.getInstance().getTime());
-		this.prices.add(p);
+		//Price p = new Price(price, Calendar.getInstance().getTime());
+		//this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
-		this.supplier = supplier;
 		this.date = Calendar.getInstance().getTime();
 	}
 	
-	public Product(String name, Float price, Float weight, Supplier supplier, Date date) {
+	public Product(String name, Float price, Float weight, Date date) {
 		this.id = new ObjectId();
-		Price p = new Price(price, date);
-		this.prices.add(p);
+		//Price p = new Price(price, date);
+		//this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
@@ -67,7 +66,7 @@ public class Product implements PersistentObject{
 	//public Product updateProductPrice(double idProd,float price, Date startDate) {
 	//	
 	//}
-	
+	@BsonIgnore
 	public Price getActualPrice() {
 		Price p = null;
 		int i=0;
@@ -81,12 +80,14 @@ public class Product implements PersistentObject{
 	}
 	
 	public Product updatePrice(Float price, Date startDate) {
+		if (! this.prices.isEmpty()) {
 		this.getActualPrice().finalizePrice(startDate);
+		}
 		Price priceVar = new Price(price, startDate);
 		this.getPrices().add(priceVar);
 		return this;
 	}
-	
+	@BsonIgnore
 	public Float getPrice() {
 		return this.getActualPrice().getPrice();
 	}
@@ -115,7 +116,7 @@ public class Product implements PersistentObject{
 	public void setId(ObjectId id) {
 		this.setObjectId(id);
 	}
-	@BsonIgnore
+	
 	public List<Price> getPrices() {
 		return prices;
 	}
