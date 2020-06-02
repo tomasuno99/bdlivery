@@ -3,30 +3,39 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.ArrayList;
 
 
+
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
+import org.bson.types.ObjectId;
 
-public class Order {
-	@Id
-	private long id;
+import ar.edu.unlp.info.bd2.mongo.PersistentObject;
+
+public class Order implements PersistentObject {
+	@BsonId
+	private ObjectId id;
 	private Date dateOfOrder;
 	private String address;
 	private Float coordX;
 	private Float coordY;
 	
+	@BsonIgnore
 	private User client;
 	
+	@BsonIgnore
 	private List<OrderProduct> products;
 	
 	private List<OrderStatus> statusHistory;
 	
+	@BsonIgnore
 	private User deliveryUser;
 	
 	public Order() {}
 	
 	public Order(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
+		this.id = new ObjectId();
 		this.statusHistory = new ArrayList<OrderStatus>();
 		this.products = new ArrayList<OrderProduct>();
 		OrderStatus pendingStatus = new Pending();
@@ -73,12 +82,12 @@ public class Order {
 		this.deliveryUser = deliveryUser;
 	}
 
-	public long getId() {
+	public ObjectId getObjectId() {
 		return id;
 	}
 
 
-	public void setId(long id) {
+	public void setObjectId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -151,5 +160,6 @@ public class Order {
 	public void setProducts(List<OrderProduct> products) {
 		this.products = products;
 	}
+
 	
 }

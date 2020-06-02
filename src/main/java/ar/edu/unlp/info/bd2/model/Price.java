@@ -3,13 +3,19 @@ package ar.edu.unlp.info.bd2.model;
 import java.util.Calendar;
 
 
+
 import java.util.Date;
 
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 
-public class Price {
-	private long id;
+import ar.edu.unlp.info.bd2.mongo.PersistentObject;
+
+public class Price implements PersistentObject{
+	@BsonId
+	private ObjectId id;
 	private Float price;
 	private Date startDate;
 	private Date endDate;
@@ -34,6 +40,7 @@ public class Price {
 	public Price() {}
 	
 	public Price(float price, Date startDate) {
+		this.id = new ObjectId();
 		this.price = price;
 		this.startDate = startDate;
 		this.actualPrice = true;
@@ -54,6 +61,17 @@ public class Price {
 			this.endDate = sdate.minusDays(1).toDate();
 		}
 		this.actualPrice = false;
+	}
+
+	@Override
+	public ObjectId getObjectId() {
+		return this.id;
+	}
+
+	@Override
+	public void setObjectId(ObjectId objectId) {
+		this.id = objectId;
+		
 	}
 	
 }

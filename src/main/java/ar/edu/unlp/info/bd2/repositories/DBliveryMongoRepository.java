@@ -54,7 +54,7 @@ public class DBliveryMongoRepository {
     }
     
 
-    public void insert(String collectionName, Class objClass,  Object obj) {
+    public void insert(String collectionName, Class objClass, Object obj) {
         this.getDb().getCollection(collectionName, objClass).insertOne(obj);
     }
     
@@ -62,6 +62,27 @@ public class DBliveryMongoRepository {
     	this.insert(collectionName, objClass, assocSource);
     	this.saveAssociation(assocSource, assocDestination, assocName);
     }
+    
+//    public Order addProduct(ObjectId order, Long quantity, Product product) {
+//    	this.getDb().getCollection("orders", order.getClass()).findOneAndUpdate((eq("_id", order),  );
+//    }
+    
+//    public Product updateProductPrice(ObjectId id, Price price) {
+//        MongoCollection<Product> mongoDoc = this.getDb().getCollection("products", Product.class);
+//        Product p = mongoDoc.find(eq("_id", id)).first();
+//        Product prod = p;
+//        prod.updatePrice(price.getPrice(), price.getStartDate());
+//        mongoDoc.replaceOne(eq("_id", id), prod);
+//        return p;
+//    }
 
+	public Product getProductById(ObjectId id) {
+		MongoCollection<Product> collection = this.getDb().getCollection("products", Product.class);
+        return collection.find(eq("_id", id)).first();
+	}
+
+	public void replaceProduct(Product product) {
+		this.getDb().getCollection("products", Product.class).replaceOne(eq("_id", product.getObjectId()), product);
+	}
 
 }

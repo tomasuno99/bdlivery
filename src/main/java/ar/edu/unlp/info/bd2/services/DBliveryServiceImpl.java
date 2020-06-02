@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
+import ar.edu.unlp.info.bd2.model.Price;
 import ar.edu.unlp.info.bd2.model.Product;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
@@ -52,11 +53,13 @@ public class DBliveryServiceImpl implements DBliveryService {
         return user;
 	}
 	@Override
-	public Product updateProductPrice(ObjectId id, Float price, Date startDate) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    public Product updateProductPrice(ObjectId id, Float price, Date startDate) throws DBliveryException {
+        Product p = repository.getProductById(id);
+        if(p.getObjectId() != null) {
+            repository.replaceProduct(p.updatePrice(price, startDate));
+            return p;
+        }else {throw new DBliveryException("The product don't exist");}
+    }
 	@Override
 	public Optional<User> getUserById(ObjectId id) {
 		// TODO Auto-generated method stub
@@ -83,15 +86,15 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = new Order(dateOfOrder, address, coordX, coordY, client);
+		repository.insertWithAssociation("lalalaala", o.getClass(), o, o.getClient(), "order_client");
+		return o;
 	}
 
-	@Override
-	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
+//		return repository.addProduct(order, quantity, product);
+//	}
 
 	@Override
 	public Order deliverOrder(ObjectId order, User deliveryUser) throws DBliveryException {

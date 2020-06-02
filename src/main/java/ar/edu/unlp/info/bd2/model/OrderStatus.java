@@ -2,16 +2,26 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.Date;
 
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
-import org.springframework.data.annotation.Id;
+import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-public abstract class OrderStatus {
-	@Id
-	protected long id;
+@BsonDiscriminator
+public abstract class OrderStatus implements PersistentObject{
+	@BsonId
+	protected ObjectId id;
 	protected boolean isActual = true;
 	protected Date date;
 	
+	public ObjectId getObjectId() {
+		return this.id;
+	}
 	
+	public void setObjectId(ObjectId objectId) {
+		this.id = objectId;
+	}
 	
 	public Date getDate() {
 		return date;

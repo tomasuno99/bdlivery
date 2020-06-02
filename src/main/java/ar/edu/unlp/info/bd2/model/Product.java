@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -19,16 +20,15 @@ import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 
 public class Product implements PersistentObject{
 
-
+	@BsonId
 	private ObjectId id;
 	private String name;
 	
 	
-	private List<Price> prices;
+	private List<Price> prices = new ArrayList<>();
 	//private double price = prices.get(prices.size()).getPrecio();
 	private Float weight;
 	
-	@BsonIgnore
 	private Supplier supplier;
 	private Date date;
 	
@@ -46,7 +46,6 @@ public class Product implements PersistentObject{
 	
 	public Product(String name, Float price, Float weight, Supplier supplier) {
 		this.id = new ObjectId();
-		this.prices = new ArrayList<Price>();
 		Price p = new Price(price, Calendar.getInstance().getTime());
 		this.prices.add(p);
 		this.name = name;
@@ -57,7 +56,6 @@ public class Product implements PersistentObject{
 	
 	public Product(String name, Float price, Float weight, Supplier supplier, Date date) {
 		this.id = new ObjectId();
-		this.prices = new ArrayList<Price>();
 		Price p = new Price(price, date);
 		this.prices.add(p);
 		this.name = name;
@@ -69,7 +67,6 @@ public class Product implements PersistentObject{
 	//public Product updateProductPrice(double idProd,float price, Date startDate) {
 	//	
 	//}
-	
 	
 	public Price getActualPrice() {
 		Price p = null;
@@ -83,10 +80,11 @@ public class Product implements PersistentObject{
 		return p;
 	}
 	
-	public void updatePrice(Float price, Date startDate) {
+	public Product updatePrice(Float price, Date startDate) {
 		this.getActualPrice().finalizePrice(startDate);
 		Price priceVar = new Price(price, startDate);
 		this.getPrices().add(priceVar);
+		return this;
 	}
 	
 	public Float getPrice() {
@@ -117,7 +115,7 @@ public class Product implements PersistentObject{
 	public void setId(ObjectId id) {
 		this.setObjectId(id);
 	}
-
+	@BsonIgnore
 	public List<Price> getPrices() {
 		return prices;
 	}
@@ -138,6 +136,7 @@ public class Product implements PersistentObject{
 		this.weight = weight;
 	}
 
+	
 	public Supplier getSupplier() {
 		return supplier;
 	}

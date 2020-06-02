@@ -2,17 +2,19 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.Date;
 
-
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 public class OrderProduct {
-	@Id
-	private long id;
+	@BsonId
+	private ObjectId id;
 	private Long quantity;
 	private Product product;
 	
 	public OrderProduct() {}
 	
 	public OrderProduct(Long quantity, Product product) {
+		this.id = new ObjectId();
 		this.quantity = quantity;
 		this.product = product;
 	}

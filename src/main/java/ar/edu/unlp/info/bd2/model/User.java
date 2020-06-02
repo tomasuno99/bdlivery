@@ -8,12 +8,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
 public class User implements PersistentObject {
+	@BsonId
 	private ObjectId id;
 	private String email;
 	private String password;
