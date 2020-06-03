@@ -13,9 +13,8 @@ import org.springframework.data.annotation.Id;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-public class Price implements PersistentObject{
+public class Price{
 	@BsonId
-	private ObjectId id;
 	private Float price;
 	private Date startDate;
 	private Date endDate;
@@ -40,18 +39,12 @@ public class Price implements PersistentObject{
 	public Price() {}
 	
 	public Price(float price, Date startDate) {
-		this.id = new ObjectId();
 		this.price = price;
 		this.startDate = startDate;
 		this.actualPrice = true;
 	}
-	public ObjectId getId() {
-		return id;
-	}
 
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+
 
 	public void setPrice(Float price) {
 		this.price = price;
@@ -77,15 +70,8 @@ public class Price implements PersistentObject{
 		this.actualPrice = false;
 	}
 
-	@Override
-	public ObjectId getObjectId() {
-		return this.id;
-	}
 
-	@Override
-	public void setObjectId(ObjectId objectId) {
-		this.id = objectId;
-		
-	}
+
+
 	
 }

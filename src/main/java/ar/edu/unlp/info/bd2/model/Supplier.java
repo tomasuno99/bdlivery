@@ -14,7 +14,7 @@ import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
 public class Supplier implements PersistentObject{
 	@BsonId
-	private ObjectId id;
+	private ObjectId objectId;
 	private String name;
 	private String cuil;
 	private String address;
@@ -27,7 +27,7 @@ public class Supplier implements PersistentObject{
 	public Supplier() {}
 	
 	public Supplier(String name, String cuil, String adress, Float coordx, Float coordy) {
-		this.id = new ObjectId();
+		this.objectId = new ObjectId();
 		this.name= name;
 		this.cuil = cuil;
 		this.address = adress;
@@ -80,12 +80,12 @@ public class Supplier implements PersistentObject{
 
 	@Override
 	public ObjectId getObjectId() {
-		return this.id;
+		return this.objectId;
 	}
 
 	@Override
 	public void setObjectId(ObjectId objectId) {
-		this.id = objectId;
+		this.objectId = objectId;
 		
 	}
 	

@@ -16,7 +16,7 @@ import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
 public class User implements PersistentObject {
 	@BsonId
-	private ObjectId id;
+	private ObjectId objectId;
 	private String email;
 	private String password;
 	private String username;
@@ -30,20 +30,12 @@ public class User implements PersistentObject {
 	public User() {}
 	
 	public User(String email, String pass, String username, String name, Date date) {
-		this.id = new ObjectId();
+		this.objectId = new ObjectId();
 		this.email = email;
 		this.password = pass;
 		this.name = name;
 		this.dateOfBirth = date;
 		this.username = username;
-	}
-	
-	public ObjectId getId() {
-		return this.getObjectId();
-	}
-
-	public void setId(ObjectId id) {
-		this.setObjectId(id);
 	}
 	
 	public List<Order> getOrders() {
@@ -94,12 +86,12 @@ public class User implements PersistentObject {
 
 	@Override
 	public ObjectId getObjectId() {
-		return this.id;
+		return this.objectId;
 	}
 
 	@Override
 	public void setObjectId(ObjectId objectId) {
-		this.id = objectId;
+		this.objectId = objectId;
 	}
 	
 }

@@ -11,16 +11,16 @@ import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 @BsonDiscriminator
 public abstract class OrderStatus implements PersistentObject{
 	@BsonId
-	protected ObjectId id;
+	protected ObjectId objectId;
 	protected boolean isActual = true;
 	protected Date date;
 	
 	public ObjectId getObjectId() {
-		return this.id;
+		return this.objectId;
 	}
 	
 	public void setObjectId(ObjectId objectId) {
-		this.id = objectId;
+		this.objectId = objectId;
 	}
 	
 	public Date getDate() {

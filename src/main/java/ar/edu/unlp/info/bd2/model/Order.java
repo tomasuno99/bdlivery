@@ -15,7 +15,7 @@ import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
 public class Order implements PersistentObject {
 	@BsonId
-	private ObjectId id;
+	private ObjectId objectId;
 	private Date dateOfOrder;
 	private String address;
 	private Float coordX;
@@ -35,7 +35,7 @@ public class Order implements PersistentObject {
 	public Order() {}
 	
 	public Order(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
-		this.id = new ObjectId();
+		this.objectId = new ObjectId();
 		this.statusHistory = new ArrayList<OrderStatus>();
 		this.products = new ArrayList<OrderProduct>();
 		OrderStatus pendingStatus = new Pending();
@@ -83,12 +83,12 @@ public class Order implements PersistentObject {
 	}
 
 	public ObjectId getObjectId() {
-		return id;
+		return objectId;
 	}
 
 
 	public void setObjectId(ObjectId id) {
-		this.id = id;
+		this.objectId = id;
 	}
 
 

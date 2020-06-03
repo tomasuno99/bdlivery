@@ -19,7 +19,7 @@ import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 public class Product implements PersistentObject {
 
 	@BsonId
-	private ObjectId id;
+	private ObjectId objectId;
 
 	private String name;
 
@@ -43,7 +43,7 @@ public class Product implements PersistentObject {
 	}
 
 	public Product(String name, Float price, Float weight) {
-		this.id = new ObjectId();
+		this.objectId = new ObjectId();
 		Price p = new Price(price, Calendar.getInstance().getTime());
 		this.prices.add(p);
 		this.name = name;
@@ -52,7 +52,7 @@ public class Product implements PersistentObject {
 	}
 
 	public Product(String name, Float price, Float weight, Date date) {
-		this.id = new ObjectId();
+		this.objectId = new ObjectId();
 		Price p = new Price(price, date);
 		this.prices.add(p);
 		this.name = name;
@@ -144,12 +144,14 @@ public class Product implements PersistentObject {
 
 	@Override
 	public ObjectId getObjectId() {
-		return this.id;
+		return this.objectId;
 	}
+	
+
 
 	@Override
 	public void setObjectId(ObjectId objectId) {
-		this.id = objectId;
+		this.objectId = objectId;
 
 	}
 
