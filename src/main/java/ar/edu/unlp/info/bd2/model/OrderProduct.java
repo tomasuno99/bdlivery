@@ -6,7 +6,6 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 public class OrderProduct {
-
 	private Long quantity;
 	private Product product;
 	
@@ -16,7 +15,7 @@ public class OrderProduct {
 		this.quantity = quantity;
 		this.product = product;
 	}
-
+	
 	public Float getAmount(Date day) {
 		return this.product.getPriceAt(day) * this.quantity;
 	}

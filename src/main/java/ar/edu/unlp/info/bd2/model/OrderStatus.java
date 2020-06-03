@@ -8,11 +8,22 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-@BsonDiscriminator
-public abstract class OrderStatus{
-	protected boolean isActual = true;
-	protected Date date;
+public class OrderStatus {
+	boolean isActual = true;
+	Date date;
+	String status;
 	
+	public OrderStatus() {}
+	
+	public OrderStatus(Date date, String status) {
+		this.date = date;
+		this.status = status;
+	}
+	
+	public OrderStatus(String status) {
+		this.date = new Date();
+		this.status = status;
+	}
 	
 	public Date getDate() {
 		return date;
@@ -30,6 +41,8 @@ public abstract class OrderStatus{
 		this.isActual = isActual;
 	}
 
-	public abstract String getStatus();
+	public String getStatus() {
+		return this.status;
+	};
 	
 }
