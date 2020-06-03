@@ -24,7 +24,6 @@ public class Order implements PersistentObject {
 	@BsonIgnore
 	private User client;
 	
-	@BsonIgnore
 	private List<OrderProduct> products;
 	
 	private List<OrderStatus> statusHistory;
@@ -34,18 +33,16 @@ public class Order implements PersistentObject {
 	
 	public Order() {}
 	
-	public Order(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
+	public Order(Date dateOfOrder, String address, Float coordX, Float coordY) {
 		this.objectId = new ObjectId();
 		this.statusHistory = new ArrayList<OrderStatus>();
 		this.products = new ArrayList<OrderProduct>();
-		OrderStatus pendingStatus = new Pending();
-		pendingStatus.setDate(dateOfOrder);
-		this.statusHistory.add(pendingStatus);
+		OrderStatus os = new OrderStatus("Pending");
+		this.statusHistory.add(os);
 		this.dateOfOrder = dateOfOrder;
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;
-		this.client = client;
 	}
 	
 	public OrderStatus getActualStatusObject() {
@@ -159,6 +156,14 @@ public class Order implements PersistentObject {
 
 	public void setProducts(List<OrderProduct> products) {
 		this.products = products;
+	}
+
+	public List<OrderStatus> getStatusHistory() {
+		return statusHistory;
+	}
+
+	public void setStatusHistory(List<OrderStatus> statusHistory) {
+		this.statusHistory = statusHistory;
 	}
 
 	
