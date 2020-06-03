@@ -60,8 +60,8 @@ public class DBliveryMongoRepository {
     }
     
     public void insertWithAssociation(String collectionName, Class objClass, PersistentObject assocSource, PersistentObject assocDestination, String assocName) {
-    	this.insert(collectionName, objClass, assocSource);
     	this.saveAssociation(assocSource, assocDestination, assocName);
+    	this.insert(collectionName, objClass, assocSource);
     }
     
 //    public Order addProduct(ObjectId order, Long quantity, Product product) {
@@ -87,7 +87,7 @@ public class DBliveryMongoRepository {
 	}
 
 	public Order getOrderById(ObjectId id) {
-		return this.getDb().getCollection("orders", Order.class).find(eq("_id", id)).first();
+		return this.getDb().getCollection("orders", Order.class).find(eq("objectId", id)).first();
 	}
 
 	public User getUserByUsername(String username) {

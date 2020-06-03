@@ -42,20 +42,20 @@ public class Order implements PersistentObject {
 		this.coordY = coordY;
 	}
 	
-//	public OrderStatus getActualStatusObject() {
-//		int i=0;
-//		while(i < this.statusHistory.size()) {
-//			if (this.statusHistory.get(i).isActual()) {
-//				return this.statusHistory.get(i);
-//			}
-//			i++;
-//		}
-//		return null;	
-//	}
+	public OrderStatus getActualStatusObject() {
+		int i=0;
+		while(i < this.statusHistory.size()) {
+			if (this.statusHistory.get(i).isActual()) {
+				return this.statusHistory.get(i);
+			}
+			i++;
+		}
+		return null;	
+	}
 
-//	public String getActualStatus() {
-//		return this.getActualStatusObject().getStatus();
-//	}
+	public String getActualStatus() {
+		return this.getActualStatusObject().getStatus();
+	}
 	
 	public Float getAmount() {
 		Float total = 00.0f;
@@ -162,6 +162,10 @@ public class Order implements PersistentObject {
 
 	public void setStatusHistory(List<OrderStatus> statusHistory) {
 		this.statusHistory = statusHistory;
+	}
+	
+	public List<OrderStatus> getStatus(){
+		return this.statusHistory;
 	}
 
 	
