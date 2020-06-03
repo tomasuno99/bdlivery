@@ -20,48 +20,40 @@ public class Order implements PersistentObject {
 	private String address;
 	private Float coordX;
 	private Float coordY;
-	
+	private List<OrderProduct> products = new ArrayList<OrderProduct>();
+	//private List<OrderStatus> statusHistory = new ArrayList<OrderStatus>();
 	@BsonIgnore
 	private User client;
-	
-	@BsonIgnore
-	private List<OrderProduct> products;
-	
-	private List<OrderStatus> statusHistory;
-	
 	@BsonIgnore
 	private User deliveryUser;
 	
 	public Order() {}
 	
-	public Order(Date dateOfOrder, String address, Float coordX, Float coordY,User client) {
+	public Order(Date dateOfOrder, String address, Float coordX, Float coordY) {
 		this.objectId = new ObjectId();
-		this.statusHistory = new ArrayList<OrderStatus>();
-		this.products = new ArrayList<OrderProduct>();
 		OrderStatus pendingStatus = new Pending();
 		pendingStatus.setDate(dateOfOrder);
-		this.statusHistory.add(pendingStatus);
+		//this.statusHistory.add(pendingStatus);
 		this.dateOfOrder = dateOfOrder;
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;
-		this.client = client;
 	}
 	
-	public OrderStatus getActualStatusObject() {
-		int i=0;
-		while(i < this.statusHistory.size()) {
-			if (this.statusHistory.get(i).isActual()) {
-				return this.statusHistory.get(i);
-			}
-			i++;
-		}
-		return null;	
-	}
+//	public OrderStatus getActualStatusObject() {
+//		int i=0;
+//		while(i < this.statusHistory.size()) {
+//			if (this.statusHistory.get(i).isActual()) {
+//				return this.statusHistory.get(i);
+//			}
+//			i++;
+//		}
+//		return null;	
+//	}
 
-	public String getActualStatus() {
-		return this.getActualStatusObject().getStatus();
-	}
+//	public String getActualStatus() {
+//		return this.getActualStatusObject().getStatus();
+//	}
 	
 	public Float getAmount() {
 		Float total = 00.0f;
@@ -92,14 +84,14 @@ public class Order implements PersistentObject {
 	}
 
 
-	public List<OrderStatus> getStatus() {
-		return this.statusHistory;
-	}
-
-
-	public void setStatus(OrderStatus status) {
-		this.statusHistory.add(status);
-	}
+//	public List<OrderStatus> getStatus() {
+//		return this.statusHistory;
+//	}
+//
+//
+//	public void setStatus(OrderStatus status) {
+//		this.statusHistory.add(status);
+//	}
 
 
 	public Date getDateOfOrder() {
@@ -161,5 +153,11 @@ public class Order implements PersistentObject {
 		this.products = products;
 	}
 
-	
+//	public List<OrderStatus> getStatusHistory() {
+//		return statusHistory;
+//	}
+//
+//	public void setStatusHistory(List<OrderStatus> statusHistory) {
+//		this.statusHistory = statusHistory;
+//	}
 }
