@@ -58,15 +58,16 @@ public class Order implements PersistentObject {
 		return this.getActualStatusObject().getStatus();
 	}
 	
-//	public Float getAmount() {
-//		Float total = 00.0f;
-//		int i=0;
-//		while(i < this.products.size()) {
-//			total += this.products.get(i).getAmount(this.dateOfOrder);
-//			i++;
-//		}
-//		return total;	
-//	}
+	@BsonIgnore
+	public Float getAmount() {
+		Float total = 00.0f;
+		int i=0;
+		while(i < this.products.size()) {
+			total += this.products.get(i).getAmount(this.dateOfOrder);
+			i++;
+		}
+		return total;	
+	}
 	
 	public User getDeliveryUser() {
 		return this.deliveryUser;

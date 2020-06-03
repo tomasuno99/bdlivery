@@ -144,16 +144,44 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return null;
 	}
 
+	/**
+	 * verifica si un pedido se puede cancelar, para lo cual debe estar en estado pending
+	 * @param order pedido a ser cancelado
+	 * @return true en caso que pueda ser cancelado false en caso contrario.
+	 * @throws DBliveryException si no existe el pedido.
+	 */
 	@Override
 	public boolean canCancel(ObjectId order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return false;
+		Order o = this.repository.getOrderById(order);
+		if (o.getObjectId() != null) {
+			if (o.getActualStatus().equals("Pending")) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {throw new DBliveryException("The order don't exist");}
 	}
-
+	
+	/**
+	 * verifica si se puede finalizar un pedido
+	 * @param id del pedido a finalizar
+	 * @return true en caso que pueda ser finalizado, false en caso contrario
+	 * @throws DBliveryException en caso de no existir el pedido
+	 */
 	@Override
 	public boolean canFinish(ObjectId id) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return false;
+		Order o = this.repository.getOrderById(id);
+		if (o.getObjectId() != null) {
+			if (o.getActualStatus().equals("Sended")) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {throw new DBliveryException("The order don't exist");}
 	}
 
 	@Override
