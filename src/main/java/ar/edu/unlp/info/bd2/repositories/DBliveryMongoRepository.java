@@ -87,7 +87,7 @@ public class DBliveryMongoRepository {
 	}
 
 	public Order getOrderById(ObjectId id) {
-		return this.getDb().getCollection("orders", Order.class).find(eq("objectId", id)).first();
+		return this.getDb().getCollection("orders", Order.class).find(eq("_id", id)).first();
 	}
 
 	public User getUserByUsername(String username) {
@@ -109,6 +109,10 @@ public class DBliveryMongoRepository {
 			list.add(obj);
 		}
 		return list;
+	}
+
+	public void updateOrder(Order o) {
+		this.getDb().getCollection("orders", Order.class).replaceOne(eq("_id", o.getObjectId()), o);
 	}
 
 }

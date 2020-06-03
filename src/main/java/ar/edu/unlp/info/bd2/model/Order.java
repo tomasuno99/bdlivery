@@ -16,13 +16,13 @@ import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 public class Order implements PersistentObject {
 	@BsonId
 	private ObjectId objectId;
+//	private Float amount = 0.0F;
 	private Date dateOfOrder;
 	private String address;
 	private Float coordX;
 	private Float coordY;
 	private List<OrderProduct> products = new ArrayList<OrderProduct>();
-	//private List<OrderStatus> statusHistory = new ArrayList<OrderStatus>();
-	@BsonIgnore
+
 	private User client;
 	
 	private List<OrderStatus> statusHistory= new ArrayList<OrderStatus>();
@@ -32,7 +32,7 @@ public class Order implements PersistentObject {
 	
 	public Order() {}
 	
-	public Order(Date dateOfOrder, String address, Float coordX, Float coordY) {
+	public Order(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
 		this.objectId = new ObjectId();
 		OrderStatus os = new OrderStatus("Pending");
 		this.statusHistory.add(os);
@@ -40,6 +40,7 @@ public class Order implements PersistentObject {
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;
+		this.client = client;
 	}
 	
 	public OrderStatus getActualStatusObject() {
@@ -57,15 +58,15 @@ public class Order implements PersistentObject {
 		return this.getActualStatusObject().getStatus();
 	}
 	
-	public Float getAmount() {
-		Float total = 00.0f;
-		int i=0;
-		while(i < this.products.size()) {
-			total += this.products.get(i).getAmount(this.dateOfOrder);
-			i++;
-		}
-		return total;	
-	}
+//	public Float getAmount() {
+//		Float total = 00.0f;
+//		int i=0;
+//		while(i < this.products.size()) {
+//			total += this.products.get(i).getAmount(this.dateOfOrder);
+//			i++;
+//		}
+//		return total;	
+//	}
 	
 	public User getDeliveryUser() {
 		return this.deliveryUser;

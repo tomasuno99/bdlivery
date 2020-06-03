@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.model.Order;
+import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Price;
 import ar.edu.unlp.info.bd2.model.Product;
@@ -83,15 +84,29 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
-		Order o = new Order(dateOfOrder, address, coordX, coordY);
-		repository.insertWithAssociation("orders",o.getClass(), o, client, "order_client");
+		Order o = new Order(dateOfOrder, address, coordX, coordY, client);
+		repository.insert("orders",o.getClass(), o);
 		return o;
 	}
-
-//	@Override
-//	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
-//		return repository.addProduct(order, quantity, product);
-//	}
+	/**
+	 * agrega un producto al pedido
+	 * @param order pedido al cual se le agrega el producto
+	 * @param quantity cantidad de producto a agregar
+	 * @param product producto a agregar
+	 * @return el pedido con el nuevo producto
+	 * @throws DBliveryException en caso de no existir el pedido
+	 */
+	@Override
+	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
+		Order o = this.repository.getOrderById(order);
+		if (o.getObjectId() != null) {
+			OrderProduct op = new OrderProduct(quantity, product);
+			o.getProducts().add(op);
+			this.repository.updateOrder(o);
+			return o;
+		}
+		else {throw new DBliveryException("The order don't exist");}
+	}
 
 	@Override
 	public Order deliverOrder(ObjectId order, User deliveryUser) throws DBliveryException {
@@ -158,11 +173,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return repository.getProductsByName(name);
 	}
 
-	@Override
-	public Order addProduct(ObjectId order, Long quantity, Product product) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 }
