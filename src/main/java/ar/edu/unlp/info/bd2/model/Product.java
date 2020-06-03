@@ -44,8 +44,8 @@ public class Product implements PersistentObject {
 
 	public Product(String name, Float price, Float weight) {
 		this.id = new ObjectId();
-		// Price p = new Price(price, Calendar.getInstance().getTime());
-		// this.prices.add(p);
+		Price p = new Price(price, Calendar.getInstance().getTime());
+		this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
 		this.date = Calendar.getInstance().getTime();
@@ -53,8 +53,8 @@ public class Product implements PersistentObject {
 
 	public Product(String name, Float price, Float weight, Date date) {
 		this.id = new ObjectId();
-		// Price p = new Price(price, date);
-		// this.prices.add(p);
+		Price p = new Price(price, date);
+		this.prices.add(p);
 		this.name = name;
 		this.weight = weight;
 		this.supplier = supplier;
@@ -112,14 +112,6 @@ public class Product implements PersistentObject {
 			i++;
 		}
 		return null;
-	}
-
-	public ObjectId getId() {
-		return this.getObjectId();
-	}
-
-	public void setId(ObjectId id) {
-		this.setObjectId(id);
 	}
 
 	public List<Price> getPrices() {

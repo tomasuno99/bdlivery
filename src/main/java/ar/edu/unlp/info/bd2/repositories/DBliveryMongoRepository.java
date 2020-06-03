@@ -110,13 +110,6 @@ public class DBliveryMongoRepository {
 			list.add(obj);
 		}
 		return list;
-//		MongoCollection<Product> collection = this.getDb().getCollection("Product", Product.class);
-//        ArrayList<Product> list = new ArrayList<>();
-//        for (Product dbObject : collection.find(regex("name", ".*" + Pattern.quote(name) + ".*", "i")))
-//        {
-//            list.add(dbObject);
-//        }
-//        return list;
 	}
 
 }

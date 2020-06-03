@@ -29,7 +29,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
 		Product p = new Product(name, price, weight);
-		p.updatePrice(price, new Date());
+		//p.updatePrice(price, new Date());
 		repository.insertWithAssociation("products", p.getClass(), p, supplier, "product_supplier");
 		return p;
 	}
