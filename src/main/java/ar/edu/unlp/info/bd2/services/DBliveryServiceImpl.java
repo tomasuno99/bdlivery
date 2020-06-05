@@ -125,7 +125,18 @@ public class DBliveryServiceImpl implements DBliveryService {
 			throw new DBliveryException("The order don't exist");
 		}
 	}
-
+	@Override
+	public Order finishOrder(ObjectId order) throws DBliveryException {
+		Order o = this.repository.getOrderById(order);
+		if (o.getObjectId() != null && this.canFinish(order)) {
+			OrderStatus os = new OrderStatus("Delivered");
+			o.changeStatus(os);
+			this.repository.updateOrder(o);
+			return o;
+		} else {
+			throw new DBliveryException("The order don't exist");
+		}
+	}
 	@Override
 	public Order deliverOrder(ObjectId order, User deliveryUser, Date date) throws DBliveryException {
 		// TODO Auto-generated method stub
@@ -144,11 +155,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return null;
 	}
 
-	@Override
-	public Order finishOrder(ObjectId order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public Order finishOrder(ObjectId order, Date date) throws DBliveryException {
