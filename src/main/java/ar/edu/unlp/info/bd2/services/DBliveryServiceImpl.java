@@ -139,8 +139,16 @@ public class DBliveryServiceImpl implements DBliveryService {
 	}
 	@Override
 	public Order deliverOrder(ObjectId order, User deliveryUser, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = this.repository.getOrderById(order);
+		if (o.getObjectId() != null && this.canDeliver(order)) {
+			OrderStatus os = new OrderStatus(date ,"Sended");
+			o.changeStatus(os);
+			o.setDeliveryUser(deliveryUser);
+			this.repository.updateOrder(o);
+			return o;
+		} else {
+			throw new DBliveryException("The order don't exist");
+		}
 	}
 	/**
 	 * Cancela un pedido
@@ -176,8 +184,15 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Order finishOrder(ObjectId order, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = this.repository.getOrderById(order);
+		if (o.getObjectId() != null && this.canFinish(order)) {
+			OrderStatus os = new OrderStatus(date,"Delivered");
+			o.changeStatus(os);
+			this.repository.updateOrder(o);
+			return o;
+		} else {
+			throw new DBliveryException("The order don't exist");
+		}
 	}
 
 	@Override
