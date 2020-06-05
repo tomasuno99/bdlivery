@@ -88,7 +88,9 @@ public class User implements PersistentObject {
 	public ObjectId getObjectId() {
 		return this.objectId;
 	}
-
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
 	@Override
 	public void setObjectId(ObjectId objectId) {
 		this.objectId = objectId;

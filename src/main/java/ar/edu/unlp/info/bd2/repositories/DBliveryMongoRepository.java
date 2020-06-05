@@ -95,7 +95,7 @@ public class DBliveryMongoRepository {
 	}
 
 	public User getUserByEmail(String email) {
-		return this.getDb().getCollection("Users", User.class).find(eq("email", email)).first();
+		return this.getDb().getCollection("users", User.class).find(eq("email", email)).first();
 	}
 
 	public User getUserById(ObjectId id) {
