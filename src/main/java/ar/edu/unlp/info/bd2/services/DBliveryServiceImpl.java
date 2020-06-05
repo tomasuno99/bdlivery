@@ -196,8 +196,11 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public boolean canDeliver(ObjectId order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return false;
+		Order o = this.repository.getOrderById(order);
+		if (! o.getProducts().isEmpty() && o.getActualStatus().equals("Pending")) {
+			return true;
+		}
+		else {throw new DBliveryException("The order is not in pending state");}
 	}
 
 	@Override
