@@ -140,12 +140,13 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public Order cancelOrder(ObjectId order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
-		if (o.getObjectId() != null) {
+		if (this.canCancel(order)) {
 			OrderStatus os = new OrderStatus("Cancelled");
-			//o.changeStatus(os);
+			o.changeStatus(os);
 			this.repository.updateOrder(o);
+			return o;
 		}
-		else {throw new DBliveryException("The order don't exist");}
+		else {throw new DBliveryException("The order isn't in Pending");}
 	}
 
 	@Override
@@ -227,11 +228,15 @@ public class DBliveryServiceImpl implements DBliveryService {
 			throw new DBliveryException("The order don't exist");
 		}
 	}
-
+	/**
+	 * Obtiene el estado actual de un pedido.
+	 * @param order pedido del cual se debe retornar el estado actual
+	 * @return el estado del pedido actual
+	 */
 	@Override
 	public OrderStatus getActualStatus(ObjectId order) {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = this.repository.getOrderById(order);
+		return o.getActualStatusObject();
 	}
 
 	@Override
