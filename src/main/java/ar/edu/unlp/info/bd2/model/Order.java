@@ -73,6 +73,10 @@ public class Order implements PersistentObject {
 		return this.deliveryUser;
 	}
 	
+	public void changeStatus(OrderStatus statusNew) {
+		this.getActualStatusObject().setActual(false);
+		this.statusHistory.add(statusNew);
+	}
 	
 	public void setDeliveryUser(User deliveryUser) {
 		this.deliveryUser = deliveryUser;

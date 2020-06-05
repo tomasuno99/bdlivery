@@ -17,12 +17,9 @@ import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 import ar.edu.unlp.info.bd2.repositories.DBliveryMongoRepository;
 
 public class DBliveryServiceImpl implements DBliveryService {
-	
+
 	DBliveryMongoRepository repository;
-	
-	
-	
-	
+
 	public DBliveryServiceImpl(DBliveryMongoRepository repository) {
 		this.repository = repository;
 	}
@@ -30,7 +27,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
 		Product p = new Product(name, price, weight);
-		//p.updatePrice(price, new Date());
+		// p.updatePrice(price, new Date());
 		repository.insertWithAssociation("products", p.getClass(), p, supplier, "product_supplier");
 		return p;
 	}
@@ -42,26 +39,30 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		Supplier s= new Supplier(name, cuil, address, coordX, coordY);
+		Supplier s = new Supplier(name, cuil, address, coordX, coordY);
 		repository.insert("suppliers", s.getClass(), s);
 		return s;
 	}
 
 	@Override
-    public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
+	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
 //        if (!repository.uniqueUsername(username))
-        User user = new User (email, password, username, name, dateOfBirth);
-        repository.insert("users", user.getClass(), user);
-        return user;
+		User user = new User(email, password, username, name, dateOfBirth);
+		repository.insert("users", user.getClass(), user);
+		return user;
 	}
+
 	@Override
-    public Product updateProductPrice(ObjectId id, Float price, Date startDate) throws DBliveryException {
-        Product p = repository.getProductById(id);
-        if(p.getObjectId() != null) {
-            repository.replaceProduct(p.updatePrice(price, startDate));
-            return p;
-        }else {throw new DBliveryException("The product don't exist");}
-    }
+	public Product updateProductPrice(ObjectId id, Float price, Date startDate) throws DBliveryException {
+		Product p = repository.getProductById(id);
+		if (p.getObjectId() != null) {
+			repository.replaceProduct(p.updatePrice(price, startDate));
+			return p;
+		} else {
+			throw new DBliveryException("The product don't exist");
+		}
+	}
+
 	@Override
 	public Optional<User> getUserById(ObjectId id) {
 		return Optional.of(repository.getUserById(id));
@@ -85,14 +86,16 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
 		Order o = new Order(dateOfOrder, address, coordX, coordY, client);
-		repository.insert("orders",o.getClass(), o);
+		repository.insert("orders", o.getClass(), o);
 		return o;
 	}
+
 	/**
 	 * agrega un producto al pedido
-	 * @param order pedido al cual se le agrega el producto
+	 * 
+	 * @param order    pedido al cual se le agrega el producto
 	 * @param quantity cantidad de producto a agregar
-	 * @param product producto a agregar
+	 * @param product  producto a agregar
 	 * @return el pedido con el nuevo producto
 	 * @throws DBliveryException en caso de no existir el pedido
 	 */
@@ -104,14 +107,23 @@ public class DBliveryServiceImpl implements DBliveryService {
 			o.getProducts().add(op);
 			this.repository.updateOrder(o);
 			return o;
+		} else {
+			throw new DBliveryException("The order don't exist");
 		}
-		else {throw new DBliveryException("The order don't exist");}
 	}
 
 	@Override
 	public Order deliverOrder(ObjectId order, User deliveryUser) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = this.repository.getOrderById(order);
+		if (o.getObjectId() != null && this.canDeliver(order)) {
+			OrderStatus os = new OrderStatus("Sended");
+			o.changeStatus(os);
+			o.setDeliveryUser(deliveryUser);
+			this.repository.updateOrder(o);
+			return o;
+		} else {
+			throw new DBliveryException("The order don't exist");
+		}
 	}
 
 	@Override
@@ -155,7 +167,9 @@ public class DBliveryServiceImpl implements DBliveryService {
 	}
 
 	/**
-	 * verifica si un pedido se puede cancelar, para lo cual debe estar en estado pending
+	 * verifica si un pedido se puede cancelar, para lo cual debe estar en estado
+	 * pending
+	 * 
 	 * @param order pedido a ser cancelado
 	 * @return true en caso que pueda ser cancelado false en caso contrario.
 	 * @throws DBliveryException si no existe el pedido.
@@ -166,16 +180,17 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (o.getObjectId() != null) {
 			if (o.getActualStatus().equals("Pending")) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
+		} else {
+			throw new DBliveryException("The order don't exist");
 		}
-		else {throw new DBliveryException("The order don't exist");}
 	}
-	
+
 	/**
 	 * verifica si se puede finalizar un pedido
+	 * 
 	 * @param id del pedido a finalizar
 	 * @return true en caso que pueda ser finalizado, false en caso contrario
 	 * @throws DBliveryException en caso de no existir el pedido
@@ -186,21 +201,31 @@ public class DBliveryServiceImpl implements DBliveryService {
 		if (o.getObjectId() != null) {
 			if (o.getActualStatus().equals("Sended")) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
+		} else {
+			throw new DBliveryException("The order don't exist");
 		}
-		else {throw new DBliveryException("The order don't exist");}
 	}
 
 	@Override
 	public boolean canDeliver(ObjectId order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
-		if (! o.getProducts().isEmpty() && o.getActualStatus().equals("Pending")) {
-			return true;
+		if (o.getObjectId() != null) {
+			if (!o.getProducts().isEmpty()) {
+				if (o.getActualStatus().equals("Pending")) {
+					return true;
+				} else {
+					throw new DBliveryException("The order is not in pending state");
+				}
+			} else {
+				return false;
+			}
+
+		} else {
+			throw new DBliveryException("The order don't exist");
 		}
-		else {throw new DBliveryException("The order is not in pending state");}
 	}
 
 	@Override
@@ -213,7 +238,5 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public List<Product> getProductsByName(String name) {
 		return repository.getProductsByName(name);
 	}
-
-
 
 }
