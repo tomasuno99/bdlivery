@@ -119,11 +119,21 @@ public class DBliveryServiceImpl implements DBliveryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * Cancela un pedido
+	 * @param order id del pedido a cancelar
+	 * @return el pedido modificado
+	 * @throws DBliveryException en caso de no existir el pedido o si el pedido no esta en estado pending
+	 */
 	@Override
 	public Order cancelOrder(ObjectId order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Order o = this.repository.getOrderById(order);
+		if (o.getObjectId() != null) {
+			OrderStatus os = new OrderStatus("Cancelled");
+			//o.changeStatus(os);
+			this.repository.updateOrder(o);
+		}
+		else {throw new DBliveryException("The order don't exist");}
 	}
 
 	@Override
