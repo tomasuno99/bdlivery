@@ -175,7 +175,7 @@ public class Order implements PersistentObject {
 	public void setStatusHistory(List<OrderStatus> statusHistory) {
 		this.statusHistory = statusHistory;
 	}
-	
+	@BsonIgnore
 	public List<OrderStatus> getStatus(){
 		return this.statusHistory;
 	}

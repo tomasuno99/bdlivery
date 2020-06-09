@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -137,6 +138,14 @@ public class DBliveryMongoRepository {
 		for (Order obj: this.getDb().getCollection("orders", Order.class).find(eq("client._id", user_id))) {
 			list.add(obj);
 		}
+		return list;
+	}
+
+	public List<Order> getSentOrders() {
+		List<Order> list = new ArrayList<>();
+		MongoCollection db = this.getDb().getCollection("orders", Order.class);
+		Bson match = match(eq("statusHistory.status", "Sended"));
+		db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
 

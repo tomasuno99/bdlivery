@@ -281,10 +281,12 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 		return null;
 	}
 
+    /**
+     * Obtiene el listado de las ordenes enviadas y no entregadas
+     */
 	@Override
 	public List<Order> getSentOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getSentOrders();
 	}
 
 	@Override
