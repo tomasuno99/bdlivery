@@ -259,14 +259,13 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public List<Order> getAllOrdersMadeByUser(String username) throws DBliveryException {
-//		User u = this.repository.getUserByUsername(username);
-//		if (u.getObjectId() != null) {
-//			return repository.getOrdersByUser(u.getObjectId());
-//		}
-//		else {
-//			throw new DBliveryException("The user don't exist");
-//		}
-		return repository.getOrdersByUser(username);
+		User u = this.repository.getUserByUsername(username);
+		if (u.getObjectId() != null) {
+			return repository.getOrdersByUser(u.getObjectId());
+		}
+		else {
+			throw new DBliveryException("The user don't exist");
+		}
 		
 	}
 

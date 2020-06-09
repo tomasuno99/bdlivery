@@ -132,9 +132,9 @@ public class DBliveryMongoRepository {
 		this.getDb().getCollection("orders", Order.class).replaceOne(eq("_id", o.getObjectId()), o);
 	}
 
-	public List<Order> getOrdersByUser(String username) {
+	public List<Order> getOrdersByUser(ObjectId user_id) {
 		List<Order> list = new ArrayList<>();
-		for (Order obj: this.getDb().getCollection("orders", Order.class).find(eq("username", username))) {
+		for (Order obj: this.getDb().getCollection("orders", Order.class).find(eq("client._id", user_id))) {
 			list.add(obj);
 		}
 		return list;
