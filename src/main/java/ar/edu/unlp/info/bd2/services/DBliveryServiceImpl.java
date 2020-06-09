@@ -278,8 +278,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public List<Order> getPendingOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getPendingOrders();
 	}
 
     /**

@@ -147,8 +147,16 @@ public class DBliveryMongoRepository {
 		List<Order> list = new ArrayList<>();
 		MongoCollection db = this.getDb().getCollection("orders", Order.class);
 		
-		
         Bson match = match(eq("actualStatusObject.status", "Sended"));
+        db.aggregate(Arrays.asList(match)).into(list);
+		return list;
+	}
+	
+	public List<Order> getPendingOrders() {
+		List<Order> list = new ArrayList<>();
+		MongoCollection db = this.getDb().getCollection("orders", Order.class);
+		
+        Bson match = match(eq("actualStatusObject.status", "Pending"));
         db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
