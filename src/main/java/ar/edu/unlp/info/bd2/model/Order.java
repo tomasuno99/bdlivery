@@ -2,6 +2,8 @@ package ar.edu.unlp.info.bd2.model;
 
 import java.util.ArrayList;
 
+import com.mongodb.client.model.geojson.Point;
+import com.mongodb.client.model.geojson.Position;
 
 
 import java.util.Date;
@@ -30,6 +32,8 @@ public class Order implements PersistentObject {
 	@BsonIgnore
 	private User deliveryUser;
 	
+	private Point position;
+	
 	public Order() {}
 	
 	public Order(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
@@ -41,6 +45,8 @@ public class Order implements PersistentObject {
 		this.coordX = coordX;
 		this.coordY = coordY;
 		this.client = client;
+		Position pos = new Position(coordX, coordY); 
+		this.position = new Point(pos);
 	}
 	
 	public OrderStatus getActualStatusObject() {
