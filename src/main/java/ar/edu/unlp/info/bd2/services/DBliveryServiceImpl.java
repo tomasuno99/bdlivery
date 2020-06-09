@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.bd2.services;
 
 import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,10 +14,11 @@ import ar.edu.unlp.info.bd2.model.Price;
 import ar.edu.unlp.info.bd2.model.Product;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
+import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 import ar.edu.unlp.info.bd2.repositories.DBliveryMongoRepository;
 
-public class DBliveryServiceImpl implements DBliveryService {
+public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsService {
 
 	DBliveryMongoRepository repository;
 
@@ -34,7 +36,9 @@ public class DBliveryServiceImpl implements DBliveryService {
 
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
-		return null;
+		Product p = new Product(name, price, weight, date);
+		repository.insertWithAssociation("products", p.getClass(), p, supplier, "product_supplier");
+		return p;
 	}
 
 	@Override
@@ -48,7 +52,7 @@ public class DBliveryServiceImpl implements DBliveryService {
 	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
 //        if (!repository.uniqueUsername(username))
 		User user = new User(email, password, username, name, dateOfBirth);
-		repository.insert("users", user.getClass(), user);
+		repository.insert("users", user.getClass(), user);		
 		return user;
 	}
 
@@ -251,6 +255,79 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Override
 	public List<Product> getProductsByName(String name) {
 		return repository.getProductsByName(name);
+	}
+
+	@Override
+	public List<Order> getAllOrdersMadeByUser(String username) throws DBliveryException {
+//		User u = this.repository.getUserByUsername(username);
+//		if (u.getObjectId() != null) {
+//			return repository.getOrdersByUser(u.getObjectId());
+//		}
+//		else {
+//			throw new DBliveryException("The user don't exist");
+//		}
+		return repository.getOrdersByUser(username);
+		
+	}
+
+	@Override
+	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getPendingOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getSentOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getDeliveredOrdersForUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product getBestSellingProduct() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getProductsOnePrice() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getSoldProductsOn(Date day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product getMaxWeigth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getOrderNearPlazaMoreno() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

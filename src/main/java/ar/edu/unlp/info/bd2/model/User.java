@@ -41,6 +41,8 @@ public class User implements PersistentObject {
 	public List<Order> getOrders() {
 		return orders;
 	}
+	
+	
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
