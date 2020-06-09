@@ -91,6 +91,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
 		Order o = new Order(dateOfOrder, address, coordX, coordY, client);
 		repository.insert("orders", o.getClass(), o);
+//		repository.saveAssociation(client, o, associationName);
 		return o;
 	}
 

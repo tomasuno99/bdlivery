@@ -11,6 +11,8 @@ import static com.mongodb.client.model.Filters.regex;
 import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.mongo.*;
 import com.mongodb.client.*;
+import com.mongodb.client.model.Filters;
+
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -144,8 +146,10 @@ public class DBliveryMongoRepository {
 	public List<Order> getSentOrders() {
 		List<Order> list = new ArrayList<>();
 		MongoCollection db = this.getDb().getCollection("orders", Order.class);
-		Bson match = match(eq("statusHistory.status", "Sended"), eq("statusHistory.actual", true));
-		db.aggregate(Arrays.asList(match)).into(list);
+		
+		
+        Bson match = match(eq("actualStatusObject.status", "Sended"));
+        db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
 
