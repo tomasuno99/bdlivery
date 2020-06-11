@@ -12,6 +12,7 @@ import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.mongo.*;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -183,6 +184,15 @@ public class DBliveryMongoRepository {
 		db.aggregate(Arrays.asList(match)).into(list);
 		
 		return list;
+	}
+	
+	public Product getMaxWeigth() {
+		List<Product> list = new ArrayList<>();
+		MongoCollection<Product> db = this.getDb().getCollection("products", Product.class);
+		
+		Bson match = sort(Sorts.orderBy(Sorts.descending("weight")));
+        
+		return db.aggregate(Arrays.asList(match,limit(1))).first();
 	}
 	
 }

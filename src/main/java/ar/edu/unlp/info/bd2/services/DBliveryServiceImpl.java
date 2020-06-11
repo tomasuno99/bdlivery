@@ -327,8 +327,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public Product getMaxWeigth() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getMaxWeigth();
 	}
 
 	@Override
