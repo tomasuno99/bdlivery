@@ -1,5 +1,6 @@
 package ar.edu.unlp.info.bd2.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
@@ -281,9 +282,6 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 		return this.repository.getPendingOrders();
 	}
 
-    /**
-     * Obtiene el listado de las ordenes enviadas y no entregadas
-     */
 	@Override
 	public List<Order> getSentOrders() {
 		return this.repository.getSentOrders();
@@ -297,8 +295,18 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public List<Order> getDeliveredOrdersForUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> list = new ArrayList<>(); 
+		
+		try {
+			for (Order o: this.getAllOrdersMadeByUser(username)){
+				if (o.getActualStatus().equals("Delivered")) {
+					list.add(o);
+				}
+			}
+		} catch (DBliveryException e) {
+			return list; // retorna la lista vacia si ocurre la excepcion
+		}
+		return list;
 	}
 
 	@Override
