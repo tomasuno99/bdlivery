@@ -147,7 +147,7 @@ public class DBliveryMongoRepository {
 		List<Order> list = new ArrayList<>();
 		MongoCollection db = this.getDb().getCollection("orders", Order.class);
 		
-        Bson match = match(eq("actualStatusObject.status", "Sended"));
+        Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"),eq("actual", true))));
         db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
@@ -156,7 +156,7 @@ public class DBliveryMongoRepository {
 		List<Order> list = new ArrayList<>();
 		MongoCollection db = this.getDb().getCollection("orders", Order.class);
 		
-        Bson match = match(eq("actualStatusObject.status", "Pending"));
+		Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Pending"),eq("actual", true))));
         db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
