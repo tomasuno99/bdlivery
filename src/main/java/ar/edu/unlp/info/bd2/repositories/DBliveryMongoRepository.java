@@ -174,4 +174,15 @@ public class DBliveryMongoRepository {
 		return list;
 	}
 
+	public List<Product> getProductsOnePrice() {
+		List<Product> list = new ArrayList<>();
+		MongoCollection<Product> db = this.getDb().getCollection("products", Product.class);
+		
+		Bson match = match(Filters.size("prices", 1));
+        
+		db.aggregate(Arrays.asList(match)).into(list);
+		
+		return list;
+	}
+	
 }

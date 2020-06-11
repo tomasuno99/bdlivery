@@ -28,4 +28,10 @@ public class OrderProduct {
 	public void setProduct(Product product) {
 		this.product = product.getObjectId();
 	}
+
+	
+	public Float getAmount(Date dateOfOrder) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
