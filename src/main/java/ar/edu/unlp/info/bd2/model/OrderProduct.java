@@ -7,17 +7,13 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 public class OrderProduct {
 	private Long quantity;
-	private Product product;
+	private ObjectId product;
 	
 	public OrderProduct() {}
 	
 	public OrderProduct(Long quantity, Product product) {
 		this.quantity = quantity;
-		this.product = product;
-	}
-	
-	public Float getAmount(Date day) {
-		return this.product.getPriceAt(day) * this.quantity;
+		this.product = product.getObjectId();
 	}
 	
 	public Long getQuantity() {
@@ -26,10 +22,10 @@ public class OrderProduct {
 	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
-	public Product getProduct() {
+	public ObjectId getProduct() {
 		return product;
 	}
 	public void setProduct(Product product) {
-		this.product = product;
+		this.product = product.getObjectId();
 	}
 }
