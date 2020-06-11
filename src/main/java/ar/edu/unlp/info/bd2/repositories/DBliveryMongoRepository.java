@@ -160,5 +160,18 @@ public class DBliveryMongoRepository {
         db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
+	
+	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
+		List<Order> list = new ArrayList<>();
+		MongoCollection db = this.getDb().getCollection("orders", Order.class);
+		
+		Bson compareDates = Filters.and(Filters.gte("dateOfOrder", startDate),Filters.lte("dateOfOrder", endDate));
+		Bson delivered = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Delivered"),eq("actual", true)));
+		Bson match = match(Filters.and(compareDates, delivered));
+        
+		db.aggregate(Arrays.asList(match)).into(list);
+		
+		return list;
+	}
 
 }
