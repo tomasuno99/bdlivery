@@ -60,6 +60,14 @@ public class Order implements PersistentObject {
 		return null;	
 	}
 
+	public Point getPosition() {
+		return position;
+	}
+
+	public void setPosition(Point position) {
+		this.position = position;
+	}
+	
 	@BsonIgnore
 	public Float getAmount() {
 		Float total = 00.0f;

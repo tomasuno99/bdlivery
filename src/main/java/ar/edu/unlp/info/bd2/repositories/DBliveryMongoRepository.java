@@ -13,6 +13,8 @@ import ar.edu.unlp.info.bd2.mongo.*;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.geojson.Point;
+import com.mongodb.client.model.geojson.Position;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -194,5 +196,17 @@ public class DBliveryMongoRepository {
         
 		return db.aggregate(Arrays.asList(match,limit(1))).first();
 	}
+	
+	public List<Order> getOrderNearPlazaMoreno() {
+		List<Order> list = new ArrayList<>();
+		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+		Point point = new Point(new Position(-34.921236,-57.954571));
+		
+		Bson match = match(Filters.near("position", point, 400.0, 0.0));
+        db.aggregate(Arrays.asList(match)).into(list);
+        
+        return list;
+	}
+
 	
 }
