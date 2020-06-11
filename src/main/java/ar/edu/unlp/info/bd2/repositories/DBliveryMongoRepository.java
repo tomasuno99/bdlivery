@@ -202,8 +202,8 @@ public class DBliveryMongoRepository {
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
 		Point point = new Point(new Position(-34.921236,-57.954571));
 		
-		Bson match = match(Filters.near("position", point, 400.0, 0.0));
-        db.aggregate(Arrays.asList(match)).into(list);
+		Bson match = Filters.near("position", point, 400.0, 0.0);
+        db.find(match).into(list);
         
         return list;
 	}
