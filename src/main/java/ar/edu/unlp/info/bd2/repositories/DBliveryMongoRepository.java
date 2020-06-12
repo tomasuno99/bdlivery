@@ -217,23 +217,13 @@ public class DBliveryMongoRepository {
 	}
 
 	public List<Product> getSoldProductsOn(Date day) {
-		String pattern = "yyyy-MM-dd HH:mm:ss";
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		String startDate = sdf.format(day);
-		Calendar c = Calendar.getInstance();
-		c.setTime(day);
-		c.add(Calendar.DATE, 1);
-		String endDate = sdf.format(c.getTime());
 		List<Product> list = new ArrayList<>();
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
 
-		Bson match = Filters.and(Filters.gte("dateOfOrder", startDate),Filters.lte("dateOfOrder", endDate));
-//		Bson match = match(Filters.and(eq("dateOfOrder", sdf.format(day)), Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"),eq("actual", true)))));
+		Bson match = eq("dateOfOrder", day);
 		for (Order o : db.find(match)) {
-//			if (sdf.format(o.getDateOfOrder()) == sdf.format(day)) {
 				for (OrderProduct op : o.getProducts()) {
 					list.add(op.getProduct());
-//				}
 			}
 		}
 
