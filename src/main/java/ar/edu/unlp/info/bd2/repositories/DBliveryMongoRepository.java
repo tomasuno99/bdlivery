@@ -1,7 +1,7 @@
 package ar.edu.unlp.info.bd2.repositories;
 
 import static com.mongodb.client.model.Aggregates.*;
-
+import static com.mongodb.client.model.Projections.*;
 
 
 
@@ -11,11 +11,14 @@ import static com.mongodb.client.model.Filters.regex;
 import ar.edu.unlp.info.bd2.model.*;
 import ar.edu.unlp.info.bd2.mongo.*;
 import com.mongodb.client.*;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Field;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -25,6 +28,7 @@ import java.util.stream.StreamSupport;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import org.joda.time.chrono.AssembledChronology.Fields;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class DBliveryMongoRepository {
@@ -208,5 +212,32 @@ public class DBliveryMongoRepository {
         return list;
 	}
 
+	public Product getBestSellingProduct() {
+		return null;
+	}
+
+	public List<Product> getSoldProductsOn(Date day) {
+		String pattern = "yyyy-MM-dd HH:mm:ss";
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		String startDate = sdf.format(day);
+		Calendar c = Calendar.getInstance();
+		c.setTime(day);
+		c.add(Calendar.DATE, 1);
+		String endDate = sdf.format(c.getTime());
+		List<Product> list = new ArrayList<>();
+		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+
+		Bson match = Filters.and(Filters.gte("dateOfOrder", startDate),Filters.lte("dateOfOrder", endDate));
+//		Bson match = match(Filters.and(eq("dateOfOrder", sdf.format(day)), Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"),eq("actual", true)))));
+		for (Order o : db.find(match)) {
+//			if (sdf.format(o.getDateOfOrder()) == sdf.format(day)) {
+				for (OrderProduct op : o.getProducts()) {
+					list.add(op.getProduct());
+//				}
+			}
+		}
+
+		return list;
+	}
 	
 }

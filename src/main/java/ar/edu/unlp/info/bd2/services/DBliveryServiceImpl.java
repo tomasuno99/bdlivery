@@ -310,8 +310,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public Product getBestSellingProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getBestSellingProduct();
 	}
 
 	@Override
@@ -321,8 +320,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public List<Product> getSoldProductsOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getSoldProductsOn(day);
 	}
 
 	@Override
