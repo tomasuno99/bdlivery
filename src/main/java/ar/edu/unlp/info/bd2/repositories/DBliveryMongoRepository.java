@@ -14,6 +14,7 @@ import com.mongodb.client.*;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Field;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
@@ -212,22 +213,33 @@ public class DBliveryMongoRepository {
         return list;
 	}
 
-	public Product getBestSellingProduct() {
-		return null;
-	}
+//	public Product getBestSellingProduct() {
+//		List<Order> list = new ArrayList<>();
+//		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+//		Point point = new Point(new Position(-34.921236,-57.954571));
+//		
+//		Bson match = Filters.near("position", point, 400.0, 0.0);
+//        db.find(match).into(list);
+//        
+//        return list;
+//	}
 
 	public List<Product> getSoldProductsOn(Date day) {
 		List<Product> list = new ArrayList<>();
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+		MongoCollection<Product> dbProduct = this.getDb().getCollection("products", Product.class);
 
-		Bson match = eq("dateOfOrder", day);
-		for (Order o : db.find(match)) {
-				for (OrderProduct op : o.getProducts()) {
-					list.add(op.getProduct());
-			}
-		}
-
-		return list;
+		
+		Bson match = match(eq("dateOfOrder", day));
+		
+		db.aggregate(Arrays.asList(match,unwind("$products"),replaceRoot("$products.product"),out("productsDay"))).toCollection();
+		
+		this.getDb().getCollection("productsDay",Product.class).aggregate(Arrays.asList()).into(list);
+		
+        return list;
 	}
+	
+	
+	
 	
 }
