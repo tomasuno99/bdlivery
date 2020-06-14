@@ -3,8 +3,6 @@ package ar.edu.unlp.info.bd2.repositories;
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Projections.*;
 
-
-
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 
@@ -34,68 +32,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class DBliveryMongoRepository {
 
-    @Autowired private MongoClient client;
+	@Autowired
+	private MongoClient client;
 
+	public void saveAssociation(PersistentObject source, PersistentObject destination, String associationName) {
+		Association association = new Association(source.getObjectId(), destination.getObjectId());
+		this.getDb().getCollection(associationName, Association.class).insertOne(association);
+	}
 
-    public void saveAssociation(PersistentObject source, PersistentObject destination, String associationName) {
-        Association association = new Association(source.getObjectId(), destination.getObjectId());
-        this.getDb()
-                .getCollection(associationName, Association.class)
-                .insertOne(association);
-    }
+	public MongoDatabase getDb() {
+		return this.client.getDatabase("bd2_grupo" + this.getGroupNumber());
+	}
 
-    public MongoDatabase getDb() {
-        return this.client.getDatabase("bd2_grupo" + this.getGroupNumber() );
-    }
+	private Integer getGroupNumber() {
+		return 15;
+	}
 
-    private Integer getGroupNumber() { return 15; }
+	public <T extends PersistentObject> List<T> getAssociatedObjects(PersistentObject source, Class<T> objectClass,
+			String association, String destCollection) {
+		AggregateIterable<T> iterable = this.getDb().getCollection(association, objectClass)
+				.aggregate(Arrays.asList(match(eq("source", source.getObjectId())),
+						lookup(destCollection, "destination", "_id", "_matches"), unwind("$_matches"),
+						replaceRoot("$_matches")));
+		Stream<T> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
+		return stream.collect(Collectors.toList());
+	}
 
-    public <T extends PersistentObject> List<T> getAssociatedObjects(
-            PersistentObject source, Class<T> objectClass, String association, String destCollection) {
-        AggregateIterable<T> iterable =
-                this.getDb()
-                        .getCollection(association, objectClass)
-                        .aggregate(
-                                Arrays.asList(
-                                        match(eq("source", source.getObjectId())),
-                                        lookup(destCollection, "destination", "_id", "_matches"),
-                                        unwind("$_matches"),
-                                        replaceRoot("$_matches")));
-        Stream<T> stream =
-                StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
-        return stream.collect(Collectors.toList());
-    }
-    
-    public <T extends PersistentObject> List<T> getObjectsAssociatedWith(
-            ObjectId objectId, Class<T> objectClass, String association, String destCollection) {
-        AggregateIterable<T> iterable =
-                this.getDb()
-                        .getCollection(association, objectClass)
-                        .aggregate(
-                                Arrays.asList(
-                                        match(eq("destination", objectId)),
-                                        lookup(destCollection, "source", "_id", "_matches"),
-                                        unwind("$_matches"),
-                                        replaceRoot("$_matches")));
-        Stream<T> stream =
-                StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
-        return stream.collect(Collectors.toList());
-    }
-    
+	public <T extends PersistentObject> List<T> getObjectsAssociatedWith(ObjectId objectId, Class<T> objectClass,
+			String association, String destCollection) {
+		AggregateIterable<T> iterable = this.getDb().getCollection(association, objectClass)
+				.aggregate(Arrays.asList(match(eq("destination", objectId)),
+						lookup(destCollection, "source", "_id", "_matches"), unwind("$_matches"),
+						replaceRoot("$_matches")));
+		Stream<T> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), 0), false);
+		return stream.collect(Collectors.toList());
+	}
 
-    public void insert(String collectionName, Class objClass, Object obj) {
-        this.getDb().getCollection(collectionName, objClass).insertOne(obj);
-    }
-    
-    public void insertWithAssociation(String collectionName, Class objClass, PersistentObject assocSource, PersistentObject assocDestination, String assocName) {
-    	this.saveAssociation(assocSource, assocDestination, assocName);
-    	this.insert(collectionName, objClass, assocSource);
-    }
-    
+	public void insert(String collectionName, Class objClass, Object obj) {
+		this.getDb().getCollection(collectionName, objClass).insertOne(obj);
+	}
+
+	public void insertWithAssociation(String collectionName, Class objClass, PersistentObject assocSource,
+			PersistentObject assocDestination, String assocName) {
+		this.saveAssociation(assocSource, assocDestination, assocName);
+		this.insert(collectionName, objClass, assocSource);
+	}
+
 //    public Order addProduct(ObjectId order, Long quantity, Product product) {
 //    	this.getDb().getCollection("orders", order.getClass()).findOneAndUpdate((eq("_id", order),  );
 //    }
-    
+
 //    public Product updateProductPrice(ObjectId id, Price price) {
 //        MongoCollection<Product> mongoDoc = this.getDb().getCollection("products", Product.class);
 //        Product p = mongoDoc.find(eq("_id", id)).first();
@@ -107,7 +93,7 @@ public class DBliveryMongoRepository {
 
 	public Product getProductById(ObjectId id) {
 		MongoCollection<Product> collection = this.getDb().getCollection("products", Product.class);
-        return collection.find(eq("_id", id)).first();
+		return collection.find(eq("_id", id)).first();
 	}
 
 	public void replaceProduct(Product product) {
@@ -133,7 +119,7 @@ public class DBliveryMongoRepository {
 	public List<Product> getProductsByName(String name) {
 		List<Product> list = new ArrayList<>();
 		Pattern pat = Pattern.compile(".*" + name + ".*");
-		for (Product obj: this.getDb().getCollection("products", Product.class).find(regex("name", pat))) {
+		for (Product obj : this.getDb().getCollection("products", Product.class).find(regex("name", pat))) {
 			list.add(obj);
 		}
 		return list;
@@ -145,7 +131,7 @@ public class DBliveryMongoRepository {
 
 	public List<Order> getOrdersByUser(ObjectId user_id) {
 		List<Order> list = new ArrayList<>();
-		for (Order obj: this.getDb().getCollection("orders", Order.class).find(eq("client._id", user_id))) {
+		for (Order obj : this.getDb().getCollection("orders", Order.class).find(eq("client._id", user_id))) {
 			list.add(obj);
 		}
 		return list;
@@ -154,83 +140,83 @@ public class DBliveryMongoRepository {
 	public List<Order> getSentOrders() {
 		List<Order> list = new ArrayList<>();
 		MongoCollection db = this.getDb().getCollection("orders", Order.class);
-		
-        Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"),eq("actual", true))));
-        db.aggregate(Arrays.asList(match)).into(list);
+
+		Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"), eq("actual", true))));
+		db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
-	
+
 	public List<Order> getPendingOrders() {
 		List<Order> list = new ArrayList<>();
 		MongoCollection db = this.getDb().getCollection("orders", Order.class);
-		
-		Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Pending"),eq("actual", true))));
-        db.aggregate(Arrays.asList(match)).into(list);
+
+		Bson match = match(
+				Filters.elemMatch("statusHistory", Filters.and(eq("status", "Pending"), eq("actual", true))));
+		db.aggregate(Arrays.asList(match)).into(list);
 		return list;
 	}
-	
+
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
 		List<Order> list = new ArrayList<>();
 		MongoCollection db = this.getDb().getCollection("orders", Order.class);
-		
-		Bson compareDates = Filters.and(Filters.gte("dateOfOrder", startDate),Filters.lte("dateOfOrder", endDate));
-		Bson delivered = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Delivered"),eq("actual", true)));
+
+		Bson compareDates = Filters.and(Filters.gte("dateOfOrder", startDate), Filters.lte("dateOfOrder", endDate));
+		Bson delivered = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Delivered"), eq("actual", true)));
 		Bson match = match(Filters.and(compareDates, delivered));
-        
+
 		db.aggregate(Arrays.asList(match)).into(list);
-		
+
 		return list;
 	}
 
 	public List<Product> getProductsOnePrice() {
 		List<Product> list = new ArrayList<>();
 		MongoCollection<Product> db = this.getDb().getCollection("products", Product.class);
-		
+
 		Bson match = match(Filters.size("prices", 1));
-        
+
 		db.aggregate(Arrays.asList(match)).into(list);
-		
+
 		return list;
 	}
-	
+
 	public Product getMaxWeigth() {
 		List<Product> list = new ArrayList<>();
 		MongoCollection<Product> db = this.getDb().getCollection("products", Product.class);
-		
+
 		Bson match = sort(Sorts.orderBy(Sorts.descending("weight")));
-        
-		return db.aggregate(Arrays.asList(match,limit(1))).first();
+
+		return db.aggregate(Arrays.asList(match, limit(1))).first();
 	}
-	
+
 	public List<Order> getOrderNearPlazaMoreno() {
 		List<Order> list = new ArrayList<>();
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
-		Point point = new Point(new Position(-34.921236,-57.954571));
-		
+		Point point = new Point(new Position(-34.921236, -57.954571));
+
 		Bson match = Filters.near("position", point, 400.0, 0.0);
-        db.find(match).into(list);
-        
-        return list;
+		db.find(match).into(list);
+
+		return list;
 	}
 
-//	public Product getBestSellingProduct() {
-//		List<Order> list = new ArrayList<>();
-//		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
-//		Point point = new Point(new Position(-34.921236,-57.954571));
-//		
-//		Bson match = Filters.near("position", point, 400.0, 0.0);
-//        db.find(match).into(list);
-//        
-//        return list;
-//	}
+	public Product getBestSellingProduct() {
+		List<Product> list = new ArrayList<>();
+		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+
+		db.aggregate(Arrays.asList(unwind("$products"), group("$products.product", Accumulators.sum("quantity", 1)),
+				sort(Sorts.orderBy(Sorts.descending("quantity"))), replaceRoot("$_id"), out("productsQuantity")))
+				.toCollection();
+
+		return this.getDb().getCollection("productsQuantity", Product.class).find().first();
+	}
 
 	public List<Product> getSoldProductsOn(Date day) {
 		List<Product> list = new ArrayList<>();
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
-		MongoCollection<Product> dbProduct = this.getDb().getCollection("products", Product.class);
 
-		
 		Bson match = match(eq("dateOfOrder", day));
+<<<<<<< HEAD
 		
 		db.aggregate(Arrays.asList(match,unwind("$products"),replaceRoot("$products.product"),out("productsDay"))).toCollection();
 		
@@ -260,4 +246,15 @@ public class DBliveryMongoRepository {
 	}
 	
 	
+=======
+
+		db.aggregate(Arrays.asList(match, unwind("$products"), replaceRoot("$products.product"), out("productsDay")))
+				.toCollection();
+
+		this.getDb().getCollection("productsDay", Product.class).aggregate(Arrays.asList()).into(list);
+
+		return list;
+	}
+
+>>>>>>> 0345d47a354e40be9fc6a5d3fbdac28afe85874c
 }
