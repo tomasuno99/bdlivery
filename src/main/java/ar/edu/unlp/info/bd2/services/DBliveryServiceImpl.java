@@ -311,7 +311,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	@Override
 	public Product getBestSellingProduct() {
 //		return this.repository.getBestSellingProduct();
-		return null;
+		return this.repository.getBestSellingProduct();
 	}
 
 	@Override
