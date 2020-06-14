@@ -238,8 +238,26 @@ public class DBliveryMongoRepository {
 		
         return list;
 	}
-	
-	
+
+	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
+		List<Supplier> list = new ArrayList<>();
+		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+		
+		
+		Bson match = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sent"),eq("actual", true)));
+		Bson group = group("$products.product.supplier", Accumulators.sum("$products.product.quantity", 1));
+		Bson sort = sort(Sorts.orderBy(Sorts.descending("supplier.totalProducts")));
+		Bson addField = addFields(new Field<Document>("totalProducts", new Document("$size", "$products.quantity")));
+		
+		
+		db.aggregate(Arrays.asList(match,unwind("$products"),group, addField, replaceRoot("$products.product.supplier"),out("auxCollection"))).toCollection();
+		
+		this.getDb().getCollection("auxCollection").aggregate(Arrays.asList(sort, replaceRoot("$products.product.supplier"),out("selectedSupplier"),limit(n))).toCollection();
+		
+		this.getDb().getCollection("selectedSuppliers", Supplier.class).aggregate(Arrays.asList()).into(list);
+		
+		return list;
+	}
 	
 	
 }

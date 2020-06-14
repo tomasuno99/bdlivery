@@ -273,8 +273,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repository.getTopNSuppliersInSentOrders(n);
 	}
 
 	@Override
