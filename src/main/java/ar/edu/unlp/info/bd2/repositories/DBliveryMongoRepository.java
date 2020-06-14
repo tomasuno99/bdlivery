@@ -229,14 +229,17 @@ public class DBliveryMongoRepository {
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
 		
 		
-		Bson match = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sent"),eq("actual", true)));
+		Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"),eq("actual", true))));
+		Bson lookup = lookup("product_supplier", "products.product._id", "source", "product_supplier_id");
+		Bson lookup2 = lookup("suppliers","product_supplier_id.destination","_id", "supplier");
 		Bson group = group("$products.product.supplier", Accumulators.sum("$products.product.quantity", 1));
 		Bson sort = sort(Sorts.orderBy(Sorts.descending("supplier.totalProducts")));
 		Bson addField = addFields(new Field<Document>("totalProducts", new Document("$size", "$products.quantity")));
 		
 		
-		db.aggregate(Arrays.asList(match,unwind("$products"),group, addField, replaceRoot("$products.product.supplier"),out("auxCollection"))).toCollection();
+		db.aggregate(Arrays.asList(match,project(excludeId()),unwind("$products"),lookup,lookup2,out("auxCollection"))).toCollection();
 		
+		addField = addFields(new Field<Document>("totalProducts", new Document("$size", "$products.quantity")));
 		this.getDb().getCollection("auxCollection").aggregate(Arrays.asList(sort, replaceRoot("$products.product.supplier"),out("selectedSupplier"),limit(n))).toCollection();
 		
 		this.getDb().getCollection("selectedSuppliers", Supplier.class).aggregate(Arrays.asList()).into(list);
