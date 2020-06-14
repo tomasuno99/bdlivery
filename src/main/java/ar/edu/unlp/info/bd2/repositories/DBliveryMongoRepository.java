@@ -204,7 +204,7 @@ public class DBliveryMongoRepository {
 		List<Product> list = new ArrayList<>();
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
 
-		db.aggregate(Arrays.asList(unwind("$products"), group("$products.product", Accumulators.sum("quantity", 1)),
+		db.aggregate(Arrays.asList(unwind("$products"), group("$products.product", Accumulators.sum("quantity", "$products.quantity")),
 				sort(Sorts.orderBy(Sorts.descending("quantity"))), replaceRoot("$_id"), out("productsQuantity")))
 				.toCollection();
 
