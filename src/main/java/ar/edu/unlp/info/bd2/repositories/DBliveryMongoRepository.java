@@ -216,7 +216,6 @@ public class DBliveryMongoRepository {
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
 
 		Bson match = match(eq("dateOfOrder", day));
-<<<<<<< HEAD
 		
 		db.aggregate(Arrays.asList(match,unwind("$products"),replaceRoot("$products.product"),out("productsDay"))).toCollection();
 		
@@ -244,17 +243,5 @@ public class DBliveryMongoRepository {
 		
 		return list;
 	}
-	
-	
-=======
 
-		db.aggregate(Arrays.asList(match, unwind("$products"), replaceRoot("$products.product"), out("productsDay")))
-				.toCollection();
-
-		this.getDb().getCollection("productsDay", Product.class).aggregate(Arrays.asList()).into(list);
-
-		return list;
-	}
-
->>>>>>> 0345d47a354e40be9fc6a5d3fbdac28afe85874c
 }
