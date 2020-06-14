@@ -216,34 +216,31 @@ public class DBliveryMongoRepository {
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
 
 		Bson match = match(eq("dateOfOrder", day));
-		
-		db.aggregate(Arrays.asList(match,unwind("$products"),replaceRoot("$products.product"),out("productsDay"))).toCollection();
-		
-		this.getDb().getCollection("productsDay",Product.class).aggregate(Arrays.asList()).into(list);
-		
-        return list;
+
+		db.aggregate(Arrays.asList(match, unwind("$products"), replaceRoot("$products.product"), out("productsDay")))
+				.toCollection();
+
+		this.getDb().getCollection("productsDay", Product.class).aggregate(Arrays.asList()).into(list);
+
+		return list;
 	}
 
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
 		List<Supplier> list = new ArrayList<>();
 		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+
+		Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"), eq("actual", true))));
+		Bson lookupAssociation = lookup("product_supplier", "products.product._id", "source", "association");
+		Bson lookupSupplier = lookup("suppliers", "association.destination", "_id", "supplier");
 		
-		
-		Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"),eq("actual", true))));
-		Bson lookup = lookup("product_supplier", "products.product._id", "source", "product_supplier_id");
-		Bson lookup2 = lookup("suppliers","product_supplier_id.destination","_id", "supplier");
-		Bson group = group("$products.product.supplier", Accumulators.sum("$products.product.quantity", 1));
-		Bson sort = sort(Sorts.orderBy(Sorts.descending("supplier.totalProducts")));
-		Bson addField = addFields(new Field<Document>("totalProducts", new Document("$size", "$products.quantity")));
-		
-		
-		db.aggregate(Arrays.asList(match,project(excludeId()),unwind("$products"),lookup,lookup2,out("auxCollection"))).toCollection();
-		
-		addField = addFields(new Field<Document>("totalProducts", new Document("$size", "$products.quantity")));
-		this.getDb().getCollection("auxCollection").aggregate(Arrays.asList(sort, replaceRoot("$products.product.supplier"),out("selectedSupplier"),limit(n))).toCollection();
-		
-		this.getDb().getCollection("selectedSuppliers", Supplier.class).aggregate(Arrays.asList()).into(list);
-		
+		Bson group = group("$supplier", Accumulators.sum("quantity", "$products.quantity"));
+		Bson sort = sort(Sorts.orderBy(Sorts.descending("quantity")));
+
+		db.aggregate(Arrays.asList(match, project(excludeId()), unwind("$products"), lookupAssociation, lookupSupplier,
+				unwind("$supplier"),unwind("$association"),group,sort,replaceRoot("$_id"),limit(n),out("auxCollection"))).toCollection();
+
+		this.getDb().getCollection("auxCollection", Supplier.class).find().into(list);
+
 		return list;
 	}
 
