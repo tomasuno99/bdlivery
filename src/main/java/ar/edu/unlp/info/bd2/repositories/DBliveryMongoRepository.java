@@ -140,9 +140,14 @@ public class DBliveryMongoRepository {
 
 	public List<Order> getOrdersByUser(ObjectId user_id) {
 		List<Order> list = new ArrayList<>();
-		for (Order obj : this.getDb().getCollection("orders", Order.class).find(eq("client._id", user_id))) {
-			list.add(obj);
-		}
+		
+		MongoCollection<Order> db = this.getDb().getCollection("order_client", Order.class);
+
+		Bson match = match(eq("destination",user_id));
+		Bson lookupClient = lookup("orders", "source", "_id", "order");
+		
+		db.aggregate(Arrays.asList(match, lookupClient,unwind("$order"),replaceRoot("$order"))).into(list);
+		
 		return list;
 	}
 
