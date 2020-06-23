@@ -168,5 +168,6 @@ public interface DBliveryService {
 	 * @return Lista de productos
 	 */
 	List<Product> getProductsByName(String name);
+	Optional<Product> getProductById(Long id);
 
 }
