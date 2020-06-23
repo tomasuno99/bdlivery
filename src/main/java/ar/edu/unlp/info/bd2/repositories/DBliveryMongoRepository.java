@@ -245,14 +245,18 @@ public class DBliveryMongoRepository {
 		List<Order> list = new ArrayList<>();
 //		List<User> listUser = new ArrayList<>();
 //		listUser = this.getObjectsAssociatedWith(this.getUserByUsername(username).getObjectId(), User.class, "order_client", "orders");
+		User user = this.getUserByUsername(username);
+		MongoCollection<Order> db = this.getDb().getCollection("order_client", Order.class);
 
-		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
-
-		Bson match = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Delivered"), eq("actual", true)));
-
-		db.aggregate(Arrays.asList(match)).into(list);
-
-		return list;
+		Bson filter1 = Filters.elemMatch("order.statusHistory", Filters.and(eq("status", "Delivered"), eq("actual", true)));
+		Bson filter2 = eq("destination", user.getObjectId());
+		Bson match = match(Filters.and(filter1, filter2));
+		
+		
+		Bson lookup = lookup("orders", "source", "_id", "order");
+		
+		return db.aggregate(Arrays.asList(lookup,unwind("$order"),match,replaceRoot("$order"))).into(list);
+		
 	}
 
 }
