@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
+@BsonDiscriminator(key="clase")
 public abstract class OrderStatus {
 	boolean isActual = true;
 	Date date;

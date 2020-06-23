@@ -49,6 +49,7 @@ public class Order implements PersistentObject {
 		this.position = new Point(pos);
 	}
 	
+	@BsonIgnore
 	public OrderStatus getActualStatusObject() {
 		int i=0;
 		while(i < this.statusHistory.size()) {
@@ -79,6 +80,7 @@ public class Order implements PersistentObject {
 		return total;	
 	}
 	
+	@BsonIgnore
 	public String getActualStatus() {
 		return this.getActualStatusObject().getStatus();
 	}
