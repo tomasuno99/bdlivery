@@ -116,7 +116,6 @@ public class DBliveryServiceImpl implements DBliveryService {
 		return Optional.of(this.repository.getUserByUsername(username));
 	}
 
-	@Override
 	public Optional<Product> getProductById(Long id) {
 		return Optional.of(this.repository.getProductById(id));
 	}
@@ -334,6 +333,12 @@ public class DBliveryServiceImpl implements DBliveryService {
 	@Transactional
 	public List<Order> getOrderWithMoreQuantityOfProducts(Date day) {
 		return this.repository.getOrderWithMoreQuantityOfProducts(day);
+	}
+
+	@Override
+	public List<Product> getProductsByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
