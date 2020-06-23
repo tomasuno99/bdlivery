@@ -47,6 +47,7 @@ public class Order implements PersistentObject {
 		this.coordY = coordY;
 		Position pos = new Position(coordX, coordY); 
 		this.position = new Point(pos);
+		this.client = client;
 	}
 	
 	@BsonIgnore

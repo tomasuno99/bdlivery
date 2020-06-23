@@ -88,7 +88,9 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public Optional<Order> getOrderById(ObjectId id) {
-		return Optional.of(repository.getOrderById(id));
+		Order o = repository.getOrderById(id);
+		o.setClient(repository.getClientFromOrder(id));
+		return Optional.of(o);
 	}
 
 	@Override

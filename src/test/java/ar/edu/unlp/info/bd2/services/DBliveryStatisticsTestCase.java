@@ -61,7 +61,6 @@ public class DBliveryStatisticsTestCase {
         try {
             assertEquals(5,this.service.getAllOrdersMadeByUser("rubnpastor265").size());
         } catch (DBliveryException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

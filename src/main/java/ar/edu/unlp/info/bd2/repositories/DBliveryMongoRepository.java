@@ -100,6 +100,15 @@ public class DBliveryMongoRepository {
 		this.getDb().getCollection("products", Product.class).replaceOne(eq("_id", product.getObjectId()), product);
 	}
 
+	public User getClientFromOrder(ObjectId order) {
+		MongoCollection<User> db = this.getDb().getCollection("order_client", User.class);
+
+		Bson match = match(eq("source",order));
+		Bson lookupClient = lookup("users", "destination", "_id", "client");
+		
+		return db.aggregate(Arrays.asList(match, lookupClient,unwind("$client"),replaceRoot("$client"))).first();
+	}
+	
 	public Order getOrderById(ObjectId id) {
 		return this.getDb().getCollection("orders", Order.class).find(eq("_id", id)).first();
 	}
