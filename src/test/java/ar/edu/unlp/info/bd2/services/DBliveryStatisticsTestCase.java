@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @ContextConfiguration(
         classes = {AppConfig.class, MongoDBConfiguration.class,DBInitializerConfig.class},
         loader = AnnotationConfigContextLoader.class)
-@Rollback(false)
+@Rollback(true)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 public class DBliveryStatisticsTestCase {

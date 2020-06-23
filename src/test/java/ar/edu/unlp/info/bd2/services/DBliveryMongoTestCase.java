@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(
         classes = {AppConfig.class, MongoDBConfiguration.class},
         loader = AnnotationConfigContextLoader.class)
-@Rollback(false)
+@Rollback(true)
 public class DBliveryMongoTestCase {
 
     @Autowired
