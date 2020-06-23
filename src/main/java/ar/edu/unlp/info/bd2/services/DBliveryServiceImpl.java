@@ -127,7 +127,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order deliverOrder(ObjectId order, User deliveryUser) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o.getObjectId() != null && this.canDeliver(order)) {
-			OrderStatus os = new Delivered();
+			OrderStatus os = new Sended();
 			o.changeStatus(os);
 			o.setDeliveryUser(deliveryUser);
 			this.repository.updateOrder(o);
