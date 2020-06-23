@@ -1,11 +1,6 @@
 package ar.edu.unlp.info.bd2.services;
 
-<<<<<<< HEAD
-public class SpringDataDBliveryService {
 
-	public SpringDataDBliveryService() {
-		// TODO Auto-generated constructor stub
-=======
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -154,7 +149,6 @@ public class SpringDataDBliveryService implements DBliveryService {
 	public Optional<Product> getProductById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
->>>>>>> 73f9d20e7473595094215482d5c548a5c30d62b3
 	}
 
 }
