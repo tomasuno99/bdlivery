@@ -8,11 +8,14 @@ import java.util.Optional;
 
 import org.bson.types.ObjectId;
 
+import ar.edu.unlp.info.bd2.model.Cancelled;
+import ar.edu.unlp.info.bd2.model.Delivered;
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Price;
 import ar.edu.unlp.info.bd2.model.Product;
+import ar.edu.unlp.info.bd2.model.Sended;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
@@ -122,7 +125,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order deliverOrder(ObjectId order, User deliveryUser) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o.getObjectId() != null && this.canDeliver(order)) {
-			OrderStatus os = new OrderStatus("Sended");
+			OrderStatus os = new Delivered();
 			o.changeStatus(os);
 			o.setDeliveryUser(deliveryUser);
 			this.repository.updateOrder(o);
@@ -135,7 +138,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order finishOrder(ObjectId order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o.getObjectId() != null && this.canFinish(order)) {
-			OrderStatus os = new OrderStatus("Delivered");
+			OrderStatus os = new Delivered();
 			o.changeStatus(os);
 			this.repository.updateOrder(o);
 			return o;
@@ -147,7 +150,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order deliverOrder(ObjectId order, User deliveryUser, Date date) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o.getObjectId() != null && this.canDeliver(order)) {
-			OrderStatus os = new OrderStatus(date ,"Sended");
+			OrderStatus os = new Sended(date);
 			o.changeStatus(os);
 			o.setDeliveryUser(deliveryUser);
 			this.repository.updateOrder(o);
@@ -166,7 +169,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order cancelOrder(ObjectId order) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (this.canCancel(order)) {
-			OrderStatus os = new OrderStatus("Cancelled");
+			OrderStatus os = new Cancelled();
 			o.changeStatus(os);
 			this.repository.updateOrder(o);
 			return o;
@@ -178,7 +181,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order cancelOrder(ObjectId order, Date date) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (this.canCancel(order)) {
-			OrderStatus os = new OrderStatus(date, "Cancelled");
+			OrderStatus os = new Cancelled(date);
 			o.changeStatus(os);
 			this.repository.updateOrder(o);
 			return o;
@@ -192,7 +195,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	public Order finishOrder(ObjectId order, Date date) throws DBliveryException {
 		Order o = this.repository.getOrderById(order);
 		if (o.getObjectId() != null && this.canFinish(order)) {
-			OrderStatus os = new OrderStatus(date,"Delivered");
+			OrderStatus os = new Delivered(date);
 			o.changeStatus(os);
 			this.repository.updateOrder(o);
 			return o;

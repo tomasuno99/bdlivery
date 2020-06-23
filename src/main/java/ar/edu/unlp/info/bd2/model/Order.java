@@ -39,7 +39,7 @@ public class Order implements PersistentObject {
 	
 	public Order(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
 		this.objectId = new ObjectId();
-		OrderStatus os = new OrderStatus("Pending");
+		OrderStatus os = new Pending();
 		this.statusHistory.add(os);
 		this.dateOfOrder = dateOfOrder;
 		this.address = address;

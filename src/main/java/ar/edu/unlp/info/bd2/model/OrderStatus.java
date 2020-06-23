@@ -9,23 +9,10 @@ import org.bson.types.ObjectId;
 
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
-public class OrderStatus {
+public abstract class OrderStatus {
 	boolean isActual = true;
 	Date date;
-	String status;
-	
-	public OrderStatus() {}
-	
-	public OrderStatus(Date date, String status) {
-		this.date = date;
-		this.status = status;
-	}
-	
-	public OrderStatus(String status) {
-		this.date = new Date();
-		this.status = status;
-	}
-	
+		
 	public Date getDate() {
 		return date;
 	}
@@ -42,12 +29,6 @@ public class OrderStatus {
 		this.isActual = isActual;
 	}
 
-	public String getStatus() {
-		return this.status;
-	}
-	
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	public abstract String getStatus();
 	
 }

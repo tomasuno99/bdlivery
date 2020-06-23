@@ -234,13 +234,12 @@ public class DBliveryMongoRepository {
 
 	public List<Order> getDeliveredOrdersForUser(String username) {
 		List<Order> list = new ArrayList<>();
-		List<User> listUser = new ArrayList<>();
-		listUser = this.getObjectsAssociatedWith(this.getUserByUsername(username).getObjectId(), User.class, "order_client", "orders");
-		listUser.get(1);
-		MongoCollection db = this.getDb().getCollection("orders", Order.class);
+//		List<User> listUser = new ArrayList<>();
+//		listUser = this.getObjectsAssociatedWith(this.getUserByUsername(username).getObjectId(), User.class, "order_client", "orders");
 
-		Bson delivered = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Delivered"), eq("actual", true)));
-		Bson match = match(delivered);
+		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+
+		Bson match = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Delivered"), eq("actual", true)));
 
 		db.aggregate(Arrays.asList(match)).into(list);
 
