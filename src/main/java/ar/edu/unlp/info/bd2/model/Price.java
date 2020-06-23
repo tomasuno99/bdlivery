@@ -14,7 +14,6 @@ import org.springframework.data.annotation.Id;
 import ar.edu.unlp.info.bd2.mongo.PersistentObject;
 
 public class Price{
-	@BsonId
 	private Float price;
 	private Date startDate;
 	private Date endDate;

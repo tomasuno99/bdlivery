@@ -74,8 +74,8 @@ public class DBliveryMongoRepository {
 
 	public void insertWithAssociation(String collectionName, Class objClass, PersistentObject assocSource,
 			PersistentObject assocDestination, String assocName) {
-		this.saveAssociation(assocSource, assocDestination, assocName);
 		this.insert(collectionName, objClass, assocSource);
+		this.saveAssociation(assocSource, assocDestination, assocName);
 	}
 
 //    public Order addProduct(ObjectId order, Long quantity, Product product) {
@@ -201,33 +201,25 @@ public class DBliveryMongoRepository {
 	}
 
 	public Product getBestSellingProduct() {
-		List<Product> list = new ArrayList<>();
-		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+		MongoCollection<Product> db = this.getDb().getCollection("orders", Product.class);
 
-		db.aggregate(Arrays.asList(unwind("$products"), group("$products.product", Accumulators.sum("quantity", "$products.quantity")),
-				sort(Sorts.orderBy(Sorts.descending("quantity"))), replaceRoot("$_id"), out("productsQuantity")))
-				.toCollection();
-
-		return this.getDb().getCollection("productsQuantity", Product.class).find().first();
+		return db.aggregate(Arrays.asList(unwind("$products"),
+				group("$products.product", Accumulators.sum("quantity", "$products.quantity")),
+				sort(Sorts.orderBy(Sorts.descending("quantity"))), replaceRoot("$_id"))).first();
 	}
 
 	public List<Product> getSoldProductsOn(Date day) {
 		List<Product> list = new ArrayList<>();
-		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+		MongoCollection<Product> db = this.getDb().getCollection("orders", Product.class);
 
 		Bson match = match(eq("dateOfOrder", day));
 
-		db.aggregate(Arrays.asList(match, unwind("$products"), replaceRoot("$products.product"), out("productsDay")))
-				.toCollection();
-
-		this.getDb().getCollection("productsDay", Product.class).aggregate(Arrays.asList()).into(list);
-
-		return list;
+		return db.aggregate(Arrays.asList(match, unwind("$products"), replaceRoot("$products.product"))).into(list);
 	}
 
 	public List<Supplier> getTopNSuppliersInSentOrders(int n) {
 		List<Supplier> list = new ArrayList<>();
-		MongoCollection<Order> db = this.getDb().getCollection("orders", Order.class);
+		MongoCollection<Supplier> db = this.getDb().getCollection("orders", Supplier.class);
 
 		Bson match = match(Filters.elemMatch("statusHistory", Filters.and(eq("status", "Sended"), eq("actual", true))));
 		Bson lookupAssociation = lookup("product_supplier", "products.product._id", "source", "association");
@@ -236,10 +228,21 @@ public class DBliveryMongoRepository {
 		Bson group = group("$supplier", Accumulators.sum("quantity", "$products.quantity"));
 		Bson sort = sort(Sorts.orderBy(Sorts.descending("quantity")));
 
-		db.aggregate(Arrays.asList(match, project(excludeId()), unwind("$products"), lookupAssociation, lookupSupplier,
-				unwind("$supplier"),unwind("$association"),group,sort,replaceRoot("$_id"),limit(n),out("auxCollection"))).toCollection();
+		return db.aggregate(Arrays.asList(match, project(excludeId()), unwind("$products"), lookupAssociation, lookupSupplier,
+				unwind("$supplier"),unwind("$association"),group,sort,replaceRoot("$_id"),limit(n))).into(list);
+	}
 
-		this.getDb().getCollection("auxCollection", Supplier.class).find().into(list);
+	public List<Order> getDeliveredOrdersForUser(String username) {
+		List<Order> list = new ArrayList<>();
+		List<User> listUser = new ArrayList<>();
+		listUser = this.getObjectsAssociatedWith(this.getUserByUsername(username).getObjectId(), User.class, "order_client", "orders");
+		listUser.get(1);
+		MongoCollection db = this.getDb().getCollection("orders", Order.class);
+
+		Bson delivered = Filters.elemMatch("statusHistory", Filters.and(eq("status", "Delivered"), eq("actual", true)));
+		Bson match = match(delivered);
+
+		db.aggregate(Arrays.asList(match)).into(list);
 
 		return list;
 	}

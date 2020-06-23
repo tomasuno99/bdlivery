@@ -24,7 +24,8 @@ public class Order implements PersistentObject {
 	private Float coordX;
 	private Float coordY;
 	private List<OrderProduct> products = new ArrayList<OrderProduct>();
-
+	
+	@BsonIgnore
 	private User client;
 	
 	private List<OrderStatus> statusHistory= new ArrayList<OrderStatus>();
@@ -44,7 +45,6 @@ public class Order implements PersistentObject {
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;
-		this.client = client;
 		Position pos = new Position(coordX, coordY); 
 		this.position = new Point(pos);
 	}

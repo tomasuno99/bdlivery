@@ -91,7 +91,7 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 	@Override
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
 		Order o = new Order(dateOfOrder, address, coordX, coordY, client);
-		repository.insert("orders", o.getClass(), o);
+		repository.insertWithAssociation("orders", o.getClass(), o, client, "order_client");
 //		repository.saveAssociation(client, o, associationName);
 		return o;
 	}
@@ -293,18 +293,19 @@ public class DBliveryServiceImpl implements DBliveryService, DBliveryStatisticsS
 
 	@Override
 	public List<Order> getDeliveredOrdersForUser(String username) {
-		List<Order> list = new ArrayList<>(); 
-		
-		try {
-			for (Order o: this.getAllOrdersMadeByUser(username)){
-				if (o.getActualStatus().equals("Delivered")) {
-					list.add(o);
-				}
-			}
-		} catch (DBliveryException e) {
-			return list; // retorna la lista vacia si ocurre la excepcion
-		}
-		return list;
+		return this.repository.getDeliveredOrdersForUser(username);
+//		List<Order> list = new ArrayList<>(); 
+//		
+//		try {
+//			for (Order o: this.getAllOrdersMadeByUser(username)){
+//				if (o.getActualStatus().equals("Delivered")) {
+//					list.add(o);
+//				}
+//			}
+//		} catch (DBliveryException e) {
+//			return list; // retorna la lista vacia si ocurre la excepcion
+//		}
+//		return list;
 	}
 
 	@Override
