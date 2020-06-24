@@ -181,6 +181,7 @@ public class DBliveryServiceTestCase {
         assertEquals(this.service.getActualStatus(o5.getId()).getStatus(),"Cancelled");
         assertEquals(2,o5.getStatus().size());
     }
+
 //
 //    @Test
 //    public void testFinishOrder() throws DBliveryException {

@@ -14,6 +14,7 @@ import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Product;
+import ar.edu.unlp.info.bd2.model.Sended;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
@@ -103,16 +104,34 @@ public class SpringDataDBliveryService implements DBliveryService {
 		return o;
 	}
 
+	/**
+	 * Registra el envío del pedido, registrando al repartidor y cambiando su estado a Send.
+	 * @param order pedido a ser enviado
+	 * @param deliveryUser Usuario que entrega el pedido
+	 * @return el pedido modificado
+	 * @throws DBliveryException en caso de no existir el pedido, que el pedido no se encuentre en estado Pending o sí no contiene productos.
+	 */
 	@Override
 	public Order deliverOrder(Long order, User deliveryUser) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		if (! this.canDeliver(order)) throw new DBliveryException("order error");
+		Order o = this.orderRepository.findById(order).get();
+		OrderStatus sended = new Sended();
+		this.getActualStatus(order).setActual(false);
+		o.setStatus(sended);
+		o.setDeliveryUser(deliveryUser);
+		return this.orderRepository.save(o);
 	}
 
 	@Override
 	public Order deliverOrder(Long order, User deliveryUser, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		if (! this.canDeliver(order)) throw new DBliveryException("order error");
+		Order o = this.orderRepository.findById(order).get();
+		OrderStatus sended = new Sended();
+		sended.setDate(date);
+		this.getActualStatus(order).setActual(false);
+		o.setStatus(sended);
+		o.setDeliveryUser(deliveryUser);
+		return this.orderRepository.save(o);
 	}
 
 	@Override
@@ -151,10 +170,17 @@ public class SpringDataDBliveryService implements DBliveryService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	@Override
 	public boolean canDeliver(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
+		Order o = this.orderRepository.findById(order).get();
+		if (this.getActualStatus(order).getStatus().equals("Pending")) {
+			if (o.getProducts().size() > 0 ) {
+				return true;
+			}
+		} else {
+			throw new DBliveryException("the order is not in pending status");
+		}
 		return false;
 	}
 
