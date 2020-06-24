@@ -5,31 +5,41 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Product;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
+import ar.edu.unlp.info.bd2.repositories.ProductRepository;
+import ar.edu.unlp.info.bd2.repositories.SupplierRepository;
 
+@Service
+@Transactional
 public class SpringDataDBliveryService implements DBliveryService {
 
+	@Autowired
+	ProductRepository productRepository;
+	@Autowired
+	SupplierRepository supplierRepository;
+	
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.save(new Product(name,price,weight,supplier));
 	}
-
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier, Date date) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.save(new Product(name,price,weight,supplier, date));
 	}
 
 	@Override
 	public Supplier createSupplier(String name, String cuil, String address, Float coordX, Float coordY) {
-		// TODO Auto-generated method stub
-		return null;
+		return supplierRepository.save(new Supplier(name,cuil,address, coordX, coordY));
 	}
 
 	@Override
