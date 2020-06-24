@@ -215,7 +215,10 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Order> getAllOrdersMadeByUser(String username) {
+
 		return this.orderRepository.getAllOrdersMadeByUser(username);
+
+		// TODO Auto-generated method stub
 	}
 	@Override
 	public List<Order> getPendingOrders() {
@@ -225,7 +228,7 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	@Override
 	public List<Order> getSentOrders() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getSentOrders();
 	}
 	@Override
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
