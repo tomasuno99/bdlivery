@@ -163,8 +163,13 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 
 	@Override
 	public Order finishOrder(Long order, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		if (! this.canFinish(order)) throw new DBliveryException("order error");
+		Order o = this.orderRepository.findById(order).get();
+		this.getActualStatus(order).setActual(false);
+		OrderStatus delivered = new Delivered();
+		delivered.setDate(date);
+		o.getStatus().add(delivered);
+		return orderRepository.save(o);
 	}
 
 	@Override
