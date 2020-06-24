@@ -56,26 +56,29 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public Product updateProductPrice(Long id, Float price, Date startDate) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Product> p = this.productRepository.findById(id);
+		if (p==null) {
+			throw new DBliveryException("the product with that id does not exist");
+		}
+		Product product = p.get();
+		product.updatePrice(price, startDate);
+		return this.productRepository.save(product);
 	}
 
 	@Override
 	public Optional<User> getUserById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userRepository.findById(id);
 	}
 
 	@Override
 	public Optional<User> getUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(this.userRepository.findByEmail(email));
 	}
 
 	@Override
 	public Optional<User> getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.of(this.userRepository.findByUsername(username));
 	}
 
 	@Override

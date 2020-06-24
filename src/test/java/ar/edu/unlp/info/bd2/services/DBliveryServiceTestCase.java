@@ -48,37 +48,37 @@ public class DBliveryServiceTestCase {
         User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
         assertNotNull(u1.getId());
     }
-//
-//    @Test
-//    public void testGetUser() {
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.YEAR, 1982);
-//        cal.set(Calendar.MONTH, Calendar.MAY);
-//        cal.set(Calendar.DAY_OF_MONTH, 17);
-//        Date dob = cal.getTime();
-//        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
-//        assertNotNull(u1.getId());
-//        assertEquals("hgamarra", u1.getUsername());
-//        Optional<User> u2 = this.service.getUserByUsername("hgamarra");
-//        if (u2.isPresent()) {
-//            User u3 = u2.get();
-//            assertEquals("hgamarra", u3.getUsername());
-//            assertEquals("hugo.gamarra@testmail.com", u3.getEmail());
-//        }
-//        Optional<User> u4 = this.service.getUserByEmail("hugo.gamarra@testmail.com");
-//        if (u4.isPresent()) {
-//            User u5 = u4.get();
-//            assertEquals("hgamarra", u5.getUsername());
-//            assertEquals("hugo.gamarra@testmail.com", u5.getEmail());
-//        }
-//        Optional<User> u6= this.service.getUserById(u1.getId());
-//        if (u6.isPresent()) {
-//            User u7 = u6.get();
-//            assertEquals("hgamarra", u7.getUsername());
-//            assertEquals("hugo.gamarra@testmail.com", u7.getEmail());
-//            assertEquals(u7.getId(), u1.getId());
-//        }
-//    }
+
+    @Test
+    public void testGetUser() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1982);
+        cal.set(Calendar.MONTH, Calendar.MAY);
+        cal.set(Calendar.DAY_OF_MONTH, 17);
+        Date dob = cal.getTime();
+        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
+        assertNotNull(u1.getId());
+        assertEquals("hgamarra", u1.getUsername());
+        Optional<User> u2 = this.service.getUserByUsername("hgamarra");
+        if (u2.isPresent()) {
+            User u3 = u2.get();
+            assertEquals("hgamarra", u3.getUsername());
+            assertEquals("hugo.gamarra@testmail.com", u3.getEmail());
+        }
+        Optional<User> u4 = this.service.getUserByEmail("hugo.gamarra@testmail.com");
+        if (u4.isPresent()) {
+            User u5 = u4.get();
+            assertEquals("hgamarra", u5.getUsername());
+            assertEquals("hugo.gamarra@testmail.com", u5.getEmail());
+        }
+        Optional<User> u6= this.service.getUserById(u1.getId());
+        if (u6.isPresent()) {
+            User u7 = u6.get();
+            assertEquals("hgamarra", u7.getUsername());
+            assertEquals("hugo.gamarra@testmail.com", u7.getEmail());
+            assertEquals(u7.getId(), u1.getId());
+        }
+    }
 
     @Test
     public void testCreateProduct() {
@@ -90,20 +90,20 @@ public class DBliveryServiceTestCase {
         assertEquals("Combo Stacker ATR",p1.getName());
         assertEquals(1,p1.getPrices().size());
     }
-//
-//    @Test
-//    public void testUpdateProductPrice() throws DBliveryException{
-//        Calendar cal = Calendar.getInstance();
-//        Date startDate = cal.getTime();
-//        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
-//        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
-//        assertNotNull(p1.getId());
-//        assertEquals(1,p1.getPrices().size());
-//        Product p2 = this.service.updateProductPrice(p1.getId(),Float.valueOf(3000.0F),startDate);
-//        assertEquals(Float.valueOf(3000.0F),p2.getPrice());
-//        assertEquals(2,p2.getPrices().size());
-//    }
-//
+
+    @Test
+    public void testUpdateProductPrice() throws DBliveryException{
+        Calendar cal = Calendar.getInstance();
+        Date startDate = cal.getTime();
+        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
+        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
+        assertNotNull(p1.getId());
+        assertEquals(1,p1.getPrices().size());
+        Product p2 = this.service.updateProductPrice(p1.getId(),Float.valueOf(3000.0F),startDate);
+        assertEquals(Float.valueOf(3000.0F),p2.getPrice());
+        assertEquals(2,p2.getPrices().size());
+    }
+
     @Test
     public void testCreateOrder() throws DBliveryException {
         Calendar cal = Calendar.getInstance();
