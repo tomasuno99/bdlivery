@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlp.info.bd2.model.Cancelled;
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
@@ -136,14 +137,23 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public Order cancelOrder(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		if (! this.canCancel(order)) throw new DBliveryException("order error");
+		Order o = this.orderRepository.findById(order).get();
+		OrderStatus cancel = new Cancelled();
+		this.getActualStatus(order).setActual(false);
+		o.setStatus(cancel);
+		return this.orderRepository.save(o);
 	}
 
 	@Override
 	public Order cancelOrder(Long order, Date date) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		if (! this.canCancel(order)) throw new DBliveryException("order error");
+		Order o = this.orderRepository.findById(order).get();
+		OrderStatus cancel = new Cancelled();
+		cancel.setDate(date);
+		this.getActualStatus(order).setActual(false);
+		o.setStatus(cancel);
+		return this.orderRepository.save(o);
 	}
 
 	@Override
