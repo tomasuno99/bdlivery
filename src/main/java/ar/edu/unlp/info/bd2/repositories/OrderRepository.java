@@ -17,4 +17,7 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 	
 	@Query("select o from Order o join o.statusHistory as os where os.class=2 and os.isActual is true")
 	public List<Order> getSentOrders();
+	
+	@Query("select o from Order as o join o.statusHistory as os where os.class=1 and os.isActual is true")
+	public List<Order> getPendingOrders();
 }

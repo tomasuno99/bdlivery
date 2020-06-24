@@ -220,8 +220,7 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Order> getPendingOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getPendingOrders();
 	}
 	@Override
 	public List<Order> getSentOrders() {
