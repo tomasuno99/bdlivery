@@ -57,7 +57,7 @@ public class SpringDataDBliveryService implements DBliveryService {
 	@Override
 	public Product updateProductPrice(Long id, Float price, Date startDate) throws DBliveryException {
 		Optional<Product> p = this.productRepository.findById(id);
-		if (p==null) {
+		if (! p.isPresent()) {
 			throw new DBliveryException("the product with that id does not exist");
 		}
 		Product product = p.get();
@@ -141,8 +141,9 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public boolean canCancel(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<Order> o = this.orderRepository.findById(order);
+		if (! o.isPresent()) throw new DBliveryException("the order with that id does not exist");
+		return this.getActualStatus(order).getStatus().equals("Pending");
 	}
 
 	@Override
@@ -159,8 +160,7 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public OrderStatus getActualStatus(Long order) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getActualStatus(order);
 	}
 
 	@Override
