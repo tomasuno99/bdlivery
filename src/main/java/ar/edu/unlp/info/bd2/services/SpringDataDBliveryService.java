@@ -215,8 +215,10 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Order> getAllOrdersMadeByUser(String username) {
+
+		return this.orderRepository.getAllOrdersMadeByUser(username);
+
 		// TODO Auto-generated method stub
-		return null;
 	}
 	@Override
 	public List<Order> getPendingOrders() {
@@ -224,6 +226,7 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Order> getSentOrders() {
+		// TODO Auto-generated method stub
 		return this.orderRepository.getSentOrders();
 	}
 	@Override
@@ -233,8 +236,7 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Order> getDeliveredOrdersForUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getDeliveredOrdersForUser(username);
 	}
 	@Override
 	public List<Product> getProductsOnePrice() {
