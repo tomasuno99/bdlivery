@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlp.info.bd2.model.Delivered;
 import ar.edu.unlp.info.bd2.model.Order;
 import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
@@ -104,13 +105,7 @@ public class SpringDataDBliveryService implements DBliveryService {
 		return o;
 	}
 
-	/**
-	 * Registra el envío del pedido, registrando al repartidor y cambiando su estado a Send.
-	 * @param order pedido a ser enviado
-	 * @param deliveryUser Usuario que entrega el pedido
-	 * @return el pedido modificado
-	 * @throws DBliveryException en caso de no existir el pedido, que el pedido no se encuentre en estado Pending o sí no contiene productos.
-	 */
+
 	@Override
 	public Order deliverOrder(Long order, User deliveryUser) throws DBliveryException {
 		if (! this.canDeliver(order)) throw new DBliveryException("order error");
@@ -148,8 +143,12 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public Order finishOrder(Long order) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		if (! this.canFinish(order)) throw new DBliveryException("order error");
+		Order o = this.orderRepository.findById(order).get();
+		this.getActualStatus(order).setActual(false);
+		OrderStatus delivered = new Delivered();
+		o.getStatus().add(delivered);
+		return orderRepository.save(o);
 	}
 
 	@Override
@@ -167,8 +166,9 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public boolean canFinish(Long id) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<Order> o_optional = this.orderRepository.findById(id);
+		if (!o_optional.isPresent()) throw new DBliveryException("the order with that id does not exist");
+		return this.getActualStatus(id).getStatus().equals("Sended");
 	}
 	
 	@Override
