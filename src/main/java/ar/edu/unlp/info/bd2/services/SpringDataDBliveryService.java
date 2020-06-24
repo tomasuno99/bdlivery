@@ -237,8 +237,7 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Order> getDeliveredOrdersForUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getDeliveredOrdersForUser(username);
 	}
 	@Override
 	public List<Product> getProductsOnePrice() {
