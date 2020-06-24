@@ -174,7 +174,7 @@ public class SpringDataDBliveryService implements DBliveryService {
 	@Override
 	public boolean canDeliver(Long order) throws DBliveryException {
 		Order o = this.orderRepository.findById(order).get();
-		if (o.getActualStatus().equals("Pending")) {
+		if (this.getActualStatus(order).getStatus().equals("Pending")) {
 			if (o.getProducts().size() > 0 ) {
 				return true;
 			}
