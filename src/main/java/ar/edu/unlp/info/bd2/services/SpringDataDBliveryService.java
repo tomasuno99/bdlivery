@@ -236,8 +236,7 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getDeliveredOrdersInPeriod(startDate, endDate);
 	}
 	@Override
 	public List<Order> getDeliveredOrdersForUser(String username) {

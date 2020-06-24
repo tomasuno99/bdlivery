@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlp.info.bd2.model.Product;
@@ -28,6 +29,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	@Query("select distinct(p) "
 		+  "from Order as o join o.products as op "
 					+ 	   "join op.product as p "
-		+ " where o.dateOfOrder=?1 ")
-	public List<Product> getSoldProductsOn(Date day);
+		+ " where o.dateOfOrder=:day ")
+	public List<Product> getSoldProductsOn(@Param("day") Date day);
 }
