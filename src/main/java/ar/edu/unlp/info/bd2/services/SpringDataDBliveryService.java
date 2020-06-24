@@ -245,13 +245,11 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 	@Override
 	public List<Product> getProductsOnePrice() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productRepository.getProductOnePrice();
 	}
 	@Override
 	public List<Product> getSoldProductsOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productRepository.getSoldProductsOn(day);
 	}
 
 }
