@@ -18,6 +18,7 @@ import ar.edu.unlp.info.bd2.model.User;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
 import ar.edu.unlp.info.bd2.repositories.ProductRepository;
 import ar.edu.unlp.info.bd2.repositories.SupplierRepository;
+import ar.edu.unlp.info.bd2.repositories.UserRepository;
 
 @Service
 @Transactional
@@ -27,6 +28,8 @@ public class SpringDataDBliveryService implements DBliveryService {
 	ProductRepository productRepository;
 	@Autowired
 	SupplierRepository supplierRepository;
+	@Autowired
+	UserRepository userRepository;
 	
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
@@ -44,8 +47,7 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public User createUser(String email, String password, String username, String name, Date dateOfBirth) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.save(new User(email,password,username,name,dateOfBirth));
 	}
 
 	@Override
