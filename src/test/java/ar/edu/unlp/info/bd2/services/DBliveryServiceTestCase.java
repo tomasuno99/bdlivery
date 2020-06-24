@@ -48,37 +48,37 @@ public class DBliveryServiceTestCase {
         User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
         assertNotNull(u1.getId());
     }
-//
-//    @Test
-//    public void testGetUser() {
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.YEAR, 1982);
-//        cal.set(Calendar.MONTH, Calendar.MAY);
-//        cal.set(Calendar.DAY_OF_MONTH, 17);
-//        Date dob = cal.getTime();
-//        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
-//        assertNotNull(u1.getId());
-//        assertEquals("hgamarra", u1.getUsername());
-//        Optional<User> u2 = this.service.getUserByUsername("hgamarra");
-//        if (u2.isPresent()) {
-//            User u3 = u2.get();
-//            assertEquals("hgamarra", u3.getUsername());
-//            assertEquals("hugo.gamarra@testmail.com", u3.getEmail());
-//        }
-//        Optional<User> u4 = this.service.getUserByEmail("hugo.gamarra@testmail.com");
-//        if (u4.isPresent()) {
-//            User u5 = u4.get();
-//            assertEquals("hgamarra", u5.getUsername());
-//            assertEquals("hugo.gamarra@testmail.com", u5.getEmail());
-//        }
-//        Optional<User> u6= this.service.getUserById(u1.getId());
-//        if (u6.isPresent()) {
-//            User u7 = u6.get();
-//            assertEquals("hgamarra", u7.getUsername());
-//            assertEquals("hugo.gamarra@testmail.com", u7.getEmail());
-//            assertEquals(u7.getId(), u1.getId());
-//        }
-//    }
+
+    @Test
+    public void testGetUser() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1982);
+        cal.set(Calendar.MONTH, Calendar.MAY);
+        cal.set(Calendar.DAY_OF_MONTH, 17);
+        Date dob = cal.getTime();
+        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
+        assertNotNull(u1.getId());
+        assertEquals("hgamarra", u1.getUsername());
+        Optional<User> u2 = this.service.getUserByUsername("hgamarra");
+        if (u2.isPresent()) {
+            User u3 = u2.get();
+            assertEquals("hgamarra", u3.getUsername());
+            assertEquals("hugo.gamarra@testmail.com", u3.getEmail());
+        }
+        Optional<User> u4 = this.service.getUserByEmail("hugo.gamarra@testmail.com");
+        if (u4.isPresent()) {
+            User u5 = u4.get();
+            assertEquals("hgamarra", u5.getUsername());
+            assertEquals("hugo.gamarra@testmail.com", u5.getEmail());
+        }
+        Optional<User> u6= this.service.getUserById(u1.getId());
+        if (u6.isPresent()) {
+            User u7 = u6.get();
+            assertEquals("hgamarra", u7.getUsername());
+            assertEquals("hugo.gamarra@testmail.com", u7.getEmail());
+            assertEquals(u7.getId(), u1.getId());
+        }
+    }
 
     @Test
     public void testCreateProduct() {
@@ -90,20 +90,20 @@ public class DBliveryServiceTestCase {
         assertEquals("Combo Stacker ATR",p1.getName());
         assertEquals(1,p1.getPrices().size());
     }
-//
-//    @Test
-//    public void testUpdateProductPrice() throws DBliveryException{
-//        Calendar cal = Calendar.getInstance();
-//        Date startDate = cal.getTime();
-//        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
-//        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
-//        assertNotNull(p1.getId());
-//        assertEquals(1,p1.getPrices().size());
-//        Product p2 = this.service.updateProductPrice(p1.getId(),Float.valueOf(3000.0F),startDate);
-//        assertEquals(Float.valueOf(3000.0F),p2.getPrice());
-//        assertEquals(2,p2.getPrices().size());
-//    }
-//
+
+    @Test
+    public void testUpdateProductPrice() throws DBliveryException{
+        Calendar cal = Calendar.getInstance();
+        Date startDate = cal.getTime();
+        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
+        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
+        assertNotNull(p1.getId());
+        assertEquals(1,p1.getPrices().size());
+        Product p2 = this.service.updateProductPrice(p1.getId(),Float.valueOf(3000.0F),startDate);
+        assertEquals(Float.valueOf(3000.0F),p2.getPrice());
+        assertEquals(2,p2.getPrices().size());
+    }
+
     @Test
     public void testCreateOrder() throws DBliveryException {
         Calendar cal = Calendar.getInstance();
@@ -125,6 +125,7 @@ public class DBliveryServiceTestCase {
         assertEquals(1,o2.getProducts().size());
     }
 
+<<<<<<< HEAD
     @Test
     public void testDeliverOrder() throws DBliveryException {
         Calendar cal = Calendar.getInstance();
@@ -157,20 +158,32 @@ public class DBliveryServiceTestCase {
 //    public void testCancelOrder() throws Exception {
 //        Calendar cal = Calendar.getInstance();
 //        Date orderDate = cal.getTime();
+=======
+//    @Test
+//    public void testDeliverOrder() throws DBliveryException {
+//        Calendar cal = Calendar.getInstance();
+//        Date orderDate = cal.getTime();
+//        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
+//        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
+>>>>>>> 0ec9a1c8b27891c7434a91b49bf53fd2d630e5b3
 //        Calendar cal2 = Calendar.getInstance();
 //        cal2.set(Calendar.YEAR, 1982);
 //        cal2.set(Calendar.MONTH, Calendar.MAY);
 //        cal2.set(Calendar.DAY_OF_MONTH, 17);
 //        Date dob = cal.getTime();
 //        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
+<<<<<<< HEAD
 //        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
 //        Order o1 = this.service.createOrder(orderDate,"Av. Corrientes 1405 2° B", Float.valueOf(-54.45F), Float.valueOf(-62.22F),u1);
 //        assertTrue(this.service.canCancel(o1.getId()));
+=======
+>>>>>>> 0ec9a1c8b27891c7434a91b49bf53fd2d630e5b3
 //        cal2.set(Calendar.YEAR, 1988);
 //        cal2.set(Calendar.MONTH, Calendar.JUNE);
 //        cal2.set(Calendar.DAY_OF_MONTH, 23);
 //        Date dob2 = cal.getTime();
 //        User u2 = this.service.createUser("delivery@info.unlp.edu.ar", "123456", "delivery", "Delivery", dob2);
+<<<<<<< HEAD
 //        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
 //        Order o2 = this.service.addProduct(o1.getId(), 1L, p1);
 //        Order o3 = this.service.deliverOrder(o2.getId(), u2);
@@ -181,6 +194,47 @@ public class DBliveryServiceTestCase {
 //        assertEquals(this.service.getActualStatus(o5.getId()).getStatus(),"Cancelled");
 //        assertEquals(2,o5.getStatus().size());
 //    }
+=======
+//        Order o1 = this.service.createOrder(orderDate,"Av. Corrientes 1405 2° B", Float.valueOf(-54.45F), Float.valueOf(-62.22F),u1);
+//        assertFalse(this.service.canDeliver(o1.getId()));
+//        assertThrows(DBliveryException.class, () -> this.service.deliverOrder(o1.getId(),u2),"The order can't be delivered");
+//        Order o2 = this.service.addProduct(o1.getId(), 1L, p1);
+//        assertTrue(this.service.canDeliver(o2.getId()));
+//        Order o3 = this.service.deliverOrder(o2.getId(),u2);
+//        assertNotNull(o3.getId());
+//        assertEquals(2,o3.getStatus().size());
+//        assertEquals(u2,o3.getDeliveryUser());
+//    }
+//
+    @Test
+    public void testCancelOrder() throws Exception {
+        Calendar cal = Calendar.getInstance();
+        Date orderDate = cal.getTime();
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(Calendar.YEAR, 1982);
+        cal2.set(Calendar.MONTH, Calendar.MAY);
+        cal2.set(Calendar.DAY_OF_MONTH, 17);
+        Date dob = cal.getTime();
+        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
+        Supplier s1 = this.service.createSupplier("Burger King", "30710256443", "Av. Corrientes 956", Float.valueOf(-53.45F), Float.valueOf(-60.22F));
+        Order o1 = this.service.createOrder(orderDate,"Av. Corrientes 1405 2° B", Float.valueOf(-54.45F), Float.valueOf(-62.22F),u1);
+        assertTrue(this.service.canCancel(o1.getId()));
+        cal2.set(Calendar.YEAR, 1988);
+        cal2.set(Calendar.MONTH, Calendar.JUNE);
+        cal2.set(Calendar.DAY_OF_MONTH, 23);
+        Date dob2 = cal.getTime();
+        User u2 = this.service.createUser("delivery@info.unlp.edu.ar", "123456", "delivery", "Delivery", dob2);
+        Product p1 = this.service.createProduct("Combo Stacker ATR", Float.valueOf(2521.2F), Float.valueOf(2.5F),s1);
+        Order o2 = this.service.addProduct(o1.getId(), 1L, p1);
+        Order o3 = this.service.deliverOrder(o2.getId(), u2);
+        assertFalse(this.service.canCancel(o3.getId()));
+        assertThrows(DBliveryException.class, () -> this.service.cancelOrder(o3.getId()),"The order can't be cancelled");
+        Order o4 = this.service.createOrder(orderDate,"Av. Corrientes 1405 2° B", Float.valueOf(-54.45F), Float.valueOf(-62.22F),u1);
+        Order o5 = this.service.cancelOrder(o4.getId());
+        assertEquals(this.service.getActualStatus(o5.getId()).getStatus(),"Cancelled");
+        assertEquals(2,o5.getStatus().size());
+    }
+>>>>>>> 0ec9a1c8b27891c7434a91b49bf53fd2d630e5b3
 //
 //    @Test
 //    public void testFinishOrder() throws DBliveryException {
