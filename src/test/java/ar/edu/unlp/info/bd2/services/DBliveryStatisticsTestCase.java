@@ -55,10 +55,10 @@ public class DBliveryStatisticsTestCase {
 //        assertEquals("Milanesa con rúcula",product.getName());
 //    }
 //
-//    @Test
-//    public void testGetAllOrdersMadeByUser() {
-//        assertEquals(5,this.service.getAllOrdersMadeByUser("rubnpastor265").size());
-//    }
+    @Test
+    public void testGetAllOrdersMadeByUser() {
+        assertEquals(5,this.service.getAllOrdersMadeByUser("rubnpastor265").size());
+    }
 //
 //    @Test
 //    public void testGetPendingOrders() {
