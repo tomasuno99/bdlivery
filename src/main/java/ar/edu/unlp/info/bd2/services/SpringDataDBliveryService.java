@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlp.info.bd2.model.Order;
+import ar.edu.unlp.info.bd2.model.OrderProduct;
 import ar.edu.unlp.info.bd2.model.OrderStatus;
 import ar.edu.unlp.info.bd2.model.Product;
 import ar.edu.unlp.info.bd2.model.Supplier;
 import ar.edu.unlp.info.bd2.model.User;
 import ar.edu.unlp.info.bd2.repositories.DBliveryException;
+import ar.edu.unlp.info.bd2.repositories.OrderRepository;
 import ar.edu.unlp.info.bd2.repositories.ProductRepository;
 import ar.edu.unlp.info.bd2.repositories.SupplierRepository;
 
@@ -27,6 +29,8 @@ public class SpringDataDBliveryService implements DBliveryService {
 	ProductRepository productRepository;
 	@Autowired
 	SupplierRepository supplierRepository;
+	@Autowired
+	OrderRepository orderRepository;
 	
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
@@ -80,14 +84,18 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public Order createOrder(Date dateOfOrder, String address, Float coordX, Float coordY, User client) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.save(new Order(dateOfOrder, address, coordX, coordY, client));
 	}
 
 	@Override
 	public Order addProduct(Long order, Long quantity, Product product) throws DBliveryException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Order> o_optional = this.orderRepository.findById(order);
+		if (!o_optional.isPresent()) throw new DBliveryException("the order with that id does not exist");
+		Order o = o_optional.get();
+		OrderProduct op = new OrderProduct(quantity, product);
+		o.getProducts().add(op);
+		this.orderRepository.save(o);
+		return o;
 	}
 
 	@Override
