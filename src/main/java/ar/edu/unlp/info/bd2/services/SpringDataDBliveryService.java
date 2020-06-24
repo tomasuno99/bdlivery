@@ -27,7 +27,7 @@ import ar.edu.unlp.info.bd2.repositories.UserRepository;
 
 @Service
 @Transactional
-public class SpringDataDBliveryService implements DBliveryService {
+public class SpringDataDBliveryService implements DBliveryService, DBliveryStatisticsService {
 
 	@Autowired
 	ProductRepository productRepository;
@@ -205,6 +205,45 @@ public class SpringDataDBliveryService implements DBliveryService {
 	}
 
 	public Optional<Product> getProductById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Product getMaxWeigth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Order> getAllOrdersMadeByUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Order> getPendingOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Order> getSentOrders() {
+		return this.orderRepository.getSentOrders();
+	}
+	@Override
+	public List<Order> getDeliveredOrdersInPeriod(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Order> getDeliveredOrdersForUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Product> getProductsOnePrice() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Product> getSoldProductsOn(Date day) {
 		// TODO Auto-generated method stub
 		return null;
 	}
