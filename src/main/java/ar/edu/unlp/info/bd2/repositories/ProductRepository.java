@@ -31,4 +31,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 					+ 	   "join op.product as p "
 		+ " where o.dateOfOrder=:day ")
 	public List<Product> getSoldProductsOn(@Param("day") Date day);
+	
+	
+	public Product findFirstByOrderByWeightDesc();
 }
