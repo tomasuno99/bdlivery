@@ -86,8 +86,7 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 
 	@Override
 	public Optional<Order> getOrderById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.findById(id);
 	}
 
 	@Override
@@ -210,13 +209,11 @@ public class SpringDataDBliveryService implements DBliveryService, DBliveryStati
 	}
 
 	public Optional<Product> getProductById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productRepository.findById(id);
 	}
 	@Override
 	public Product getMaxWeigth() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productRepository.getMaxWeigth();
 	}
 	@Override
 	public List<Order> getAllOrdersMadeByUser(String username) {

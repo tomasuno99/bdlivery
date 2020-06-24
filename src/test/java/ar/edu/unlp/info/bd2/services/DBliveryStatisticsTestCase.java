@@ -49,15 +49,6 @@ public class DBliveryStatisticsTestCase {
         this.initializer.prepareDB();
     }
 
-//
-//    @Test
-//    public void testGetMaxWeigth() {
-//        Product product = this.service.getMaxWeigth();
-//        assertEquals("Milanesa con rúcula",product.getName());
-//    }
-//
-
-
     @Test
     public void testGetMaxWeigth() {
         Product product = this.service.getMaxWeigth();
