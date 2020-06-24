@@ -38,16 +38,16 @@ public class DBliveryServiceTestCase {
         this.service = this.getService();
     }
 
-//    @Test
-//    public void testCreateUser() {
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.YEAR, 1982);
-//        cal.set(Calendar.MONTH, Calendar.MAY);
-//        cal.set(Calendar.DAY_OF_MONTH, 17);
-//        Date dob = cal.getTime();
-//        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
-//        assertNotNull(u1.getId());
-//    }
+    @Test
+    public void testCreateUser() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1982);
+        cal.set(Calendar.MONTH, Calendar.MAY);
+        cal.set(Calendar.DAY_OF_MONTH, 17);
+        Date dob = cal.getTime();
+        User u1 = this.service.createUser("hugo.gamarra@testmail.com", "123456", "hgamarra", "Hugo Gamarra", dob);
+        assertNotNull(u1.getId());
+    }
 //
 //    @Test
 //    public void testGetUser() {
