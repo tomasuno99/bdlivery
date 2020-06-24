@@ -31,11 +31,9 @@ public class SpringDataDBliveryService implements DBliveryService {
 	@Autowired
 	SupplierRepository supplierRepository;
 	@Autowired
-<<<<<<< HEAD
 	OrderRepository orderRepository;
-=======
+	@Autowired
 	UserRepository userRepository;
->>>>>>> 0fb576f556c2f9a608787af23b8ecc8dd553465d
 	
 	@Override
 	public Product createProduct(String name, Float price, Float weight, Supplier supplier) {
