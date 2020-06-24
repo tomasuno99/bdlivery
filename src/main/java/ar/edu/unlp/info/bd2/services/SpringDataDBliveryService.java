@@ -165,8 +165,7 @@ public class SpringDataDBliveryService implements DBliveryService {
 
 	@Override
 	public List<Product> getProductsByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productRepository.findByNameContaining(name);
 	}
 
 	public Optional<Product> getProductById(Long id) {
